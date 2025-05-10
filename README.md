@@ -13,5 +13,7 @@ combine and priortize polygenic genetic information from multiple different trai
 > This R package automates the pipeline using functions: 
 
 ## Table of Contents
+- [Installation](#installation)
 
+## Installation
 The direct installation of EX-TERR can be performed using `devtools::install_github:`
