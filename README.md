@@ -6,7 +6,7 @@ combine and priortize polygenic genetic information from multiple different trai
 > and determine the association strength of each input trait. EX-TERR applies MARS to multiple
 > 
 > Further details regarding development and further details of EX-TERR can be referred
-> to in the corresponding manuscript [link text](https://example.com)
+> to in the [corresponding manuscript](https://example.com)
 >
 > This R package automates the pipeline using functions: 
 
