@@ -36,27 +36,30 @@ run_LDPred2 <- function(blocks,
                         freq_dir,
                         ref_allele_dir,
                         traits_dir = NULL,
-                        trait_type = c("gwas", "outcome"),
-                        LDpred2_model = c("auto", "grid"),
+                        trait_type,
+                        LDpred2_model,
                         phenotype = NULL,
                         corrections_dir = NULL,
                         ncores) {
-  if (!file.exists(file.path(blocks))) {
+  phenotype <- file.path(phenotype)
+  rds_in <- file.path(rds_in)
+  bed_in <- file.path(bed_in)
+  blocks <- file.path(blocks)
+  if (!file.exists(blocks)) {
     stop("Blocks file does not exist.")
   }
-  if (!file.exists(file.path(traits_list))) {
-    stop("Traits list file does not exist.")
-  }
-  if (!file.exists(file.path(rds_in)) && !file.exists(file.path(bed_in))) {
+  if (!file.exists(rds_in) && !file.exists(bed_in)) {
     stop("Neither the .rds nor .bed for the outcome genotype data exist. Check path.")
   }
-  if (!file.exists(file.path(paste0(ref_allele_dir, "/ref_allele_09_from_", outcome_db))) | !file.exists(file.path(paste0(ref_allele_dir, "/ref_allele_09")))) {
+  if (!file.exists(file.path(ref_allele_dir, paste0("ref_allele_09_from_", outcome_db))) || !file.exists(file.path(ref_allele_dir, "ref_allele_09"))) {
     stop("At least one of the ref allele files is missing.")
   }
-  if (!file.exists(file.path(traits_list))) {
-    stop("Traits list file does not exist.")
+  if (trait_type != "gwas" && trait_type != "outcome") {
+    stop("Trait type must be either 'gwas' or 'outcome'.")
   }
-
+  if (LDpred2_model != "auto" && LDpred2_model != "grid") {
+    stop("LDpred2 model must be either 'auto' or 'grid'.")
+  }
 
   get_adj_lassosum_betas <- function(betas) {
     block <- as.matrix(fread(blocks, header = F))
@@ -66,7 +69,7 @@ run_LDPred2 <- function(blocks,
     {
       for (set in 1:block[chr])
       {
-        maf <- as.matrix(fread(paste0(freq_dir, "/", outcome_db, "_09_freq_", chr, "_", set, ".frq")))
+        maf <- as.matrix(fread(file.path(freq_dir, paste0(outcome_db, "_09_freq_", chr, "_", set, ".frq"))))
         MAF <- rbind(MAF, maf)
       }
     }
@@ -81,20 +84,13 @@ run_LDPred2 <- function(blocks,
 
 
   # Main function
-  setwd(paste0(trait_dir, "/Traits_", LDpred2_model, "/"))
-
-  if (!dir.exists("Betas")) {
-    dir.create("Betas", recursive = TRUE)
+  dir <- file.path(traits_dir, paste0("Traits_", LDpred2_model))
+  if (!dir.exists(dir)) {
+    dir.create(dir, recursive = TRUE)
   }
 
-  traits <- as.matrix(fread(traits_list)) # gwas or ukb traits list, with auto or grid mode e.g. Gwas_list_auto.txt
-
-  # trait = traits[which(traits == trait_name)] # CHECK THIS LINE.
-
-  if (dir.exists(paste0(trait_dir, "/Traits_", LDpred2_model))) {
-    dir.create(paste0(trait_dir, "/Traits_", LDpred2_model), recursive = TRUE)
-  } else {
-    setwd(paste0(trait_dir, "/Traits_", LDpred2_model))
+  if (!dir.exists(file.path(dir, "Betas"))) {
+    dir.create(file.path(dir, "Betas"), recursive = TRUE)
   }
 
   # Grid model
@@ -104,17 +100,17 @@ run_LDPred2 <- function(blocks,
     }
 
     # Phenotype info
-    phenotype <- as.matrix(fread(phenotype), header = T)
-    Age <- as.matrix(fread(corrections_dir, "/Age_disc.txt", header = T))
-    Sex <- as.matrix(fread(corrections_dir, "/Sex_disc.txt", header = T))
-    PCs <- as.matrix(fread(corrections_dir, "/PCs_disc.txt", header = T))
+    phenotype <- as.matrix(fread(file.path(phenotype), header = T))
+    Age <- as.matrix(fread(file.path(corrections_dir, "Age_disc.txt"), header = T))
+    Sex <- as.matrix(fread(file.path(corrections_dir, "Sex_disc.txt"), header = T))
+    PCs <- as.matrix(fread(file.path(corrections_dir, "PCs_disc.txt"), header = T))
   }
 
 
 
-  if (!file.exists(paste0(rds_in))) {
+  if (!file.exists(rds_in)) {
     # preprocess the bed file (only need to do once for each data set)
-    snp_readBed(paste0(bed_in))
+    snp_readBed(bed_in)
   }
 
   # now attach the genotype object
@@ -126,22 +122,6 @@ run_LDPred2 <- function(blocks,
   POS <- obj.bigSNP$map$physical.pos
   y <- obj.bigSNP$fam$affection #<- phenotype[, 3]
   class(y) <- "numeric"
-
-  # randomly set NA values to 0, 1 or 2
-  # for(i in 1:dim(G)[2])
-  # {
-  # 	if(length(which(is.na(G[, i]))) > 0)
-  # 	{
-  # 		n = length(which(is.na(G[, i])))
-  # 		index_0 = which(G[, i] == 0)
-  # 		index_1 = which(G[, i] == 1)
-  # 		index_2 = which(G[, i] == 2)
-  # 		prob0 = length(index_0) / (length(index_0) + length(index_1) + length(index_2))
-  # 		prob2 = length(index_2) / (length(index_0) + length(index_1) + length(index_2))
-  # 		prob1 = 1 - prob0 - prob2
-  # 		G[which(is.na(G[, i])), i] <- sample(c(0:2), size = n, replace = T, prob=c(prob0,prob1,prob2))
-  # 	}
-  # }
 
   sumstats$N[which(is.na(sumstats$N))] <- 30000
 
@@ -157,11 +137,11 @@ run_LDPred2 <- function(blocks,
 
   POS2 <- snp_asGeneticPos(CHR, POS, dir = ".")
 
-  tmp <- tempfile(tmpdir = paste0(trait_dir, "/Traits_", LDpred2_model, "/", trait, "/tmp-data"))
+  tmp <- tempfile(tmpdir = file.path(dir, trait, "tmp-data"))
   on.exit(file.remove(paste0(tmp, ".sbk")), add = TRUE)
 
 
-  if (!file.exists("../corr.RData") || !file.exists("../ld.RData")) {
+  if (!file.exists(file.path(traits_dir, "corr.RData")) || !file.exists(file.path(traits_dir, "ld.RData"))) {
     for (chr in 1:22) {
       ## indices in 'df_beta'
       ind.chr <- which(df_beta$chr == chr)
@@ -170,7 +150,7 @@ run_LDPred2 <- function(blocks,
 
       corr0 <- snp_cor(G,
         ind.col = ind.chr2, size = 3 / 1000,
-        infos.pos = POS2[ind.chr2], ncores = NCORES
+        infos.pos = POS2[ind.chr2], ncores = ncores
       )
 
       if (chr == 1) {
@@ -182,11 +162,11 @@ run_LDPred2 <- function(blocks,
       }
       print(chr)
     }
-    save(corr, file = "../corr.RData")
-    save(ld, file = "../ld.RData")
+    save(corr, file = file.path(dir, "corr.RData"))
+    save(ld, file = file.path(dir, "ld.RData"))
   } else {
-    load("../corr.RData")
-    load("../ld.RData")
+    load(file.path(dir, "corr.RData"))
+    load(file.path(dir, "ld.RData"))
   }
 
   ldsc <- with(df_beta, snp_ldsc(ld, length(ld),
@@ -211,7 +191,7 @@ run_LDPred2 <- function(blocks,
     multi_auto <- snp_ldpred2_auto(
       corr, df_beta,
       h2_init = ldsc_h2_est,
-      vec_p_init = seq_log(1e-4, 0.2, length.out = 30), ncores = NCORES,
+      vec_p_init = seq_log(1e-4, 0.2, length.out = 30), ncores = ncores,
       #  use_MLE = FALSE,  # uncomment if you have convergence issues or when power is low (need v1.11.9)
       allow_jump_sign = FALSE, shrink_corr = coef_shrink
     )
@@ -241,7 +221,7 @@ run_LDPred2 <- function(blocks,
     params <- expand.grid(p = p_seq, h2 = h2_seq, sparse = c(FALSE, TRUE))
 
     # takes less than 2 min with 4 cores
-    beta_grid <- snp_ldpred2_grid(corr, df_beta, params, ncores = NCORES)
+    beta_grid <- snp_ldpred2_grid(corr, df_beta, params, ncores = ncores)
 
     pred_grid <- big_prodMat(G, beta_grid, ind.col = df_beta[["_NUM_ID_"]])
 
@@ -273,12 +253,12 @@ run_LDPred2 <- function(blocks,
 
 
   colnames(LDpred2_betas) <- c("chr", "rsid", "betas")
-  write.table(LDpred2_betas, paste0("Betas/LDpred2_betas.txt"), col.names = T, row.names = F, quote = F, sep = "\t")
+  write.table(LDpred2_betas, file.path(dir, "Betas", "LDpred2_betas.txt"), col.names = T, row.names = F, quote = F, sep = "\t")
 
 
   # sign the betas whose effect allele is different from that in UKB
-  UKB_ref <- as.matrix(fread(paste0(ref_allele_dir, "/ref_allele_09_from_", outcome_db), header = F))
-  GWAS_ref <- as.matrix(fread(paste0(ref_allele_dir, "/ref_allele_09"), header = F))
+  UKB_ref <- as.matrix(fread(file.path(ref_allele_dir, paste0("ref_allele_09_from_", outcome_db)), header = F))
+  GWAS_ref <- as.matrix(fread(file.path(ref_allele_dir, "ref_allele_09"), header = F))
 
   index <- (which(UKB_ref[, 2] != GWAS_ref[, 2]))
 
@@ -287,11 +267,11 @@ run_LDPred2 <- function(blocks,
   }
 
   LDpred2_betas[index, 3] <- 0 - as.numeric(LDpred2_betas[index, 3])
-  write.table(LDpred2_betas, paste0("Betas/LDpred2_betas_signed.txt"), col.names = T, row.names = F, quote = F, sep = "\t")
+  write.table(LDpred2_betas, file.path(dir, "Betas", "LDpred2_betas_signed.txt"), col.names = T, row.names = F, quote = F, sep = "\t")
   # Standardize the betas
   ldpred2_beta_adj <- get_adj_lassosum_betas(LDpred2_betas)
 
-  write.table(ldpred2_beta_adj, paste0("Betas/LDpred2_betas_signed_adj.txt"), col.names = T, row.names = F, quote = F, sep = "\t")
+  write.table(ldpred2_beta_adj, file.path(dir, "Betas", "LDpred2_betas_signed_adj.txt"), col.names = T, row.names = F, quote = F, sep = "\t")
 
-  return(list(ldpred2_betadj = ldpred2_beta_adj, ldpred2_beta = ldpred2_betas))
+  return(list(ldpred2_betadj = ldpred2_beta_adj, ldpred2_beta = LDpred2_betas))
 }
