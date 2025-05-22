@@ -6,7 +6,7 @@ baseline_prs_asso <- function(mode, age, sex, pcs, input_dir, output_dir = NULL)
                 dir.create(output_dir, recursive = TRUE)
         }
         if (!mode %in% c("default", "no_mask", "gwas", "with_name")) {
-                stop("mode should be either 'default' or 'no_mask' or 'gwas'")
+                stop("mode should be either 'default' or 'no_mask' or 'gwas' or 'with_name'")
         }
 
         standardization <- function(x) {
@@ -51,7 +51,7 @@ baseline_prs_asso <- function(mode, age, sex, pcs, input_dir, output_dir = NULL)
 
         blocks_orig <- as.matrix(fread(file.path(input_dir, "Cross_validation_groups.txt"))) # Randomly divided into 5 groups
         if (mode == "gwas" || mode == "with_name") {
-                testing_traits <- as.matrix(fread("Data/mask_outcome_list_final.txt", header = F))
+                testing_traits <- as.matrix(fread(file.path(input_dir, "mask_outcome_list_final.txt"), header = F))
         } else {
                 testing_traits <- as.matrix(fread(file.path(input_dir, "outcome_list_final.txt"), header = F)) # 71 test traits
         }
@@ -66,7 +66,7 @@ baseline_prs_asso <- function(mode, age, sex, pcs, input_dir, output_dir = NULL)
         pcs <- PCs[, 2:11]
 
         # Get PRS_disc and PRS_val
-        if (!file.exists(file.path(input_dir, "Baseline_PRS_disc.txt")) | !file.exists(file.path(input_dir, "Baseline_PRS_val.txt"))) {
+        if (!file.exists(file.path(input_dir, "Baseline_PRS_disc.txt")) || !file.exists(file.path(input_dir, "Baseline_PRS_val.txt"))) {
                 prs_disc <- as.matrix(fread(file.path(input_dir, "PRS_chr_1_1_1_disc.txt")))
                 PRS_disc <- matrix(0, ncol = dim(prs_disc)[2], nrow = dim(prs_disc)[1])
 
@@ -83,11 +83,11 @@ baseline_prs_asso <- function(mode, age, sex, pcs, input_dir, output_dir = NULL)
                         PRS_val <- PRS_val + prs_val
                 }
 
-                write.table(PRS_disc, paste0(input_dir, "Baseline_PRS_disc.txt"), col.names = T, row.names = F, quote = F, sep = "\t")
-                write.table(PRS_val, paste0(input_dir, "Baseline_PRS_val.txt"), col.names = T, row.names = F, quote = F, sep = "\t")
+                write.table(PRS_disc, file.path(input_dir, "Baseline_PRS_disc.txt"), col.names = T, row.names = F, quote = F, sep = "\t")
+                write.table(PRS_val, file.path(input_dir, "Baseline_PRS_val.txt"), col.names = T, row.names = F, quote = F, sep = "\t")
         } else {
-                PRS_disc <- as.matrix(fread(file.path(input_dir, "Baseline_PRS/Baseline_PRS_disc.txt")))
-                PRS_val <- as.matrix(fread(file.path(input_dir, "Baseline_PRS/Baseline_PRS_val.txt")))
+                PRS_disc <- as.matrix(fread(file.path(input_dir, "Baseline_PRS_disc.txt")))
+                PRS_val <- as.matrix(fread(file.path(input_dir, "Baseline_PRS_val.txt")))
         }
 
         if (mode == "gwas") {
@@ -107,7 +107,7 @@ baseline_prs_asso <- function(mode, age, sex, pcs, input_dir, output_dir = NULL)
                 phenos <- as.matrix(fread(file.path(input_dir, paste0(trait, "_disc.txt")), header = T))
 
 
-                if (file.exists(file.path(input_dir, paste0(trait, "_masked.txt"))) && mode != "no_mask") {
+                if (mode != "no_mask" && file.exists(file.path(input_dir, paste0(trait, "_masked.txt")))) {
                         mask_gwas <- as.matrix(fread(file.path(input_dir, paste0(trait, "_masked.txt"), header = F)))
                         mask_ids <- match(mask_gwas, colnames(PRS_disc))
 
@@ -182,8 +182,8 @@ baseline_prs_asso <- function(mode, age, sex, pcs, input_dir, output_dir = NULL)
         }
 
         if (!is.null(output_dir)) {
-                write.table(Results_dicho_val, paste0("Baseline_PRS/Baseline_PRS_regression_dichotomous_val.txt"), col.names = F, row.names = F, quote = F, sep = "\t")
-                write.table(Results_cont_val, paste0("Baseline_PRS/Baseline_PRS_regression_continuous_val.txt"), col.names = F, row.names = F, quote = F, sep = "\t")
+                write.table(Results_dicho_val, file.path(output_dir, "Baseline_PRS_regression_dichotomous_val.txt"), col.names = F, row.names = F, quote = F, sep = "\t")
+                write.table(Results_cont_val, file.path(output_dir, "Baseline_PRS_regression_continuous_val.txt"), col.names = F, row.names = F, quote = F, sep = "\t")
         }
 
         return(list(

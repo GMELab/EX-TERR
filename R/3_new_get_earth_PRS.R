@@ -20,43 +20,43 @@ run_earth <- function(ids,
                       size = 5000,
                       degree = 3,
                       blocks,
+                      cross_val_PC_SD,
                       traits_dir,
-                      LDpred2_model = c("auto", "grid"),
+                      LDpred2_model,
                       beta_dir,
                       outcome_db,
-                      mask = c("mask", "no_mask"),
-                      mask_dir = NULL) {
-  if (!file.exists(file.path(blocks))) {
+                      mask = "no_mask",
+                      mask_dir = NULL,
+                      output_dir) {
+  blocks <- file.path(blocks)
+  cross_val_PC_SD <- file.path(cross_val_PC_SD)
+  if (!file.exists(blocks)) {
     stop("Blocks file does not exist.")
   }
-
-  if (!file.exists(file.path(cross_val_PC_SD))) {
+  if (!file.exists(cross_val_PC_SD)) {
     stop("Cross validation PC SD file does not exist.")
+  }
+  if (LDpred2_model != "auto" && LDpred2_model != "grid") {
+    stop("LDpred2_model must be either 'auto' or 'grid'.")
+  }
+  if (mask != "mask" && mask != "no_mask") {
+    stop("Mask must be either 'mask' or 'no_mask'.")
   }
 
   # Mar to Earth predict function, no sign
   earth_predict <- function(beta_disc, beta_val, test_data, ind) {
     x <- as.data.frame(beta_disc)
 
-    # 	nk = 5 * dim(x)[2]
-
     cv_mars_beta <- earth(x = x, y = beta_val)
-    # 	cv_mars_beta <- earth(x = x, y = beta_val, thresh = 0.001)
-    # 	cv_mars_beta <- earth(x = x, y = beta_val, degree = 3, thresh = 0.001)
-    # 	cv_mars_beta <- earth(x = x, y = beta_val, degree = degree, nk = nk, trace = FALSE, thresh = 0.0001)
-
-    # 	save(cv_mars_beta, file = paste0("Model/", colnames(beta_validation)[ind], "_earth_PC_std_threshold_", PC_std_threshold, "_5fold_CV_id_", ids,".RData" ))
 
     pred <- predict(cv_mars_beta, newdata = test_data)
     return(pred)
   }
 
-
   # Main function
-  setwd(paste0(trait_dir, "/Traits_", LDpred2_model, "/"))
+  dir <- file.path(traits_dir, paste0("Traits_", LDpred2_model))
 
   block <- as.matrix(fread(blocks))
-  # mask_trait_id = as.matrix(fread("Data/masked_traits_20240409.txt", header = F)) #include the GWAS info which will be masked
 
   beta_validation <- as.numeric()
   beta_discovery <- as.numeric()
@@ -66,14 +66,12 @@ run_earth <- function(ids,
   {
     for (set in 1:block[chr])
     {
-      # 		ukb_dis_beta = as.matrix(fread(paste0("Betas/20240207/UKB_LDPRED2_PC_Betas_chr_", chr, "_", set, "_disc.txt"), header = T))
-      # 		ukb_dis_beta = as.matrix(fread(paste0("Betas/20240207/UKB_Univariate_PC_Betas_chr_", chr, "_", set, "_disc.txt"), header = T))
-      ukb_dis_beta <- as.matrix(fread(paste0("Betas/", outcome_db, "_LDPRED2_PC_Betas_chr_", chr, "_", set, "_disc.txt"), header = T))
+      ukb_dis_beta <- as.matrix(fread(file.path(dir, "Betas", paste0(outcome_db, "_LDPRED2_PC_Betas_chr_", chr, "_", set, "_disc.txt")), header = T))
       PC_SD <- c(PC_SD, ukb_dis_beta[, 1])
 
       beta_validation <- rbind(beta_validation, ukb_dis_beta[, -1])
 
-      ldpred2_beta <- as.matrix(fread(paste0("Betas/GWAS_LDPRED2_PC_Betas_chr_", chr, "_", set, "_disc.txt"), header = T))
+      ldpred2_beta <- as.matrix(fread(file.path(dir, "Betas", paste0("GWAS_LDPRED2_PC_Betas_chr_", chr, "_", set, "_disc.txt")), header = T))
       beta_discovery <- rbind(beta_discovery, ldpred2_beta[, -1])
     }
   }
@@ -86,18 +84,17 @@ run_earth <- function(ids,
   beta_validation_train <- beta_validation[index_train, ]
 
   predict_earth <- as.numeric()
-  for (i in 1:dim(beta_validation)[2])
+  for (i in seq_len(dim(beta_validation)[2]))
   {
     beta_discovery_train <- cbind(beta_discovery[index_train, ], PC_SD[index_train])
     test_data <- cbind(beta_discovery[index_test, ], PC_SD[index_test])
 
-    if (file.exists(paste0(mask_dir, colnames(beta_validation)[i], "_masked.txt"))) {
-      mask_gwas <- as.matrix(fread(paste0(mask_dir, colnames(beta_validation)[i], "_masked.txt"), header = F))
+    if (mask == "mask" && file.exists(file.path(mask_dir, paste0(colnames(beta_validation)[i], "_masked.txt")))) {
+      mask_gwas <- as.matrix(fread(file.path(mask_dir, paste0(colnames(beta_validation)[i], "_masked.txt")), header = F))
       mask_ids <- match(mask_gwas, colnames(beta_discovery_train))
 
       beta_discovery_train <- beta_discovery_train[, -mask_ids]
       test_data <- test_data[, -mask_ids]
-      # 		print(i)
     }
     pred_earth <- earth_predict(beta_discovery_train, beta_validation_train[, i], test_data, i)
 
@@ -107,10 +104,10 @@ run_earth <- function(ids,
   colnames(predict_earth) <- colnames(beta_validation)
 
   # Get opt validation PRS
-  if (file.exists(paste0("Geno_disc_PCA/Geno_PCA_PC_std_threshold_", PC_std_threshold, "_", ids, "_val.txt"))) {
-    geno_PCA <- as.matrix(fread(paste0("Geno_disc_PCA/Geno_PCA_PC_std_threshold_", PC_std_threshold, "_", ids, "_val.txt"), header = F))
+  if (file.exists(file.path(dir, "Geno_disc_PCA", paste0("Geno_PCA_PC_std_threshold_", PC_std_threshold, "_", ids, "_val.txt")))) {
+    geno_PCA <- as.matrix(fread(file.path(dir, "Geno_disc_PCA", paste0("Geno_PCA_PC_std_threshold_", PC_std_threshold, "_", ids, "_val.txt")), header = F))
   } else {
-    geno_PCA <- as.matrix(fread(paste0("Geno_disc_PCA/Geno_PCA_PC_std_threshold_", PC_std_threshold, "_", ids, "_val.txt"), header = F))
+    geno_PCA <- as.matrix(fread(file.path(dir, "Geno_disc_PCA", paste0("Geno_PCA_PC_std_threshold_", PC_std_threshold, "_", ids, "_val.txt")), header = F))
   }
   earth_PRS <- geno_PCA %*% predict_earth
 
@@ -119,7 +116,7 @@ run_earth <- function(ids,
 
   write.table(earth_PRS, paste0(output_dir, "/Earth_PRS_PC_std_threshold_", PC_std_threshold, "_index_", ids, "_val.txt"), col.names = T, row.names = F, quote = F, sep = "\t")
 
-  val_PRs <- earth_PRS
+  val_PRS <- earth_PRS
 
   # Get true validation PRS
   if (file.exists(paste0("Geno_disc_PCA/Geno_PCA_PC_std_threshold_", PC_std_threshold, "_", ids, "_disc.txt"))) {
@@ -136,5 +133,5 @@ run_earth <- function(ids,
 
   write.table(earth_PRS, paste0(output_dir, "/Earth_PRS_PC_std_threshold_", PC_std_threshold, "_index_", ids, "_disc.txt"), col.names = T, row.names = F, quote = F, sep = "\t")
 
-  return(list(val_earth_PRS = val_PRS, disc_earth_PRS = disc_PRS))
+  return(list(val_earth_PRS = val_PRS, disc_earth_PRS = earth_PRS))
 }

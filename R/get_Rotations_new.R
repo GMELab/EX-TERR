@@ -31,14 +31,14 @@ get_rotations < function(chr,
         ending <- dim(Data)[2]
       }
 
-      if (!file.exists(paste0(rotations_dir, "G_PC_chr_", chr, "_set_", set, "_id_", i, ".RData"))) {
+      if (!file.exists(file.path(rotations_dir, paste0("G_PC_chr_", chr, "_set_", set, "_id_", i, ".RData")))) {
         G <- Data[, starting:ending]
         G_PC <- prcomp(G, scale = T)
 
         G_PC_rotation <- G_PC$rotation
         G_PC_SD <- G_PC$sdev
-        save(G_PC_rotation, file = paste0(rotations_dir, "G_PC_chr_", chr, "_set_", set, "_id_", i, ".RData"))
-        save(G_PC_SD, file = paste0(rotations_dir, "G_PC_SD_chr_", chr, "_set_", set, "_id_", i, ".RData"))
+        save(G_PC_rotation, file = file.path(rotations_dir, paste0("G_PC_chr_", chr, "_set_", set, "_id_", i, ".RData")))
+        save(G_PC_SD, file = file.path(rotations_dir, paste0("G_PC_SD_chr_", chr, "_set_", set, "_id_", i, ".RData")))
 
         rm(G)
         rm(G_PC)
@@ -51,11 +51,11 @@ get_rotations < function(chr,
 
   # Main function
   # setwd("/genetics3/maos/Geno_PC_external_GWAS")
-  block <- as.matrix(fread(blocks))
+  block <- as.matrix(fread(file.path(blocks)))
 
   for (set in 1:block[chr])
   {
-    load(paste0(genotype_dir, "/", outcome_db, "_09_", chr, "_", set, ".RData")) # load genotypes
+    load(file.path(genotype_dir, paste0(outcome_db, "_09_", chr, "_", set, ".RData"))) # load genotypes
 
     geno_data_PCA <- get_PCA_geno(geno_data)
     rm(geno_data)

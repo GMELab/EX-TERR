@@ -10,12 +10,17 @@ library("data.table")
 #' @return
 
 get_block_PRS <- function(chr,
-                          flag = c("disc", "Val"),
+                          flag,
                           size = 5000,
                           traits_dir,
                           genotype_dir,
                           blocks,
-                          traits_list_dir) {
+                          traits_list_dir,
+                          outcome_db,
+                          output_dir) {
+  if (flag != "disc" && flag != "val") {
+    stop("Flag must be either 'disc' or 'val'.")
+  }
   if (!file.exists(file.path(blocks))) {
     stop("Blocks file does not exist.")
   }
@@ -23,15 +28,14 @@ get_block_PRS <- function(chr,
 
   collect_LDPRED2_betas <- function(traits, tag) {
     GWAS_LDPRED2_betas <- as.numeric()
-    for (i in 1:length(traits))
+    for (i in seq_along(traits))
     {
       trait <- traits[i]
-      gwas <- as.matrix(fread(paste0(traits_dir, "/Traits_", tag, "/", trait, "/Betas/LDpred2_betas_signed_adj.txt")))
+      gwas <- as.matrix(fread(file.path(traits_dir, paste0("Traits_", tag), paste0(trait, "/Betas/LDpred2_betas_signed_adj.txt"))))
       GWAS_LDPRED2_betas <- cbind(GWAS_LDPRED2_betas, gwas[, 3])
     }
     colnames(GWAS_LDPRED2_betas) <- traits
     class(GWAS_LDPRED2_betas) <- "numeric"
-    # 	save(GWAS_LDPRED2_betas, file = paste0("/genetics3/maos/Geno_PC_external_GWAS/Traits_", tag, "/GWAS_LDPRED2_betas.RData"))
 
     return(GWAS_LDPRED2_betas)
   }
@@ -40,7 +44,7 @@ get_block_PRS <- function(chr,
   get_PRS <- function(adj_betas) {
     cycles <- ceiling(dim(adj_betas)[1] / size)
     ending <- 0
-    load(paste0(genotype_dir, "/Geno_", flag, "/", outcome_db, "_09_", chr, "_", set, ".RData"))
+    load(file.path(genotype_dir, paste0("Geno_", flag), paste0(outcome_db, "_09_", chr, "_", set, ".RData")))
 
     for (i in 1:cycles)
     {
@@ -51,11 +55,7 @@ get_block_PRS <- function(chr,
       }
       PRS <- geno_data[, starting:ending] %*% adj_betas[starting:ending, ]
 
-      if (!dir.exists("Multi_PRS")) {
-        dir.create("Multi_PRS", recursive = TRUE)
-      }
-
-      write.table(PRS, file = paste0("Multi_PRS/Single_PRS/PRS_chr_", chr, "_", set, "_", i, "_", flag, ".txt"), col.names = T, row.names = F, quote = F, sep = "\t")
+      write.table(PRS, file = file.path(output_dir, paste0("PRS_chr_", chr, "_", set, "_", i, "_", flag, ".txt")), col.names = T, row.names = F, quote = F, sep = "\t")
 
       print(paste("chr", chr, i, "out of", cycles, " beta is done"))
     }
@@ -71,20 +71,20 @@ get_block_PRS <- function(chr,
   # Main function
   block <- as.matrix(blocks, header = F)
 
-  traits_grid <- as.matrix(fread(traits_list_dir, "/Gwas_list_grid.txt", header = F))
-  traits_auto <- as.matrix(fread(traits_list_dir, "/Gwas_list_auto.txt", header = F))
+  traits_grid <- as.matrix(fread(file.path(traits_list_dir, "Gwas_list_grid.txt"), header = F))
+  traits_auto <- as.matrix(fread(file.path(traits_list_dir, "Gwas_list_auto.txt"), header = F))
 
   grid_beta <- collect_LDPRED2_betas(traits_grid, "auto")
 
 
-  if (!file.exists(paste0("/Traits_auto/GWAS_LDPRED2_betas.RData"))) {
+  if (!file.exists(file.path(genotype_dir, "GWAS_LDPRED2_betas.RData"))) {
     auto_beta <- collect_LDPRED2_betas(traits_auto, "auto")
   } else {
-    load(paste0("/Traits_auto/GWAS_LDPRED2_betas.RData"))
+    load(file.path(genotype_dir, "GWAS_LDPRED2_betas.RData"))
     auto_beta <- GWAS_LDPRED2_betas
   }
 
-  bim <- as.matrix(fread(genotype_dir, "/Geno_disc/", outcome_db, "_final.bim", header = F))
+  bim <- as.matrix(fread(file.path(genotype_dir, "Geno_disc", paste0(outcome_db, "_final.bim")), header = F))
 
   ldpred2_beta <- cbind(grid_beta, auto_beta)
   ldpred2_beta_chr <- ldpred2_beta[which(as.numeric(bim[, 1]) == chr), ]
@@ -92,7 +92,7 @@ get_block_PRS <- function(chr,
   SNP_ending <- 0
   for (set in 1:block[chr])
   {
-    bim <- as.matrix(fread(paste0(genotype_dir, "/Geno_", flag, "/", outcome_db, "_09_", chr, "_", set, ".bim"), header = F))
+    bim <- as.matrix(fread(file.path(genotype_dir, paste0("Geno_", flag), paste0(outcome_db, "_09_", chr, "_", set, ".bim")), header = F))
     SNP_starting <- SNP_ending + 1
     SNP_ending <- SNP_ending + dim(bim)[1]
 
