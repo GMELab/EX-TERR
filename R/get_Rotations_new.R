@@ -13,58 +13,53 @@ get_rotations < function(chr,
                          size = 5000,
                          rotations_dir,
                          blocks,
-                         genotype_dir){
-
+                         genotype_dir) {
   if (!file.exists(file.path(blocks))) {
     stop("Blocks file does not exist.")
   }
 
-get_PCA_geno = function(Data)
-{
-  cycles = ceiling(dim(Data)[2] / size)
-  ending = 0
-  block_end = 0
+  get_PCA_geno <- function(Data) {
+    cycles <- ceiling(dim(Data)[2] / size)
+    ending <- 0
+    block_end <- 0
 
-  for(i in 1:cycles)
-  {
-    starting = ending + 1
-    ending = ending + size
-    if(ending > dim(Data)[2])
+    for (i in 1:cycles)
     {
-      ending = dim(Data)[2]
+      starting <- ending + 1
+      ending <- ending + size
+      if (ending > dim(Data)[2]) {
+        ending <- dim(Data)[2]
+      }
+
+      if (!file.exists(paste0(rotations_dir, "G_PC_chr_", chr, "_set_", set, "_id_", i, ".RData"))) {
+        G <- Data[, starting:ending]
+        G_PC <- prcomp(G, scale = T)
+
+        G_PC_rotation <- G_PC$rotation
+        G_PC_SD <- G_PC$sdev
+        save(G_PC_rotation, file = paste0(rotations_dir, "G_PC_chr_", chr, "_set_", set, "_id_", i, ".RData"))
+        save(G_PC_SD, file = paste0(rotations_dir, "G_PC_SD_chr_", chr, "_set_", set, "_id_", i, ".RData"))
+
+        rm(G)
+        rm(G_PC)
+        gc()
+      }
     }
-
-    if(!file.exists(paste0(rotations_dir,"G_PC_chr_", chr, "_set_", set, "_id_", i, ".RData")))
-    {
-      G = Data[, starting:ending]
-      G_PC <- prcomp( G , scale = T )
-
-      G_PC_rotation <- G_PC$rotation
-      G_PC_SD <- G_PC$sdev
-      save(G_PC_rotation, file = paste0(rotations_dir,"G_PC_chr_", chr, "_set_", set, "_id_", i, ".RData"))
-      save(G_PC_SD, file = paste0(rotations_dir,"G_PC_SD_chr_", chr, "_set_", set, "_id_", i, ".RData"))
-
-      rm(G)
-      rm(G_PC)
-      gc()
-    }
+    return(1)
   }
-  return(1)
+
+
+  # Main function
+  # setwd("/genetics3/maos/Geno_PC_external_GWAS")
+  block <- as.matrix(fread(blocks))
+
+  for (set in 1:block[chr])
+  {
+    load(paste0(genotype_dir, "/", outcome_db, "_09_", chr, "_", set, ".RData")) # load genotypes
+
+    geno_data_PCA <- get_PCA_geno(geno_data)
+    rm(geno_data)
+    gc()
+  }
+  return(g_pc_rotation = G_PC_rotation, g_pc_sd = G_PC_SD)
 }
-
-
-# Main function
-#setwd("/genetics3/maos/Geno_PC_external_GWAS")
-block = as.matrix(fread(blocks))
-
-for (set in 1:block[chr])
- {
-  load(paste0(genotype_dir, "/", outcome_db, "_09_", chr, "_", set, ".RData")) #load genotypes
-
-  geno_data_PCA = get_PCA_geno(geno_data)
-  rm(geno_data)
-  gc()
- }
- return(g_pc_rotation = G_PC_rotation, g_pc_sd = G_PC_SD)
-}
-
