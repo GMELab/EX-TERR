@@ -76,7 +76,6 @@ multi_PRS_asso <- function(
         for(i in 1:length(dicho_trait))
         {
                 trait <- dicho_trait[i]
-                # phenos = as.matrix(fread(paste0("/genetics3/maos/Geno_PC_external_GWAS/Traits_UKB/", trait, "/Pheno/", trait, "_disc_updated.txt"), header = T))
                 phenos <- as.matrix(fread(file.path(pheno_dir, paste0(trait, "_disc.txt")), header = T))
                 pheno_norm <- phenos[, 3, drop = F]
                 pheno_norm <- ifelse(pheno_norm != 0, 1, 0)
@@ -135,8 +134,8 @@ multi_PRS_asso <- function(
 
         Results <- c("Traits", "Beta", "beta_se", "pval", "OR")
         dicho_trait <- colnames(one_dicho_PRS)
-        # for(i in 1:length(dicho_trait))
-        for (i in c(1:10, 13:36))
+        
+        for(i in 1:length(dicho_trait))
         {
                 trait <- dicho_trait[i]
 
