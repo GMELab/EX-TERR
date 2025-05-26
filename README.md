@@ -18,7 +18,7 @@ combine and priortize polygenic genetic information from multiple different trai
 ## Installation
 The direct installation of EX-TERR can be performed using `devtools::install_github:`
 
-```sh devtools::install_github("GMELab/EXTERR")```
+<pre> sh devtools::install_github("GMELab/EXTERR") </pre>
 
 ## Contact information
 For questions, feedback or other inquiries regarding the EX-TERR pipeline, please contact 
