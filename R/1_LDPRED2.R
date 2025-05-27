@@ -83,6 +83,11 @@ run_LDPred2 <- function(blocks,
 
   # Main function
   dir <- file.path(traits_dir, paste0("Traits_", LDpred2_model))
+  if (trait_type == "gwas") {
+    dir <- file.path(traits_dir, paste0("Traits_", LDpred2_model))
+  } else if (trait_type == "outcome") {
+    dir <- file.path(traits_dir, paste0("Traits_", outcome_db))
+  }
   if (!dir.exists(dir)) {
     dir.create(dir, recursive = TRUE)
   }
