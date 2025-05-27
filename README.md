@@ -44,8 +44,14 @@ EX-TERR can be loaded in `R` using `devtools::load_all`:
 setwd("/directory/R")
 devtools::load_all(".")
 ```
+This package requires multiple dependencies: `data.table`, `earth`, `caret`, `bigsnpr`, `magrittr`, `dplyr`, `pscl`, `fmsb`
+and `glmnet`.
 
 ## Workflow
+
+### Preparation: Data Formatting & Getting Rotations
+
+### Part 1: LDPRED2 Conversion
 
 ## Contact Information
 For questions, feedback or other inquiries regarding the EX-TERR pipeline, please contact 
