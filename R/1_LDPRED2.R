@@ -10,8 +10,7 @@ library(pscl)
 library(fmsb)
 
 #' @param blocks Path to the blocks file.
-#' @param trait Name of trait found in traits_list
-#' @param traits_list Path to list of desired list of traits
+#' @param trait Name of trait
 #' @param outcome_db Name of outcome database (e.g. UKB).
 #' @param rds_in .rds file for target outcome genotypes
 #' @param bed_in .bed file for target outcome genotypes. Required if .rds file not available.
@@ -28,7 +27,6 @@ library(fmsb)
 
 run_LDPred2 <- function(blocks,
                         trait,
-                        traits_list,
                         outcome_db,
                         rds_in,
                         bed_in = NULL,
@@ -105,8 +103,10 @@ run_LDPred2 <- function(blocks,
     Sex <- as.matrix(fread(file.path(corrections_dir, "Sex_disc.txt"), header = T))
     PCs <- as.matrix(fread(file.path(corrections_dir, "PCs_disc.txt"), header = T))
   }
-
-
+  sumstats <- bigreadr::fread2(file.path(sumstats_dir, trait, "/4_final.txt.gz"))
+  sumstats <- sumstats[, c(1, 3:8, 12, 10)]
+  # LDpred 2 require the header to follow the exact naming
+  names(sumstats) <- c("rsid", "chr", "pos", "a0", "a1", "beta", "beta_se", "N", "p")
 
   if (!file.exists(rds_in)) {
     # preprocess the bed file (only need to do once for each data set)
@@ -123,11 +123,13 @@ run_LDPred2 <- function(blocks,
   y <- obj.bigSNP$fam$affection #<- phenotype[, 3]
   class(y) <- "numeric"
 
-  sumstats$N[which(is.na(sumstats$N))] <- 30000
+  if (LDpred2_model == "auto") {
+    sumstats$N[which(is.na(sumstats$N))] <- 30000
 
-  index <- which((sumstats$N) < 0)
-  if (length(index) > 0) {
-    sumstats$N[index] <- mean(sumstats$N[-index])
+    index <- which((sumstats$N) < 0)
+    if (length(index) > 0) {
+      sumstats$N[index] <- mean(sumstats$N[-index])
+    }
   }
 
   sumstats$n_eff <- sumstats$N
@@ -173,16 +175,16 @@ run_LDPred2 <- function(blocks,
     chi2 = (beta / beta_se)^2,
     sample_size = n_eff, blocks = NULL
   ))
-  ldsc_h2_est <- ldsc[["h2"]]
-
-  if (ldsc_h2_est <= 0) {
-    ldsc_h2_est <- 0.00001
-  }
 
   # LDpred2
 
   if (LDpred2_model == "auto") {
     # LDpred2-auto: automatic mode
+    ldsc_h2_est <- ldsc[["h2"]]
+
+    if (ldsc_h2_est <= 0) {
+      ldsc_h2_est <- 0.00001
+    }
     coef_shrink <- 0.95 # reduce this up to 0.4 if you have some (large) mismatch with the LD ref
 
     set.seed(1) # to get the same result every time
@@ -206,11 +208,6 @@ run_LDPred2 <- function(blocks,
     beta_auto <- rowMeans(sapply(multi_auto[keep], function(auto) auto$beta_est))
     LDpred2_betas <- cbind(df_beta$chr, df_beta$rsid, beta_auto)
   } else if (LDpred2_model == "grid") {
-    ldsc <- with(df_beta, snp_ldsc(ld, length(ld),
-      chi2 = (beta / beta_se)^2,
-      sample_size = n_eff, blocks = NULL
-    ))
-
     h2_est <- ldsc[["h2"]]
 
     h2_seq <- round(h2_est * c(0.3, 0.7, 1, 1.4), 4)
