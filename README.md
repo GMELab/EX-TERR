@@ -14,7 +14,7 @@ combine and priortize polygenic genetic information from multiple different trai
 
 ## Table of Contents
 - [Installation](#installation)
-- [Contact Information](#contactinformation)
+- [Contact Information](#contact-information)
 
 ## Installation
 The direct installation of EX-TERR can be performed using `devtools::install_github`:
