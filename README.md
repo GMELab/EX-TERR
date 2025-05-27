@@ -1,4 +1,4 @@
-# EX-TERR
+ EX-TERR
 
 > EX-TERR is a methodology for polygenic risk score (PRS) generation, utilizing supervised machine learning to 
 combine and priortize polygenic genetic information from multiple different traits from related risk factors.
@@ -14,14 +14,39 @@ combine and priortize polygenic genetic information from multiple different trai
 
 ## Table of Contents
 - [Installation](#installation)
+- [Contact Information](#contactinformation)
 
 ## Installation
-The direct installation of EX-TERR can be performed using `devtools::install_github:`
+The direct installation of EX-TERR can be performed using `devtools::install_github`:
 
 ```sh
 devtools::install_github("GMELab/EXTERR")
 ```
 
-## Contact information
+If issues are encountered with the above command, a local download can be performed
+using the `git clone` command as follows:
+
+```sh
+# Enter target directory to download EX-TERR
+cd directory
+
+# Initialize git repository
+git init
+
+# Download locally using the git clone command
+git clone https://github.com/GMELab/EX-TERR
+
+```
+
+EX-TERR can be loaded in `R` using `devtools::load_all`:
+
+```R
+setwd("/directory/R")
+devtools::load_all(".")
+```
+
+## Workflow
+
+## Contact Information
 For questions, feedback or other inquiries regarding the EX-TERR pipeline, please contact 
 Ann Le (annl.37@hotmail.com) or Guillaume Paré (pareg@mcmaster.ca). 
