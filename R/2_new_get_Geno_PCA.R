@@ -3,18 +3,19 @@ library("data.table")
 #' @param id Fold id number, from 1 to 5
 #' @param flag Type of set: disc (discovery) or val (validation)
 #' @param PC_std_threshold PC SD threshold for filtering of rotated genotype data
+#' @param genotype_dir Directory containing genotype directions (either Geno_disc or Geno_val)
 #' @param outcome_db Name of outcome database (e.g. UKB)
-#' @param geno_ext_PC_dir Path to directory containing rotated genotype PCs. Each file must be of the form <outcome>_<chr>_<set>.RData.
 #' @param rotations_dir Path to directory containing rotations G_PC_SD_chr_<chr>_set_<set>_id_<group_id>.RData.
 #' @param cv_groups Path to cross validation groups file (Cross_validation_groups.txt)
+#' @param output_dir Name of target output dir
 #' @param return Element geno_pc.
 
 
 geno_PCA <- function(id,
                      flag = c("disc", "val"),
                      PC_std_threshold,
-                     outcome,
-                     geno_ext_PC_dir,
+                     genotype_dir,
+                     outcome_db,
                      rotations_dir,
                      cv_groups,
                      output_dir = NULL){
@@ -35,6 +36,9 @@ geno_PCA <- function(id,
    chr = item[1]
    set = item[2]
    group_id = item[3]
+   
+   load(paste0(genotype_dir, "/Geno_", flag, "/UKB_09_", chr, "_", set, ".RData")) #load genotypes
+   
 
    if(grepl(flag, rotations_dir)){ # Ensure correct set: disc or val
    load(paste0(rotations_dir, "/", outcome_db, "_09_", chr, "_", set, ".RData")) #load genotypes
