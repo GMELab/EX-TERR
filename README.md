@@ -15,6 +15,8 @@ combine and priortize polygenic genetic information from multiple different trai
 ## Table of Contents
 - [Installation](#installation)
 - [Contact Information](#contact-information)
+- [Preparation](#preparation-data-formatting--getting-rotations)
+- [Part 1: LDpred2 Conversion](#part-1-ldpred2-conversion)
 
 ## Installation
 The direct installation of EX-TERR can be performed using `devtools::install_github`:
@@ -50,6 +52,8 @@ and `glmnet`.
 ## Workflow
 
 ### Preparation: Data Formatting & Getting Rotations
+
+EX-TERR requires specific file formats and data preparation in order to execute pipeline  
 
 ### Part 1: LDPRED2 Conversion
 
