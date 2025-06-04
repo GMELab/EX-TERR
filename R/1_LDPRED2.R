@@ -1,14 +1,3 @@
-#!/bin/sh
-library("data.table")
-library(bigsnpr)
-options(bigstatsr.check.parallel.blas = FALSE)
-options(default.nproc.blas = NULL)
-
-library(magrittr)
-library(dplyr)
-library(pscl)
-library(fmsb)
-
 #' @param blocks Path to the blocks file.
 #' @param trait Name of trait
 #' @param outcome_db Name of outcome database (e.g. UKB).
@@ -39,6 +28,15 @@ run_LDPred2 <- function(blocks,
                         phenotype = NULL,
                         corrections_dir = NULL,
                         ncores) {
+  suppressMessages(library("data.table"))
+  suppressMessages(library(bigsnpr))
+  suppressMessages(options(bigstatsr.check.parallel.blas = FALSE))
+  suppressMessages(options(default.nproc.blas = NULL))
+  suppressMessages(library(magrittr))
+  suppressMessages(library(dplyr))
+  suppressMessages(library(pscl))
+  suppressMessages(library(fmsb))
+
   phenotype <- file.path(phenotype)
   rds_in <- file.path(rds_in)
   bed_in <- file.path(bed_in)

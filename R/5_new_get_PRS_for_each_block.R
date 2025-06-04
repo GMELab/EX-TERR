@@ -1,5 +1,3 @@
-library("data.table")
-
 #' @param chr chromosome number
 #' @param flag Type of set: disc (discovery) or val (validation)
 #' @param size Size/number of rotated components per block. Default is 5000.
@@ -17,6 +15,8 @@ get_block_PRS <- function(chr,
                           traits_list_dir,
                           outcome_db,
                           output_dir) {
+  suppressMessages(library("data.table"))
+
   if (flag != "disc" && flag != "val") {
     stop("Flag must be either 'disc' or 'val'.")
   }

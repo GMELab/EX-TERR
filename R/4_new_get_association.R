@@ -1,5 +1,3 @@
-library("data.table")
-
 #' @param flag Type of set: disc (discovery) or val (validation)
 #' @param PC_std_threshold PC SD threshold for filtering of rotated genotype data
 #' @param mask Specifies whether or not to applying masking condition (leaving out most highly associated trait)
@@ -17,6 +15,8 @@ get_assoc <- function(flag,
                       outcome_db,
                       geno_disc_dir,
                       output_dir) {
+  suppressMessages(library("data.table"))
+
   output_dir <- file.path(output_dir)
   if (mask == "mask") {
     flag_2 <- ""

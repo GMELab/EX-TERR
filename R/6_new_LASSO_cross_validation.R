@@ -1,6 +1,3 @@
-library("data.table")
-library("glmnet")
-
 #' @param ids Fold id number (1 to 5 for 5-fold cross validation.)
 #' @param cv_group Path to file containing cross_validation_groups.txt
 #' @param outcome_list Path to file containing outcome list.
@@ -14,6 +11,9 @@ LASSO_cv <- function(ids,
                      mask_dir,
                      pheno_dir,
                      prs_dir) {
+  suppressMessages(library("data.table"))
+  suppressMessages(library("glmnet"))
+
   # Main function
 
   blocks_orig <- as.matrix(fread(cv_group)) # Randomly divided into 5 groups

@@ -1,7 +1,3 @@
-library("data.table")
-library(earth)
-library(caret)
-
 #' @param ids Fold id number (1 to 5 for 5-fold cross validation.)
 #' @param PC_std_threshold PC SD threshold for filtering of rotated genotype data
 #' @param size Number of continguous variants per block. Default set to 5000.
@@ -28,6 +24,10 @@ run_earth <- function(ids,
                       mask = "no_mask",
                       mask_dir = NULL,
                       output_dir) {
+  suppressMessages(library("data.table"))
+  suppressMessages(library(earth))
+  suppressMessages(library(caret))
+
   blocks <- file.path(blocks)
   cross_val_PC_SD <- file.path(cross_val_PC_SD)
   if (!file.exists(blocks)) {

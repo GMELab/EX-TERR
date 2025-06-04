@@ -1,5 +1,4 @@
 #!/bin/sh
-library("data.table")
 
 #' @param mask Specifies whether or not to applying masking condition (leaving out most highly associated trait)
 #' @param corrections_dir Path to directory containing corrections for Age, Sex and PCs. Files should be in the form <correction>_<flag>.txt
@@ -11,6 +10,8 @@ multi_PRS_asso <- function(
     corrections_dir,
     pheno_dir,
     prs_dir) {
+        suppressMessages(library("data.table"))
+
         if (mask != "mask" && mask != "no_mask") {
                 stop("Mask must be either 'mask' or 'no_mask'.")
         }

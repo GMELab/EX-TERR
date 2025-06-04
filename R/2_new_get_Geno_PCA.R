@@ -1,5 +1,3 @@
-library("data.table")
-
 #' @param id Fold id number, from 1 to 5
 #' @param flag Type of set: disc (discovery) or val (validation)
 #' @param PC_std_threshold PC SD threshold for filtering of rotated genotype data
@@ -18,6 +16,8 @@ geno_PCA <- function(id,
                      rotations_dir,
                      cv_groups,
                      output_dir = NULL) {
+  suppressMessages(library("data.table"))
+
   if (!file.exists(file.path(cv_groups))) {
     stop("Cross validation groups file does not exist.")
   }

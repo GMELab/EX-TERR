@@ -1,6 +1,3 @@
-#!/bin/sh
-library("data.table")
-
 #' @param trait_type Specifies the type of trait: auto, grid or outcome
 #' @param chr chromosome number
 #' @param flag Type of set: disc (discovery) or val (validation)
@@ -25,6 +22,8 @@ convert_LDpred2 <- function(trait_type = c("auto", "grid", "outcome"),
                             trait_list_dir,
                             blocks,
                             bim_dir) {
+  suppressMessages(library("data.table"))
+
   if (!file.exists(file.path(blocks))) {
     stop("Blocks file does not exist.")
   }
