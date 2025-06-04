@@ -9,11 +9,11 @@ library("data.table")
 #' @return A list containing two elements: g_pc_rotation  and g_pc_sd.
 
 
-get_rotations < function(chr,
-                         size = 5000,
-                         rotations_dir,
-                         blocks,
-                         genotype_dir) {
+get_rotations <- function(chr,
+                          size = 5000,
+                          rotations_dir,
+                          blocks,
+                          genotype_dir) {
   if (!file.exists(file.path(blocks))) {
     stop("Blocks file does not exist.")
   }
