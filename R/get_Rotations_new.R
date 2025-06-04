@@ -12,6 +12,7 @@ get_rotations <- function(chr,
                           size = 5000,
                           rotations_dir,
                           blocks,
+                          outcome_db,
                           genotype_dir) {
   if (!file.exists(file.path(blocks))) {
     stop("Blocks file does not exist.")
@@ -20,7 +21,6 @@ get_rotations <- function(chr,
   get_PCA_geno <- function(Data) {
     cycles <- ceiling(dim(Data)[2] / size)
     ending <- 0
-    block_end <- 0
 
     for (i in 1:cycles)
     {
