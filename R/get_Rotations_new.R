@@ -1,5 +1,3 @@
-library("data.table")
-
 #' @param chr Chromsome number
 #' @param size Number of continguous variants per block. Default set to 5000.
 #' @param rotations_dir Path to the directory containing rotation files. Each file must be of the form G_PC_SD_chr_<chr>_set_<set>_id_<id>.RData and contain a single object named G_PC_SD.
@@ -14,6 +12,8 @@ get_rotations <- function(chr,
                           blocks,
                           outcome_db,
                           genotype_dir) {
+  library("data.table")
+
   if (!file.exists(file.path(blocks))) {
     stop("Blocks file does not exist.")
   }
