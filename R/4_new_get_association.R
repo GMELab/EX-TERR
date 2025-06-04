@@ -7,7 +7,7 @@ library("data.table")
 #' @param pheno_dir Path to directory containing phenotype file. Name should be in the form Pheno_<flag>.txt
 #' @param genotype_dir Path to directory containing genotype files. Directory contains directories Geno_<flag> and files <outcome_db>_final.fam
 #' @return A list containing two elements: earth_cont & earth_dicho
-
+#' @export
 get_assoc <- function(flag,
                       PC_std_threshold,
                       mask = c("mask", "no_mask"),

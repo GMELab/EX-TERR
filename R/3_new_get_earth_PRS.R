@@ -14,7 +14,7 @@ library(caret)
 #' @param mask_dir Path to directory containing data for masking. Not required if mask set to "no_mask". Files must be in the format *_masked.txt
 #' @param output_dir Path to output directory for earth PRS.
 #' @return Returns a list of two elements: disc_earth_PRS and val_earth_PRS
-
+#' @export
 run_earth <- function(ids,
                       PC_std_threshold,
                       size = 5000,

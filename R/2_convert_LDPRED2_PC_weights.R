@@ -13,7 +13,7 @@ library("data.table")
 #' @param blocks Path to the blocks file.
 #' @param bim_dir Path to directory containing outcome genotype .bim files divided into chromsome and set. Must be in the form <outcome_db>_09_<chr>_<set>.bim
 #' @return Returns element beta
-
+#' @export
 convert_LDpred2 <- function(trait_type = c("auto", "grid", "outcome"),
                             chr,
                             flag = c("disc", "val"),

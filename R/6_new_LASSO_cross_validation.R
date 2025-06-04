@@ -7,7 +7,7 @@ library("glmnet")
 #' @param mask_dir Path to directory containing data for masking. Not required if mask set to "no_mask". Files must be in the format *_masked.txt
 #' @param pheno_dir Path to directory containing phenotype information separated by trait. Files are named <trait>_pheno.txt
 #' @return Returns a list containing four elements: PRS_cont_train, PRS_cont_test, PRS_dicho_train, PRS_dicho_test
-
+#' @export
 LASSO_cv <- function(ids,
                      cv_group,
                      outcome_list,

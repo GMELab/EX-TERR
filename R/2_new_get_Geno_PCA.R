@@ -9,8 +9,7 @@ library("data.table")
 #' @param cv_groups Path to cross validation groups file (Cross_validation_groups.txt)
 #' @param output_dir Name of target output dir
 #' @param return Element geno_pc.
-
-
+#' @export
 geno_PCA <- function(id,
                      flag = c("disc", "val"),
                      PC_std_threshold,

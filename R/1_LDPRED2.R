@@ -24,7 +24,7 @@ library(fmsb)
 #' @param corrections_dir Path to directory containing corrections for Age, Sex and PCs. Files should be in the form <correction>_disc.txt
 #' @param ncores Number of cores used.
 #' @return A list containing two elements: ldpred2_betadj & ldpred2_beta
-
+#' @export
 run_LDPred2 <- function(blocks,
                         trait,
                         outcome_db,

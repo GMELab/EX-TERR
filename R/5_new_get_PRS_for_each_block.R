@@ -7,8 +7,7 @@ library("data.table")
 #' @param genotype_dir Path to directory containing genotype files. Directory contains directories Geno_<flag> and files <outcome_db>_09_<chr>_<set>.Rdata
 #' @param blocks Path to the blocks file.
 #' @param traits_list_dir Path to directory containing traits_list sorted by ldpred_model: gwas_list_auto.txt and gwas_list_grid.txt
-#' @return
-
+#' @export
 get_block_PRS <- function(chr,
                           flag,
                           size = 5000,

@@ -7,8 +7,7 @@ library("data.table")
 #' @param outcome_db Name of outcome database (e.g. UKB).
 #' @param genotype_dir Path to directory containing genotype .Rdata files. Each file must be of the form <outcome_db>_09_<chr>_<set>.RData and contain a single object named Data.
 #' @return A list containing two elements: g_pc_rotation  and g_pc_sd.
-
-
+#' @export
 get_rotations <- function(chr,
                           size = 5000,
                           rotations_dir,

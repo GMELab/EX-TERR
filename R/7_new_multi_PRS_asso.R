@@ -5,7 +5,7 @@ library("data.table")
 #' @param corrections_dir Path to directory containing corrections for Age, Sex and PCs. Files should be in the form <correction>_<flag>.txt
 #' @param pheno_dir Path to directory containing phenotype information separated by trait and disc and val. Files are named <trait>_disc.txt and <trait>_val.txt
 #' @return Returns results as element "results"
-
+#' @export
 multi_PRS_asso <- function(
     mask,
     corrections_dir,
@@ -73,7 +73,7 @@ multi_PRS_asso <- function(
         Results <- c("Traits", "Beta", "beta_se", "pval", "OR")
         dicho_trait <- colnames(one_dicho_PRS)
 
-        for(i in 1:length(dicho_trait))
+        for (i in 1:length(dicho_trait))
         {
                 trait <- dicho_trait[i]
                 phenos <- as.matrix(fread(file.path(pheno_dir, paste0(trait, "_disc.txt")), header = T))
@@ -134,8 +134,8 @@ multi_PRS_asso <- function(
 
         Results <- c("Traits", "Beta", "beta_se", "pval", "OR")
         dicho_trait <- colnames(one_dicho_PRS)
-        
-        for(i in 1:length(dicho_trait))
+
+        for (i in 1:length(dicho_trait))
         {
                 trait <- dicho_trait[i]
 

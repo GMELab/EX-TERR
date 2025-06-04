@@ -1,6 +1,7 @@
 #!/bin/sh
 library("data.table")
 
+#' @export
 baseline_prs_asso <- function(mode, age, sex, pcs, input_dir, output_dir = NULL) {
         if (!is.null(output_dir)) {
                 dir.create(output_dir, recursive = TRUE)
