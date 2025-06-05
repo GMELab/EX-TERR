@@ -133,5 +133,5 @@ convert_LDpred2 <- function(trait_type = c("auto", "grid", "outcome"),
       write.table(betas, file = file.path("Betas", paste0("GWAS_LDPRED2_PC_Betas_chr_", chr, "_", set, "_", flag, ".txt")), col.names = T, row.names = F, quote = F, sep = "\t")
     }
   }
-  return(beta = betas)
+  return(list(beta = betas))
 }

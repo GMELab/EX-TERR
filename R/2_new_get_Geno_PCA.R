@@ -87,5 +87,5 @@ geno_PCA <- function(id,
     write.table(geno_PCA, file.path(output_dir, paste0("Geno_PCA_PC_std_threshold_", PC_std_threshold, "_", id, "_", flag, ".txt")), col.names = F, row.names = F, quote = F, sep = "\t")
   }
 
-  return(geno_pc = geno_PCA)
+  return(list(geno_pc = geno_PCA))
 }

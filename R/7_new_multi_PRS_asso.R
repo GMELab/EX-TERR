@@ -154,5 +154,5 @@ multi_PRS_asso <- function(
 
         write.table(Results, file.path(prs_dir, paste0("R7_LASSO_Asso_dicho_val", flag_2, ".txt")), col.names = F, row.names = F, quote = F, sep = "\t")
 
-        return(results = Results)
+        return(list(results = Results))
 }
