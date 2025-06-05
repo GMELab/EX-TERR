@@ -106,8 +106,7 @@ run_LDPred2 <- function(blocks,
     Sex <- as.matrix(fread(file.path(corrections_dir, "Sex_disc.txt"), header = T))
     PCs <- as.matrix(fread(file.path(corrections_dir, "PCs_disc.txt"), header = T))
   }
-  sumstats <- bigreadr::fread2(file.path(sumstats_dir, trait, "/4_final.txt.gz"))
-  sumstats <- sumstats[, c(1, 3:8, 12, 10)]
+  sumstats <- bigreadr::fread2(file.path(sumstats_dir, trait, "4_final.txt.gz"))
   # LDpred 2 require the header to follow the exact naming
   names(sumstats) <- c("rsid", "chr", "pos", "a0", "a1", "beta", "beta_se", "N", "p")
 
