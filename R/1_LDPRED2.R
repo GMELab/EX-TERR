@@ -142,8 +142,6 @@ run_LDPred2 <- function(blocks,
   POS2 <- snp_asGeneticPos(CHR, POS, dir = ".")
 
   tmp <- tempfile(tmpdir = file.path(dir, trait, "tmp-data"))
-  on.exit(file.remove(paste0(tmp, ".sbk")), add = TRUE)
-
 
   if (!file.exists(file.path(traits_dir, "corr.RData")) || !file.exists(file.path(traits_dir, "ld.RData"))) {
     for (chr in 1:22) {
