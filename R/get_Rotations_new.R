@@ -60,5 +60,4 @@ get_rotations <- function(chr,
     rm(geno_data)
     gc()
   }
-  return(list(g_pc_rotation = G_PC_rotation, g_pc_sd = G_PC_SD))
 }
