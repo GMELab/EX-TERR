@@ -94,6 +94,10 @@ run_LDPred2 <- function(blocks,
     dir.create(file.path(dir, "Betas"), recursive = TRUE)
   }
 
+  if (!dir.exists(file.path(dir, trait))) {
+    dir.create(file.path(dir, trait), recursive = TRUE)
+  }
+
   # Grid model
   if (LDpred2_model == "grid") {
     if (!file.exists(file.path(phenotype))) {
