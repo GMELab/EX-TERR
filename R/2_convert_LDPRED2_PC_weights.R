@@ -27,8 +27,8 @@ convert_LDpred2 <- function(trait_type = c("auto", "grid", "outcome"),
   if (!file.exists(file.path(blocks))) {
     stop("Blocks file does not exist.")
   }
-  if (!file.exists(file.path(bim))) {
-    stop(".bim file does not exist.")
+  if (!file.exists(file.path(bim_dir))) {
+    stop("bim_dir does not exist.")
   }
 
   get_PC_weights <- function(adj_betas) {
@@ -112,7 +112,6 @@ convert_LDpred2 <- function(trait_type = c("auto", "grid", "outcome"),
     }
   }
 
-  bim <- as.matrix(fread(bim, header = F))
   # ldpred2_beta = cbind(grid_beta, auto_beta)
   ldpred2_beta_chr <- ldpred2_beta[which(as.numeric(bim[, 1]) == chr), ]
 
