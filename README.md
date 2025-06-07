@@ -92,8 +92,20 @@ The header represents the following information:
 | Column | Description | 
 |--------|-----------------|
 | `rsid` | SNP identifier (Reference SNP ID) e.g. rs123456 |
+| `chr` | Chromosome number (1-22) |
+| `pos` | Base pair coordinate representing genomic position of the SNP |
+| `a0` | Reference allele |
+| `a1` | Alternate (effect) allele, which `beta` refers to |  
+| `beta` | Regression coefficent, key input of EX-TERR. Estimated effect size `a1` on the trait/phenotype |
+| `beta_se` | Standard error of the beta estimate | 
+| N | Sample size used for the association at that variant | 
 
 </div>
+
+Note that it is important to identify which allele is the reference versus alternate allele for the study.
+This can be further specified in the `ref_allele` file (part of the Genotype data section).
+
+#### 2. Genotype data
 
 
 ### Part 1: LDPRED2 Conversion
