@@ -72,6 +72,7 @@ Details and examples can be found after the summary table.
 | Masking data information (`.txt`) | Pre-generated file signifying which GWAS traits to mask for each outcome. |
 | Rotation information (`.txt`) | Pre-generated file which generate the rotation matrix which will be applied to genotype data, derived from training set genotype data. |
 
+<br> 
 
 #### 1. Genome-wide association study summary statistics 
 Genome-wide association study (GWAS) summary statistics represent the association between variants and a specific
@@ -107,6 +108,8 @@ Note that it is important to identify which allele is the reference versus alter
 This can be further specified in the `ref_allele` file (further details 
 found in the [Genotype data section](#2-genotype-data)).
 
+<br> 
+
 #### 2. Genotype data
 
 The genotypic data correponds to the group of individuals of which the outcome phenotypes are obtained from,
@@ -132,6 +135,7 @@ format (`.frq`) , with the following column information:
 Additionally, it is good practice to include `ref_allele` files to signify which allele from the genotype is
 the alternate/effect allele. 
 
+<br> 
 
 
 ### Part 1: LDPRED2 Conversion
