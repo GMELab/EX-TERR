@@ -78,7 +78,9 @@ trait or disease. The information from summary statistics used for the EX-TERR p
 outcome phenotypes in order to avoid circularity and ensure unbiased effect estimates. 
 
 The columns of the GWAS summary statistics follow the REGENIE output format, with the header:
-<div align="center"> `<rsid> <chr> <pos> <a0> <a1> <beta> <beta_se> <N>` </div>
+<div align="center"> 
+  `<rsid> <chr> <pos> <a0> <a1> <beta> <beta_se> <N>`
+</div>
 The header represents the following information:
 
 <div align="center">
