@@ -70,6 +70,7 @@ Details and examples can be found after the summary table.
 | Phenotype (.txt) | Phenotypic information for outcome and validation steps. Also present in various formats | 
 | Cross validation groups (.txt) | Pre-generated file with columns `<chr> <set> <ids>` corresponding to chromosome, set, and group identity (1-5) for the purpose of cross-validation. Default setting is for 5 folds. |
 | Masking data information (.txt) | Pre-generated file signifying which GWAS traits to mask for each outcome. |
+| Rotation information (.txt) | Pre-generated file which generate the rotation matrix which will be applied to genotype data, derived from training set genotype data. |
 
 
 #### 1. Genome-wide association study summary statistics 
@@ -98,7 +99,7 @@ The header represents the following information:
 | `a1` | Alternate (effect) allele, which `beta` refers to |  
 | `beta` | Regression coefficent, key input of EX-TERR. Estimated effect size `a1` on the trait/phenotype |
 | `beta_se` | Standard error of the beta estimate | 
-| N | Sample size used for the association at that variant | 
+| `N` | Sample size used for the association at that variant | 
 
 </div>
 
@@ -109,19 +110,21 @@ found in the [Genotype data section](#2-genotype-data)).
 #### 2. Genotype data
 
 The genotypic data correponds to the group of individuals of which the outcome phenotypes are obtained from,
-and used for validation within the EX-TERR pipeline. 
-This data should be stored as PLINK binary files (`.bim`/`.fam`/`.bed`/) files as various sets. The following sets 
-of participant should be available. 
+and used for validation within the EX-TERR pipeline. This data should be stored as PLINK binary files (`.bim`/`.fam`/`.bed`/) files as various sets. The following sets 
+of participant should be available:
 
 1. **Full cohort**
 2. **Training set:** Used to train the MARS algorithm (e.g. 80\% of participants)
 3. **Test set:** Used to verify MARS output (e.g. 20\% of participants)
 
-
+Each set of genotypic data should be available cumulatively (all variants; `genotype_all`), as well as per chromosome 
+(e.g. `genotype_chr1`, `genotype_chr2`...`genotype_chr22`). Chromosome data can be further divided into sets for 
+larger chromosomes in neccesary (e.g. `genotype_chr1_set1` and `genotype_chr1_set2`). 
 Note that a key aspect of EX-TERR is that it **does not** required an initial participant train-test split,
 due to a downstream cross-validation step on the genotypic information. Thus, the pipeline can be trained on 
 all available participants if desired. 
 
+In addition to the core genotype information, details on allele information should also be prepared. 
 
 
 
