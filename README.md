@@ -15,7 +15,7 @@ combine and priortize polygenic genetic information from multiple different trai
 ## Table of Contents
 - [Installation](#installation)
 - [Contact Information](#contact-information)
-- [Preparation: Data Formatting & Required Files](#preparation-data-formatting--getting-rotations)
+- [Data Formatting & Required Files](#data-formatting--required-files)
 - [Part 1: LDpred2 Conversion](#part-1-ldpred2-conversion)
 
 ## Installation
@@ -55,7 +55,7 @@ and `glmnet`.
 
 The following figure extracted shows a general overview of the overall EX-TERR pipeline:
 
-### Preparation: Data Formatting & Required Files
+### Data Formatting & Required Files
 
 EX-TERR requires specific file formats and data preparation in order to execute pipeline.
 Details and examples can be found after the summary table. 
