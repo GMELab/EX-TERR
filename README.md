@@ -58,9 +58,16 @@ Summary of the files required can be seen below:
 
 | Required File | Brief Description |
 |-----------------|-----------------|
-| Genome-wide association studies    | Summary statistics for external data from genome-wide association studies and UKB outcomes. UKB summary statistics show the association between UKB variants and UKB outcomes, as generated through REGENIE.   |
-| Genotype Data    | Genotype data stored as PLINK binary files (bim/bed/fam) for outcome data.  |
+| Genome-wide association studies <br> (.txt)   | Summary statistics for external data from genome-wide association studies and UKB outcomes. UKB summary statistics show the association between UKB variants and UKB outcomes, as generated through REGENIE.   |
+| Genotype Data <br> (bim/bed/fam)  | Genotype data stored as PLINK binary files for outcome data.  Also includes files 
+for allele freqency (.frq) and referenece allele. |
 | No. of Blocks   | A simple one-column file indicating the number of "sets" each genotype file is divided into, if formatted as such. |
+| Traits lists <br> (.txt) | List of traits corresponding to number of external GWAS and outcome traits tested. This pipeline can 
+test multiple outcomes at once. |
+| Corrections <br> (.txt) | Cofactors of genotype information required for regression analyses, corresponding to participants' age, sex and desired number of genetic principal components (PCs). | 
+| Phenotype <br> (.txt) | Phenotypic information for outcome and validation steps. Also present in various formats | 
+| Cross validation groups | Pre-generated file with columns `<chr> <set> <ids>` corresponding to chromosome, set, and group
+identity (1-5) for the purpose of cross-validation. Default setting is for 5 folds. |
 
 ### Part 1: LDPRED2 Conversion
 
