@@ -53,7 +53,14 @@ and `glmnet`.
 
 ### Preparation: Data Formatting & Getting Rotations
 
-EX-TERR requires specific file formats and data preparation in order to execute pipeline  
+EX-TERR requires specific file formats and data preparation in order to execute pipeline.
+Summary of the files required can be seen below:
+
+| Required File | Brief Description |
+|-----------------|-----------------|
+| Genome-wide association studies    | Summary statistics for external data from genome-wide association studies and UKB outcomes. UKB summary statistics show the association between UKB variants and UKB outcomes, as generated through REGENIE.   |
+| Genotype Data    | Genotype data stored as PLINK binary files (bim/bed/fam) for outcome data.  |
+| No. of Blocks   | A simple one-column file indicating the number of "sets" each genotype file is divided into, if formatted as such. |
 
 ### Part 1: LDPRED2 Conversion
 
