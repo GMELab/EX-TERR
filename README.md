@@ -103,7 +103,7 @@ The header represents the following information:
 </div>
 
 Note that it is important to identify which allele is the reference versus alternate allele for the study.
-This can be further specified in the `ref_allele` file (part of the Genotype data section).
+This can be further specified in the `ref_allele` file (part of the [Genotype data section](#2-genotype-data).
 
 #### 2. Genotype data
 
