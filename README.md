@@ -71,6 +71,7 @@ Details and examples can be found after the summary table.
 | Cross validation groups (.txt) | Pre-generated file with columns `<chr> <set> <ids>` corresponding to chromosome, set, and group identity (1-5) for the purpose of cross-validation. Default setting is for 5 folds. |
 | Masking data information (.txt) | Pre-generated file signifying which GWAS traits to mask for each outcome. |
 
+
 #### 1. Genome-wide association study summary statistics 
 Genome-wide association study (GWAS) summary statistics represent the association between variants and a specific
 trait or disease. The information from summary statistics used for the EX-TERR pipeline should not overlap with 
@@ -80,6 +81,7 @@ The columns of the GWAS summary statistics follow the REGENIE output format, wit
 `<rsid> <chr> <pos> <a0> <a1> <beta> <beta_se> <N>` corrsponding to the following information:
 
 | Column | Description | 
+|--------|-----------------|
 | `rsid` | SNP identifier (Reference SNP ID) e.g. rs123456 |
 
 
