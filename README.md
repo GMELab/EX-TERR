@@ -103,9 +103,26 @@ The header represents the following information:
 </div>
 
 Note that it is important to identify which allele is the reference versus alternate allele for the study.
-This can be further specified in the `ref_allele` file (part of the [Genotype data section](#2-genotype-data).
+This can be further specified in the `ref_allele` file (further details 
+found in the [Genotype data section](#2-genotype-data)).
 
 #### 2. Genotype data
+
+The genotypic data correponds to the group of individuals of which the outcome phenotypes are obtained from,
+and used for validation within the EX-TERR pipeline. 
+This data should be stored as PLINK binary files (`.bim`/`.fam`/`.bed`/) files as various sets. The following sets 
+of participant should be available. 
+
+1. **Full cohort**
+2. **Training set:** Used to train the MARS algorithm (e.g. 80\% of participants)
+3. **Test set:** Used to verify MARS output (e.g. 20\% of participants)
+
+
+Note that a key aspect of EX-TERR is that it **does not** required an initial participant train-test split,
+due to a downstream cross-validation step on the genotypic information. Thus, the pipeline can be trained on 
+all available participants if desired. 
+
+
 
 
 ### Part 1: LDPRED2 Conversion
