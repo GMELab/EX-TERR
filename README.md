@@ -77,8 +77,9 @@ Genome-wide association study (GWAS) summary statistics represent the associatio
 trait or disease. The information from summary statistics used for the EX-TERR pipeline should not overlap with 
 outcome phenotypes in order to avoid circularity and ensure unbiased effect estimates. 
 
-The columns of the GWAS summary statistics follow the REGENIE output format, with the headersr
-`<rsid> <chr> <pos> <a0> <a1> <beta> <beta_se> <N>` corrsponding to the following information:
+The columns of the GWAS summary statistics follow the REGENIE output format, with the header:
+<div align="center"> `<rsid> <chr> <pos> <a0> <a1> <beta> <beta_se> <N>` </N>div>
+The header represents the following information:
 
 <div align="center">
   
