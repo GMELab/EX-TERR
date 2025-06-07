@@ -51,10 +51,14 @@ and `glmnet`.
 
 ## Workflow
 
+### Overview
+
+The following figure extracted shows a general overview of the overall EX-TERR pipeline:
+
 ### Preparation: Data Formatting & Getting Rotations
 
 EX-TERR requires specific file formats and data preparation in order to execute pipeline.
-Summary of the files required can be seen below:
+Details and examples can be found after the summary table. 
 
 | Required File | Brief Description |
 |-----------------|-----------------|
@@ -66,6 +70,8 @@ Summary of the files required can be seen below:
 | Phenotype (.txt) | Phenotypic information for outcome and validation steps. Also present in various formats | 
 | Cross validation groups (.txt) | Pre-generated file with columns `<chr> <set> <ids>` corresponding to chromosome, set, and group identity (1-5) for the purpose of cross-validation. Default setting is for 5 folds. |
 | Masking data information (.txt) | Pre-generated file signifying which GWAS traits to mask for each outcome. |
+
+
 
 ### Part 1: LDPRED2 Conversion
 
