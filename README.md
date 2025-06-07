@@ -80,11 +80,13 @@ outcome phenotypes in order to avoid circularity and ensure unbiased effect esti
 The columns of the GWAS summary statistics follow the REGENIE output format, with the headersr
 `<rsid> <chr> <pos> <a0> <a1> <beta> <beta_se> <N>` corrsponding to the following information:
 
+<div align="center">
+  
 | Column | Description | 
 |--------|-----------------|
 | `rsid` | SNP identifier (Reference SNP ID) e.g. rs123456 |
 
-
+</div>
 
 
 ### Part 1: LDPRED2 Conversion
