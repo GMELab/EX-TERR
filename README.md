@@ -137,6 +137,40 @@ the alternate/effect allele.
 
 <br> 
 
+#### 3. Blocks File
+If chromosomal genotype data is further divided into sets (e.g. `genotype_chr1_set1` and `genotype_chr1_set2`), this
+file is an indicator of how sets each chromosome is divided into. It is a simple one-column file containing 22 rows,
+each containing a number indicative of the set count per chromosome. This file has no header.
+
+Example:
+
+`
+2
+2
+2
+2
+2
+1
+1
+2
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+`
+
+<br>
+
 
 ### Part 1: LDPRED2 Conversion
 
