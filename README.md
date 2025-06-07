@@ -62,7 +62,7 @@ Details and examples can be found after the summary table.
 
 | Required File | Brief Description |
 |-----------------|-----------------|
-| Genome-wide association studies (.txt)   | Summary statistics for external data from genome-wide association studies and UKB outcomes. UKB summary statistics show the association between UKB variants and UKB outcomes, as generated through REGENIE.   |
+| Genome-wide association studies (.txt)   | Summary statistics for external data from genome-wide association studies and  outcomes. "Outcome" summary statistics show the circular association between outcome variants and outcome phenotypes, as generated through REGENIE.   |
 | Genotype Data <br> (bim/bed/fam)  | Genotype data stored as PLINK binary files for outcome data.  Also includes files for allele freqency (.frq) and referenece allele. |
 | No. of Blocks (.txt)   | A simple one-column file indicating the number of "sets" each genotype file is divided into, if formatted as such. |
 | Traits lists (.txt) | List of traits corresponding to number of external GWAS and outcome traits tested. This pipeline can test multiple outcomes at once. |
