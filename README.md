@@ -75,6 +75,10 @@ Details and examples can be found after the summary table.
 
 ### Part 1: LDPRED2 Conversion
 
+## License
+
 ## Contact Information
 For questions, feedback or other inquiries regarding the EX-TERR pipeline, please contact 
 Ann Le (annl.37@hotmail.com) or Guillaume Paré (pareg@mcmaster.ca). 
+
+## Citation
