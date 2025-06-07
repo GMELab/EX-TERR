@@ -125,6 +125,12 @@ due to a downstream cross-validation step on the genotypic information. Thus, th
 all available participants if desired. 
 
 In addition to the core genotype information, details on allele information should also be prepared. 
+Allele frequency information should be available for outcome variants file in the PLINK
+format (`.frq`) , with the following column information:
+
+
+Additionally, it is good practice to include `ref_allele` files to signify which allele from the genotype is
+the alternate/effect allele. 
 
 
 
