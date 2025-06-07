@@ -65,6 +65,7 @@ Summary of the files required can be seen below:
 | Corrections (.txt) | Cofactors of genotype information required for regression analyses, corresponding to participants' age, sex and desired number of genetic principal components (PCs). | 
 | Phenotype (.txt) | Phenotypic information for outcome and validation steps. Also present in various formats | 
 | Cross validation groups (.txt) | Pre-generated file with columns `<chr> <set> <ids>` corresponding to chromosome, set, and group identity (1-5) for the purpose of cross-validation. Default setting is for 5 folds. |
+| Masking data information (.txt) | Pre-generated file signifying which GWAS traits to mask for each outcome. |
 
 ### Part 1: LDPRED2 Conversion
 
