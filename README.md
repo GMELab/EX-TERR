@@ -62,15 +62,15 @@ Details and examples can be found after the summary table.
 
 | Required File | Brief Description |
 |-----------------|-----------------|
-| Genome-wide association studies (.txt)   | Summary statistics for external data from genome-wide association studies and  outcomes. "Outcome" summary statistics show the circular association between outcome variants and outcome phenotypes, as generated through REGENIE.   |
-| Genotype Data <br> (bim/bed/fam)  | Genotype data stored as PLINK binary files for outcome data.  Also includes files for allele freqency (.frq) and referenece allele. |
-| No. of Blocks (.txt)   | A simple one-column file indicating the number of "sets" each genotype file is divided into, if formatted as such. |
-| Traits lists (.txt) | List of traits corresponding to number of external GWAS and outcome traits tested. This pipeline can test multiple outcomes at once. |
-| Corrections (.txt) | Cofactors of genotype information required for regression analyses, corresponding to participants' age, sex and desired number of genetic principal components (PCs). | 
-| Phenotype (.txt) | Phenotypic information for outcome and validation steps. Also present in various formats | 
-| Cross validation groups (.txt) | Pre-generated file with columns `<chr> <set> <ids>` corresponding to chromosome, set, and group identity (1-5) for the purpose of cross-validation. Default setting is for 5 folds. |
-| Masking data information (.txt) | Pre-generated file signifying which GWAS traits to mask for each outcome. |
-| Rotation information (.txt) | Pre-generated file which generate the rotation matrix which will be applied to genotype data, derived from training set genotype data. |
+| Genome-wide association studies (`.txt`)   | Summary statistics for external data from genome-wide association studies and  outcomes. "Outcome" summary statistics show the circular association between outcome variants and outcome phenotypes, as generated through REGENIE.   |
+| Genotype Data <br> (`.bim/.bed/.fam`)  | Genotype data stored as PLINK binary files for outcome data.  Also includes files for allele freqency (.frq) and referenece allele. |
+| No. of Blocks (`.txt`)   | A simple one-column file indicating the number of "sets" each genotype file is divided into, if formatted as such. |
+| Traits lists (`.txt`) | List of traits corresponding to number of external GWAS and outcome traits tested. This pipeline can test multiple outcomes at once. |
+| Corrections (`.txt`) | Cofactors of genotype information required for regression analyses, corresponding to participants' age, sex and desired number of genetic principal components (PCs). | 
+| Phenotype (`.txt`) | Phenotypic information for outcome and validation steps. Also present in various formats | 
+| Cross validation groups (`.txt`) | Pre-generated file with columns `<chr> <set> <ids>` corresponding to chromosome, set, and group identity (1-5) for the purpose of cross-validation. Default setting is for 5 folds. |
+| Masking data information (`.txt`) | Pre-generated file signifying which GWAS traits to mask for each outcome. |
+| Rotation information (`.txt`) | Pre-generated file which generate the rotation matrix which will be applied to genotype data, derived from training set genotype data. |
 
 
 #### 1. Genome-wide association study summary statistics 
