@@ -71,7 +71,7 @@ Details and examples can be found after the summary table.
 | Cross validation groups (.txt) | Pre-generated file with columns `<chr> <set> <ids>` corresponding to chromosome, set, and group identity (1-5) for the purpose of cross-validation. Default setting is for 5 folds. |
 | Masking data information (.txt) | Pre-generated file signifying which GWAS traits to mask for each outcome. |
 
-
+#### 1. Genome-wide association study summary statistics 
 
 ### Part 1: LDPRED2 Conversion
 
