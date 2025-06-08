@@ -64,10 +64,10 @@ Details and examples can be found after the summary table.
 |-----------------|-----------------|
 | Genome-wide association studies (`.txt`)   | Summary statistics for external data from genome-wide association studies and  outcomes. "Outcome" summary statistics show the circular association between outcome variants and outcome phenotypes, as generated through REGENIE.   |
 | Genotype Data <br> (`.bim/.bed/.fam`)  | Genotype data stored as PLINK binary files for outcome data.  Also includes files for allele freqency (.frq) and referenece allele. |
+| Phenotype (`.txt`) | Phenotypic information for outcome and validation steps. Also present in various formats | 
 | No. of Blocks (`.txt`)   | A simple one-column file indicating the number of "sets" each genotype file is divided into, if formatted as such. |
 | Traits lists (`.txt`) | List of traits corresponding to number of external GWAS and outcome traits tested. This pipeline can test multiple outcomes at once. |
 | Corrections (`.txt`) | Cofactors of genotype information required for regression analyses, corresponding to participants' age, sex and desired number of genetic principal components (PCs). | 
-| Phenotype (`.txt`) | Phenotypic information for outcome and validation steps. Also present in various formats | 
 | Cross validation groups (`.txt`) | Pre-generated file with columns `<chr> <set> <ids>` corresponding to chromosome, set, and group identity (1-5) for the purpose of cross-validation. Default setting is for 5 folds. |
 | Masking data information (`.txt`) | Pre-generated file signifying which GWAS traits to mask for each outcome. |
 | Rotation information (`.txt`) | Pre-generated file which generate the rotation matrix which will be applied to genotype data, derived from training set genotype data. |
@@ -141,10 +141,51 @@ the alternate/effect allele.
 
 <br> 
 
-#### 3. Blocks File
+### 3. Phenotypic Information
+
+As the overall dependent variable, phenotypes are the outcomes used to ultimately train and validate the EX-TERR pipeline. 
+Phenotypes are required in various formats, and are also divided into training and test sets (e.g. `Pheno.txt`, `Pheno_train.txt`, `Pheno_test.txt`). 
+
+1. **LDpred2 Input Phenotypes:** These files should be labeled as `<trait>_<flag>.txt`, where `<flag>` refers to
+   whether the participants are from the `train` set or `test` set. Each file is formatted according to a typical
+   PLINK phenotype file with three columns `FID` (family ID), `IID` (individual ID) & `PHENO` (phenotype value: 1,2
+   and -9) for missing.
+
+   Example:
+
+| FID  | IID     | Pheno | 
+|------|---------|-----|
+| 1001 | 1001_A  | 1   | 
+| 1002 | 1002_B  | 2   | 
+| 1003 | 1003_C  | 1   | 
+| 1004 | 1004_D  | 2   | 
+| 1005 | 1005_E  | 1   | 
+   
+  
+3. **All Phenotypes for All Participants**: This file contains cumulative information for all participants. The
+   first column in this
+
+  Example: 
+
+    | eid | pheno_1 | pheno_2 | ... |
+    |-----|---------|---------|-----|
+    | 1001 | 1.90 | 0   | ... |
+    | 1002 | 2.12  | 1   | ... |
+    | 1003 | 1.l0  | 0   | ... |
+    | 1004 | 1.89  | 1   | ... |  
+    | 1005 | 2.01  | 0   | ... |
+    
+ 
+   
+
+
+<br>
+
+#### 4. Blocks File
 If chromosomal genotype data is further divided into sets (e.g. `genotype_chr1_set1` and `genotype_chr1_set2`), this
 file is an indicator of how sets each chromosome is divided into. It is a simple one-column file containing 22 rows,
-each containing a number indicative of the set count per chromosome. This file has no header.
+each containing a number indicative of the set count per chromosome. This file has no header. Row 1 corresponds
+to the number of sets for chromosome 1, row 2 for sets in chromosome 2, and so on. 
 
 Example:
 
@@ -153,6 +194,38 @@ Example:
 
 <br>
 
+#### 5. Traits list 
+Traits lists are required for both the external GWAS and outcome traits used within the pipeline.
+Each trait list is a single-column file, with each line containing the name of a trait. External GWAS traits
+are further divided into "grid" or "auto" lists depending on which LDpred2 model is used on the given traits.
+Typically, the "grid" LDpred2 model is used when phenotypic information is available for the trait. Thus,
+the following lists are required.
+
+ 1. All GWAS Traits
+ 2. GWAS Grid Traits
+ 3. GWAS Auto Traits
+ 4. Outcome Traits
+
+<br>
+
+#### 6. Corrections file 
+
+These files contain the necessary covariates for correction during regression analyses, containing information 
+for participant age, sex, and principal components (PCs). 
+The files containing the age and sex information are each two columns,
+with the first column indicative of patient ID and the second containing the respective information. The PCs
+file contains as many columns as PCs desired for the analyses, plus the first column indicative of patient ID. 
+These files should also be divided into the training and test sets (e.g. `Age_train.txt` and `Age_test.txt`). 
+
+Examples:
+
+
+
+<br>
+
+#### 7. Cross validation groups
+
+This file contains the assignment for cross-validation, 
 
 ### Part 1: LDPRED2 Conversion
 
