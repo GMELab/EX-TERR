@@ -168,8 +168,9 @@ Phenotypes are required in various formats, and are also divided into training a
    
 </div>
   
-3. **All Phenotypes for All Participants**: This file contains cumulative information for all participants. The
-   first column in this
+2. **All Phenotypes for All Participants**: This file contains cumulative information for all participants. The
+   first column corresponds to the participant ID, while the following columns contains the respective information
+   for each phenotype. There as many columns as there are outcome traits. 
 
 <br>
 
@@ -177,7 +178,7 @@ Phenotypes are required in various formats, and are also divided into training a
 
 <div align="center"> 
 
- | eid | pheno_1 | pheno_2 |
+ | eid | pheno_1 | pheno_2 | 
  |-----|---------|------|
  | 1001 | 1.90 | 0   |
  | 1002 | 2.12  | 1   | 
@@ -237,7 +238,31 @@ Examples:
 
 #### 7. Cross validation groups
 
-This file contains the assignment for cross-validation, 
+This file contains the group assignment for the purposes of cross-validation. 
+It contains four columns with the header `<chr> <set> <ids> <groups>`
+The genotypic information at this stage of the pipeline is randomly assigned into five different groups (5 folds),
+as indicated by the  `<groups>` column. 
+
+<br>
+
+Example:
+
+<br>
+
+#### 8. Masking data
+To eliminate certain GWAS data from the run and simulate "masking" as performed in the manuscript, this file signifies
+ which GWAS traits to mask for each outcome. Files are named `<outcome_trait>_masked.txt`, and contains a single column 
+ (without a header) of GWAS traits to be removed for that masked analysis. 
+
+<br>
+
+#### 9. Get rotations
+
+If the file is not initially generated, this initial step generates rotation matrices that will be applied to summary statistic data to convert variant information into rotated genetic information. The standard deviation of each rotation is also generated in order to allow filtering. 
+
+
+<br>
+
 
 ### Part 1: LDPRED2 Conversion
 
