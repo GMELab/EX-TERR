@@ -171,7 +171,7 @@ Phenotypes are required in various formats, and are also divided into training a
     |-----|---------|---------|
     | 1001 | 1.90 | 0   |
     | 1002 | 2.12  | 1   | 
-    | 1003 | 1.l0  | 0   | 
+    | 1003 | 1.10  | 0   | 
     | 1004 | 1.89  | 1   |
     | 1005 | 2.01  | 0   | 
     
