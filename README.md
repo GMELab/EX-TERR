@@ -104,14 +104,13 @@ The header represents the following information:
 
 </div>
 
-Example:
-
-![Alt text](readme_figures/GWAS.png)
-
-
 Note that it is important to identify which allele is the reference versus alternate allele for the study.
 This can be further specified in the `ref_allele` file (further details 
 found in the [Genotype data section](#2-genotype-data)).
+
+Example:
+
+![Alt text](readme_figures/GWAS.png)
 
 <br> 
 
@@ -149,6 +148,7 @@ each containing a number indicative of the set count per chromosome. This file h
 
 Example:
 
+![Alt text](readme_figures/blocks.png)
 
 
 <br>
