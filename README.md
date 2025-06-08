@@ -156,6 +156,8 @@ Phenotypes are required in various formats, and are also divided into training a
 
    Example:
 
+<div align="center"> 
+  
 | FID  | IID     | Pheno | 
 |------|---------|-----|
 | 1001 | 1001_A  | 1   | 
@@ -164,6 +166,7 @@ Phenotypes are required in various formats, and are also divided into training a
 | 1004 | 1004_D  | 2   | 
 | 1005 | 1005_E  | 1   | 
    
+</div>
   
 3. **All Phenotypes for All Participants**: This file contains cumulative information for all participants. The
    first column in this
@@ -172,6 +175,8 @@ Phenotypes are required in various formats, and are also divided into training a
 
   Example: 
 
+<div align="center"> 
+
  | eid | pheno_1 | pheno_2 |
  |-----|---------|------|
  | 1001 | 1.90 | 0   |
@@ -179,8 +184,7 @@ Phenotypes are required in various formats, and are also divided into training a
  | 1004 | 1.89  | 1   |
  | 1005 | 2.01  | 0   | 
     
- 
-   
+</div>
 
 
 <br>
