@@ -210,7 +210,7 @@ Traits lists are required for both the external GWAS and outcome traits used wit
 Each trait list is a single-column file, with each line containing the name of a trait. External GWAS traits
 are further divided into "grid" or "auto" lists depending on which LDpred2 model is used on the given traits.
 Typically, the "grid" LDpred2 model is used when phenotypic information is available for the trait. Thus,
-the following lists are required.
+the following lists are required. These files are single column lists with no header. 
 
  1. All GWAS Traits
  2. GWAS Grid Traits
