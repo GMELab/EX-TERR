@@ -240,7 +240,7 @@ Examples:
 ![Alt text](readme_figures/Sex_corrections.png)
 - PCs
 
-![Alt text](readme_figures/PCs_corrections.png)
+![Alt text](readme_figures/PCs_correction.png)
 
 <br>
 
