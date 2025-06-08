@@ -232,7 +232,12 @@ These files should also be divided into the training and test sets (e.g. `Age_tr
 
 Examples:
 
-
+- Age 
+![Alt text](readme_figures/Age_corrections.png)
+- Sex
+![Alt text](readme_figures/Sex_corrections.png)
+- PCs
+![Alt text](readme_figures/PCs_corrections.png)
 
 <br>
 
