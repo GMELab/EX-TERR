@@ -255,6 +255,8 @@ as indicated by the  `<groups>` column.
 
 Example:
 
+![Alt text](readme_figures/CV_groups.png)
+
 <br>
 
 #### 8. Masking data
