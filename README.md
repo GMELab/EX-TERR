@@ -108,6 +108,8 @@ Note that it is important to identify which allele is the reference versus alter
 This can be further specified in the `ref_allele` file (further details 
 found in the [Genotype data section](#2-genotype-data)).
 
+<br>
+
 Example:
 
 ![Alt text](readme_figures/GWAS.png)
@@ -135,7 +137,6 @@ In addition to the core genotype information, details on allele information shou
 Allele frequency information should be available for outcome variants file in the PLINK
 format (`.frq`) , with the following column information:
 
-
 Additionally, it is good practice to include `ref_allele` files to signify which allele from the genotype is
 the alternate/effect allele. 
 
@@ -151,6 +152,8 @@ Phenotypes are required in various formats, and are also divided into training a
    PLINK phenotype file with three columns `FID` (family ID), `IID` (individual ID) & `PHENO` (phenotype value: 1,2
    and -9) for missing.
 
+<br>
+
    Example:
 
 | FID  | IID     | Pheno | 
@@ -164,6 +167,8 @@ Phenotypes are required in various formats, and are also divided into training a
   
 3. **All Phenotypes for All Participants**: This file contains cumulative information for all participants. The
    first column in this
+
+<br>
 
   Example: 
 
@@ -185,6 +190,8 @@ If chromosomal genotype data is further divided into sets (e.g. `genotype_chr1_s
 file is an indicator of how sets each chromosome is divided into. It is a simple one-column file containing 22 rows,
 each containing a number indicative of the set count per chromosome. This file has no header. Row 1 corresponds
 to the number of sets for chromosome 1, row 2 for sets in chromosome 2, and so on. 
+
+<br>
 
 Example:
 
@@ -215,6 +222,8 @@ The files containing the age and sex information are each two columns,
 with the first column indicative of patient ID and the second containing the respective information. The PCs
 file contains as many columns as PCs desired for the analyses, plus the first column indicative of patient ID. 
 These files should also be divided into the training and test sets (e.g. `Age_train.txt` and `Age_test.txt`). 
+
+<br>
 
 Examples:
 
