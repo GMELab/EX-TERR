@@ -258,8 +258,7 @@ To eliminate certain GWAS data from the run and simulate "masking" as performed 
 
 #### 9. Get rotations
 
-If the file is not initially generated, this initial step generates rotation matrices that will be applied to summary statistic data to convert variant information into rotated genetic information. The standard deviation of each rotation is also generated in order to allow filtering. 
-
+If the file is not initially generated, `get_Rotations.R` generates rotation matrices that will be applied to summary statistic data to convert variant information into rotated genetic information. The standard deviation of each rotation is also generated in order to allow filtering of rotated components. 
 
 <br>
 
