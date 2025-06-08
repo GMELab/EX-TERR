@@ -144,33 +144,7 @@ each containing a number indicative of the set count per chromosome. This file h
 
 Example:
 
-`
-2
 
-2
-
-2
-
-2
-2
-1
-1
-2
-1
-1
-1
-1
-1
-1
-1
-1
-1
-1
-1
-1
-1
-1
-`
 
 <br>
 
