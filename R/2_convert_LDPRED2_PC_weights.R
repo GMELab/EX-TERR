@@ -64,7 +64,11 @@ convert_LDpred2 <- function(trait_type = c("auto", "grid", "outcome"),
     for (i in seq_along(traits))
     {
       trait <- traits[i]
-      gwas <- as.matrix(fread(file.path(trait_dir, paste0("Traits_", LDpred2_model), trait, "Betas", "LDpred2_betas_signed_adj.txt")))
+      path <- file.path(trait_dir, paste0("Traits_", LDpred2_model), trait, "Betas", "LDpred2_betas_signed_adj.txt")
+      if (!file.exists(path)) {
+        next
+      }
+      gwas <- as.matrix(fread(path))
       GWAS_LDPRED2_betas <- cbind(GWAS_LDPRED2_betas, gwas[, 3])
     }
     colnames(GWAS_LDPRED2_betas) <- traits
