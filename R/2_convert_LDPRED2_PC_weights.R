@@ -111,10 +111,10 @@ convert_LDpred2 <- function(trait_type = c("auto", "grid", "outcome"),
   } else if (LDpred2_model == "outcome") {
     traits_outcome <- as.matrix(fread(file.path(trait_list_dir, "outcome_list_final.txt"), header = F))
 
-    if (!file.exists(file.path(trait_dir, paste0("Traits", outcome_db), "GWAS_LDPRED2_betas.RData"))) {
+    if (!file.exists(file.path(trait_dir, paste0("Traits_", LDpred2_model), "GWAS_LDPRED2_betas.RData"))) {
       ldpred2_beta <- collect_LDPRED2_betas(traits_outcome, outcome_db)
     } else {
-      load(file.path(trait_dir, paste0("Traits", outcome_db), "GWAS_LDPRED2_betas.RData"))
+      load(file.path(trait_dir, paste0("Traits_", LDpred2_model), "GWAS_LDPRED2_betas.RData"))
       ldpred2_beta <- GWAS_LDPRED2_betas
     }
   }
