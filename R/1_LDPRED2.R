@@ -90,12 +90,8 @@ run_LDPred2 <- function(blocks,
     dir.create(dir, recursive = TRUE)
   }
 
-  if (!dir.exists(file.path(dir, "Betas"))) {
-    dir.create(file.path(dir, "Betas"), recursive = TRUE)
-  }
-
-  if (!dir.exists(file.path(dir, trait))) {
-    dir.create(file.path(dir, trait), recursive = TRUE)
+  if (!dir.exists(file.path(dir, trait, "Betas"))) {
+    dir.create(file.path(dir, trait, "Betas"), recursive = TRUE)
   }
 
   # Grid model
@@ -147,7 +143,7 @@ run_LDPred2 <- function(blocks,
 
   tmp <- tempfile(tmpdir = file.path(dir, trait, "tmp-data"))
 
-  if (!file.exists(file.path(traits_dir, "corr.RData")) || !file.exists(file.path(traits_dir, "ld.RData"))) {
+  if (!file.exists(file.path(dir, "corr.RData")) || !file.exists(file.path(dir, "ld.RData"))) {
     for (chr in 1:22) {
       ## indices in 'df_beta'
       ind.chr <- which(df_beta$chr == chr)
@@ -254,7 +250,7 @@ run_LDPred2 <- function(blocks,
 
 
   colnames(LDpred2_betas) <- c("chr", "rsid", "betas")
-  write.table(LDpred2_betas, file.path(dir, "Betas", "LDpred2_betas.txt"), col.names = T, row.names = F, quote = F, sep = "\t")
+  write.table(LDpred2_betas, file.path(dir, trait, "Betas", "LDpred2_betas.txt"), col.names = T, row.names = F, quote = F, sep = "\t")
 
 
   # sign the betas whose effect allele is different from that in UKB
@@ -268,11 +264,11 @@ run_LDPred2 <- function(blocks,
   }
 
   LDpred2_betas[index, 3] <- 0 - as.numeric(LDpred2_betas[index, 3])
-  write.table(LDpred2_betas, file.path(dir, "Betas", "LDpred2_betas_signed.txt"), col.names = T, row.names = F, quote = F, sep = "\t")
+  write.table(LDpred2_betas, file.path(dir, trait, "Betas", "LDpred2_betas_signed.txt"), col.names = T, row.names = F, quote = F, sep = "\t")
   # Standardize the betas
   ldpred2_beta_adj <- get_adj_lassosum_betas(LDpred2_betas)
 
-  write.table(ldpred2_beta_adj, file.path(dir, "Betas", "LDpred2_betas_signed_adj.txt"), col.names = T, row.names = F, quote = F, sep = "\t")
+  write.table(ldpred2_beta_adj, file.path(dir, trait, "Betas", "LDpred2_betas_signed_adj.txt"), col.names = T, row.names = F, quote = F, sep = "\t")
 
   return(list(ldpred2_betadj = ldpred2_beta_adj, ldpred2_beta = LDpred2_betas))
 }
