@@ -21,7 +21,8 @@ convert_LDpred2 <- function(trait_type = c("auto", "grid", "outcome"),
                             trait_dir,
                             trait_list_dir,
                             blocks,
-                            bim_dir) {
+                            bim_dir,
+                            bim_file) {
   suppressMessages(library("data.table"))
 
   if (!file.exists(file.path(blocks))) {
@@ -117,6 +118,8 @@ convert_LDpred2 <- function(trait_type = c("auto", "grid", "outcome"),
       ldpred2_beta <- GWAS_LDPRED2_betas
     }
   }
+
+  bim <- as.matrix(fread(bim_file, header = F))
 
   # ldpred2_beta = cbind(grid_beta, auto_beta)
   ldpred2_beta_chr <- ldpred2_beta[which(as.numeric(bim[, 1]) == chr), ]
