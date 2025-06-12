@@ -139,7 +139,7 @@ run_LDPred2 <- function(blocks,
   sumstats$chr <- as.numeric(sumstats$chr)
   df_beta <- snp_match(sumstats, map) # use rsid instead of pos
 
-  POS2 <- snp_asGeneticPos(CHR, POS, dir = ".")
+  POS2 <- snp_asGeneticPos(CHR, POS, dir = file.path(dir, trait))
 
   tmp <- tempfile(tmpdir = file.path(dir, trait, "tmp-data"))
 
