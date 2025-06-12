@@ -75,6 +75,7 @@ convert_LDpred2 <- function(trait_type = c("auto", "grid", "outcome"),
       GWAS_LDPRED2_betas <- cbind(GWAS_LDPRED2_betas, as.data.frame(gwas[, 3]))
     }
     colnames(GWAS_LDPRED2_betas) <- exists
+    GWAS_LDPRED2_betas <- as.matrix(GWAS_LDPRED2_betas)
     # save(GWAS_LDPRED2_betas, file = paste0("/genetics3/maos/Geno_PC_external_GWAS/Traits_", tag, "/GWAS_LDPRED2_betas.RData"))
     save(GWAS_LDPRED2_betas, file = file.path(trait_dir, paste0("Traits_", LDpred2_model), "GWAS_LDPRED2_betas.RData"))
 
