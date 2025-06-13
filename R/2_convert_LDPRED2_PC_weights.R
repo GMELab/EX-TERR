@@ -127,7 +127,7 @@ convert_LDpred2 <- function(trait_type = c("auto", "grid", "outcome"),
 
   print(dim(ldpred2_beta))
   print(class(ldpred2_beta))
-  ldpred2_beta_chr <- ldpred2_beta[which(as.numeric(bim[, 1]) == chr), ]
+  ldpred2_beta_chr <- ldpred2_beta[which(as.numeric(bim[, 1]) == chr), , drop = FALSE]
   print(dim(ldpred2_beta_chr))
   print(class(ldpred2_beta_chr))
   print(length(ldpred2_beta_chr))
