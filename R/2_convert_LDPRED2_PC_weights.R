@@ -120,6 +120,10 @@ convert_LDpred2 <- function(trait_type = c("auto", "grid", "outcome"),
   }
 
   bim <- as.matrix(fread(bim_file, header = F))
+  print(dim(bim))
+  print(class(bim))
+  print(class(bim[, 1]))
+  print(head(which(as.numeric(bim[, 1]) == chr)))
 
   print(dim(ldpred2_beta))
   print(class(ldpred2_beta))
