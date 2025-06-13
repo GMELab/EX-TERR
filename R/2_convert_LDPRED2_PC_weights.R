@@ -130,6 +130,8 @@ convert_LDpred2 <- function(trait_type = c("auto", "grid", "outcome"),
   ldpred2_beta_chr <- ldpred2_beta[which(as.numeric(bim[, 1]) == chr), ]
   print(dim(ldpred2_beta_chr))
   print(class(ldpred2_beta_chr))
+  print(length(ldpred2_beta_chr))
+  print(head(ldpred2_beta_chr))
 
   ending <- 0
   for (set in 1:block[chr])
