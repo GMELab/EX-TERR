@@ -74,6 +74,7 @@ convert_LDpred2 <- function(trait_type = c("auto", "grid", "outcome"),
       gwas <- as.matrix(fread(path))
       GWAS_LDPRED2_betas[[i]] <- as.numeric(gwas[, 3])
     }
+    print(class(GWAS_LDPRED2_betas[[1]]))
     GWAS_LDPRED2_betas <- as.matrix(as.data.frame(GWAS_LDPRED2_betas))
     colnames(GWAS_LDPRED2_betas) <- exists
     # save(GWAS_LDPRED2_betas, file = paste0("/genetics3/maos/Geno_PC_external_GWAS/Traits_", tag, "/GWAS_LDPRED2_betas.RData"))
