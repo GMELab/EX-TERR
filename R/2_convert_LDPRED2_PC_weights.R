@@ -121,7 +121,7 @@ convert_LDpred2 <- function(trait_type = c("auto", "grid", "outcome"),
 
   bim <- as.matrix(fread(bim_file, header = F))
 
-  ldpred2_beta_chr <- ldpred2_beta[which(as.numeric(bim[, 1]) == chr), ]
+  ldpred2_beta_chr <- ldpred2_beta[which(as.numeric(bim[, 1]) == chr), drop = FALSE]
 
   ending <- 0
   for (set in 1:block[chr])
