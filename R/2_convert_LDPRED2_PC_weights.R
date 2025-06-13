@@ -72,7 +72,7 @@ convert_LDpred2 <- function(trait_type = c("auto", "grid", "outcome"),
       }
       exists <- c(exists, trait)
       gwas <- as.matrix(fread(path))
-      GWAS_LDPRED2_betas <- cbind(GWAS_LDPRED2_betas, gwas[, 3])
+      GWAS_LDPRED2_betas <- cbind(GWAS_LDPRED2_betas, as.numeric(gwas[, 3]))
     }
     GWAS_LDPRED2_betas <- matrix(GWAS_LDPRED2_betas, ncol = length(exists), byrow = FALSE)
     colnames(GWAS_LDPRED2_betas) <- exists
