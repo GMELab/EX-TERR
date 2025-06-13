@@ -61,7 +61,7 @@ convert_LDpred2 <- function(trait_type = c("auto", "grid", "outcome"),
   }
 
   collect_LDPRED2_betas <- function(traits, tag) {
-    GWAS_LDPRED2_betas <- list()
+    GWAS_LDPRED2_betas <- as.numeric()
     exists <- c()
     for (i in seq_along(traits))
     {
@@ -72,10 +72,9 @@ convert_LDpred2 <- function(trait_type = c("auto", "grid", "outcome"),
       }
       exists <- c(exists, trait)
       gwas <- as.matrix(fread(path))
-      GWAS_LDPRED2_betas[[i]] <- as.numeric(gwas[, 3])
+      GWAS_LDPRED2_betas <- cbind(GWAS_LDPRED2_betas, gwas[, 3])
     }
-    print(class(GWAS_LDPRED2_betas[[1]]))
-    GWAS_LDPRED2_betas <- as.matrix(as.data.frame(GWAS_LDPRED2_betas))
+    GWAS_LDPRED2_betas <- matrix(GWAS_LDPRED2_betas, ncol = length(exists), byrow = FALSE)
     colnames(GWAS_LDPRED2_betas) <- exists
     # save(GWAS_LDPRED2_betas, file = paste0("/genetics3/maos/Geno_PC_external_GWAS/Traits_", tag, "/GWAS_LDPRED2_betas.RData"))
     save(GWAS_LDPRED2_betas, file = file.path(trait_dir, paste0("Traits_", LDpred2_model), "GWAS_LDPRED2_betas.RData"))
