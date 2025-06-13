@@ -61,7 +61,6 @@ convert_LDpred2 <- function(trait_type = c("auto", "grid", "outcome"),
   }
 
   collect_LDPRED2_betas <- function(traits, tag) {
-    GWAS_LDPRED2_betas <- data.frame()
     exists <- c()
     for (i in seq_along(traits))
     {
