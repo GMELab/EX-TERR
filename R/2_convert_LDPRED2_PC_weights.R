@@ -144,6 +144,8 @@ convert_LDpred2 <- function(trait_type = c("auto", "grid", "outcome"),
     starting <- ending + 1
     ending <- ending + dim(bim)[1]
 
+    l <- ldpred2_beta_chr[starting:ending, , drop = FALSE]
+    print(paste("chr", chr, "set", set, "has", dim(l)))
     betas <- get_PC_weights(ldpred2_beta_chr[starting:ending, ])
 
     print(paste("chr", chr, "set", set, "is done"))
