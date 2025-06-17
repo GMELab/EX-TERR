@@ -72,10 +72,11 @@ convert_LDpred2 <- function(trait_type = c("auto", "grid", "outcome"),
       }
       exists <- c(exists, trait)
       gwas <- as.matrix(fread(path))
-      GWAS_LDPRED2_betas <- cbind(GWAS_LDPRED2_betas, as.numeric(gwas[, 3]))
+      GWAS_LDPRED2_betas <- cbind(GWAS_LDPRED2_betas, gwas[, 3])
     }
     GWAS_LDPRED2_betas <- matrix(GWAS_LDPRED2_betas, ncol = length(exists), byrow = FALSE)
     colnames(GWAS_LDPRED2_betas) <- exists
+    class(GWAS_LDPRED2_betas) <- "numeric"
     # save(GWAS_LDPRED2_betas, file = paste0("/genetics3/maos/Geno_PC_external_GWAS/Traits_", tag, "/GWAS_LDPRED2_betas.RData"))
     save(GWAS_LDPRED2_betas, file = file.path(trait_dir, paste0("Traits_", LDpred2_model), "GWAS_LDPRED2_betas.RData"))
 
@@ -91,31 +92,31 @@ convert_LDpred2 <- function(trait_type = c("auto", "grid", "outcome"),
     traits_auto <- as.matrix(fread(file.path(trait_list_dir, paste0("Gwas_list_", LDpred2_model, ".txt")), header = F))
 
     if (!file.exists(file.path(trait_dir, paste0("Traits_", LDpred2_model), "GWAS_LDPRED2_betas.RData"))) {
-      auto_beta <- collect_LDPRED2_betas(traits_auto, "auto")
+      ldpred2_beta <- collect_LDPRED2_betas(traits_auto, "auto")
     } else {
       # load(paste0("/genetics3/maos/Geno_PC_external_GWAS/Traits_auto/GWAS_LDPRED2_betas.RData"))
       load(file.path(trait_dir, paste0("Traits_", LDpred2_model), "GWAS_LDPRED2_betas.RData"))
 
-      auto_beta <- GWAS_LDPRED2_betas
+      ldpred2_beta <- GWAS_LDPRED2_betas
     }
   } else if (LDpred2_model == "grid") {
     traits_grid <- as.matrix(fread(file.path(trait_list_dir, paste0("Gwas_list_", LDpred2_model, ".txt"), header = F)))
 
     if (!file.exists(file.path(trait_dir, paste0("Traits_", LDpred2_model), "GWAS_LDPRED2_betas.RData"))) {
-      grid_beta <- collect_LDPRED2_betas(traits_grid, "grid")
+      ldpred2_beta <- collect_LDPRED2_betas(traits_grid, "grid")
     } else {
       # load(paste0("/genetics3/maos/Geno_PC_external_GWAS/Traits_GRID/GWAS_LDPRED2_betas.RData"))
       load(file.path(trait_dir, paste0("Traits_", LDpred2_model), "GWAS_LDPRED2_betas.RData"))
-      grid_beta <- GWAS_LDPRED2_betas
+      ldpred2_beta <- GWAS_LDPRED2_betas
     }
   } else if (LDpred2_model == "outcome") {
     traits_outcome <- as.matrix(fread(file.path(trait_list_dir, "outcome_list_final.txt"), header = F))
 
     if (!file.exists(file.path(trait_dir, paste0("Traits_", LDpred2_model), "GWAS_LDPRED2_betas.RData"))) {
-      outcome_beta <- collect_LDPRED2_betas(traits_outcome, outcome_db)
+      ldpred2_beta <- collect_LDPRED2_betas(traits_outcome, outcome_db)
     } else {
       load(file.path(trait_dir, paste0("Traits_", LDpred2_model), "GWAS_LDPRED2_betas.RData"))
-      outcome_beta <- GWAS_LDPRED2_betas
+      ldpred2_beta <- GWAS_LDPRED2_betas
     }
   }
 
@@ -125,12 +126,11 @@ convert_LDpred2 <- function(trait_type = c("auto", "grid", "outcome"),
   print(class(bim[, 1]))
   print(head(which(as.numeric(bim[, 1]) == chr)))
 
-  ldpred2_beta <- cbind(grid_beta, auto_beta, outcome_beta)
   print(dim(ldpred2_beta))
   print(class(ldpred2_beta))
   print(class(ldpred2_beta[, 1]))
   print(class(ldpred2_beta[1, 1]))
-  ldpred2_beta_chr <- ldpred2_beta[which(as.numeric(bim[, 1]) == chr), ]
+  ldpred2_beta_chr <- ldpred2_beta[which(as.numeric(bim[, 1]) == chr), , drop = FALSE]
   print(dim(ldpred2_beta_chr))
   print(class(ldpred2_beta_chr))
   print(length(ldpred2_beta_chr))
