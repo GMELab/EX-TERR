@@ -54,8 +54,6 @@ convert_LDpred2 <- function(trait_type = c("auto", "grid", "outcome"),
       weight_block_adj <- weight_block * G_PC_SD
 
       PC_beta_weight <- rbind(PC_beta_weight, cbind(G_PC_SD, weight_block_adj))
-
-      print(paste("chr", chr, i, "out of", cycles, " beta is done"))
     }
     return(PC_beta_weight)
   }
@@ -121,21 +119,11 @@ convert_LDpred2 <- function(trait_type = c("auto", "grid", "outcome"),
   }
 
   bim <- as.matrix(fread(bim_file, header = F))
-  print(dim(bim))
-  print(class(bim))
-  print(class(bim[, 1]))
-  print(head(which(as.numeric(bim[, 1]) == chr)))
-
-  print(dim(ldpred2_beta))
-  print(class(ldpred2_beta))
-  print(class(ldpred2_beta[, 1]))
-  print(class(ldpred2_beta[1, 1]))
   ldpred2_beta_chr <- ldpred2_beta[which(as.numeric(bim[, 1]) == chr), , drop = FALSE]
-  print(dim(ldpred2_beta_chr))
-  print(class(ldpred2_beta_chr))
-  print(length(ldpred2_beta_chr))
-  print(head(ldpred2_beta_chr))
-  print(class(ldpred2_beta_chr[, 1]))
+
+  if (!dir.exists(file.path(trait_dir, paste0("Traits_", LDpred2_model), "Betas"))) {
+    dir.create(file.path(trait_dir, paste0("Traits_", LDpred2_model), "Betas"), recursive = TRUE)
+  }
 
   ending <- 0
   for (set in 1:block[chr])
@@ -144,16 +132,12 @@ convert_LDpred2 <- function(trait_type = c("auto", "grid", "outcome"),
     starting <- ending + 1
     ending <- ending + dim(bim)[1]
 
-    l <- ldpred2_beta_chr[starting:ending, , drop = FALSE]
-    print(paste("chr", chr, "set", set, "has", dim(l)))
     betas <- get_PC_weights(ldpred2_beta_chr[starting:ending, , drop = FALSE])
 
-    print(paste("chr", chr, "set", set, "is done"))
-
     if (trait_type == "outcome") {
-      write.table(betas, file = file.path("Betas", paste0(outcome_db, "_LDPRED2_PC_Betas_chr_", chr, "_", set, "_", flag, ".txt")), col.names = T, row.names = F, quote = F, sep = "\t")
+      write.table(betas, file = file.path(trait_dir, paste0("Traits_", LDpred2_model), "Betas", paste0(outcome_db, "_LDPRED2_PC_Betas_chr_", chr, "_", set, "_", flag, ".txt")), col.names = T, row.names = F, quote = F, sep = "\t")
     } else {
-      write.table(betas, file = file.path("Betas", paste0("GWAS_LDPRED2_PC_Betas_chr_", chr, "_", set, "_", flag, ".txt")), col.names = T, row.names = F, quote = F, sep = "\t")
+      write.table(betas, file = file.path(trait_dir, paste0("Traits_", LDpred2_model), "Betas", paste0("GWAS_LDPRED2_PC_Betas_chr_", chr, "_", set, "_", flag, ".txt")), col.names = T, row.names = F, quote = F, sep = "\t")
     }
   }
   return(list(beta = betas))
