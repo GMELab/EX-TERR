@@ -91,31 +91,31 @@ convert_LDpred2 <- function(trait_type = c("auto", "grid", "outcome"),
     traits_auto <- as.matrix(fread(file.path(trait_list_dir, paste0("Gwas_list_", LDpred2_model, ".txt")), header = F))
 
     if (!file.exists(file.path(trait_dir, paste0("Traits_", LDpred2_model), "GWAS_LDPRED2_betas.RData"))) {
-      ldpred2_beta <- collect_LDPRED2_betas(traits_auto, "auto")
+      auto_beta <- collect_LDPRED2_betas(traits_auto, "auto")
     } else {
       # load(paste0("/genetics3/maos/Geno_PC_external_GWAS/Traits_auto/GWAS_LDPRED2_betas.RData"))
       load(file.path(trait_dir, paste0("Traits_", LDpred2_model), "GWAS_LDPRED2_betas.RData"))
 
-      ldpred2_beta <- GWAS_LDPRED2_betas
+      auto_beta <- GWAS_LDPRED2_betas
     }
   } else if (LDpred2_model == "grid") {
     traits_grid <- as.matrix(fread(file.path(trait_list_dir, paste0("Gwas_list_", LDpred2_model, ".txt"), header = F)))
 
     if (!file.exists(file.path(trait_dir, paste0("Traits_", LDpred2_model), "GWAS_LDPRED2_betas.RData"))) {
-      ldpred2_beta <- collect_LDPRED2_betas(traits_grid, "grid")
+      grid_beta <- collect_LDPRED2_betas(traits_grid, "grid")
     } else {
       # load(paste0("/genetics3/maos/Geno_PC_external_GWAS/Traits_GRID/GWAS_LDPRED2_betas.RData"))
       load(file.path(trait_dir, paste0("Traits_", LDpred2_model), "GWAS_LDPRED2_betas.RData"))
-      ldpred2_beta <- GWAS_LDPRED2_betas
+      grid_beta <- GWAS_LDPRED2_betas
     }
   } else if (LDpred2_model == "outcome") {
     traits_outcome <- as.matrix(fread(file.path(trait_list_dir, "outcome_list_final.txt"), header = F))
 
     if (!file.exists(file.path(trait_dir, paste0("Traits_", LDpred2_model), "GWAS_LDPRED2_betas.RData"))) {
-      ldpred2_beta <- collect_LDPRED2_betas(traits_outcome, outcome_db)
+      outcome_beta <- collect_LDPRED2_betas(traits_outcome, outcome_db)
     } else {
       load(file.path(trait_dir, paste0("Traits_", LDpred2_model), "GWAS_LDPRED2_betas.RData"))
-      ldpred2_beta <- GWAS_LDPRED2_betas
+      outcome_beta <- GWAS_LDPRED2_betas
     }
   }
 
@@ -125,11 +125,12 @@ convert_LDpred2 <- function(trait_type = c("auto", "grid", "outcome"),
   print(class(bim[, 1]))
   print(head(which(as.numeric(bim[, 1]) == chr)))
 
+  ldpred2_beta <- cbind(grid_beta, auto_beta, outcome_beta)
   print(dim(ldpred2_beta))
   print(class(ldpred2_beta))
   print(class(ldpred2_beta[, 1]))
   print(class(ldpred2_beta[1, 1]))
-  ldpred2_beta_chr <- ldpred2_beta[which(as.numeric(bim[, 1]) == chr), , drop = FALSE]
+  ldpred2_beta_chr <- ldpred2_beta[which(as.numeric(bim[, 1]) == chr), ]
   print(dim(ldpred2_beta_chr))
   print(class(ldpred2_beta_chr))
   print(length(ldpred2_beta_chr))
