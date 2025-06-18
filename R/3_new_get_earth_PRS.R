@@ -11,6 +11,7 @@
 #' @param output_dir Path to output directory for earth PRS.
 #' @return Returns a list of two elements: disc_earth_PRS and val_earth_PRS
 #' @export
+run_earth(ids = 1, PC_std_threshold = 1, blocks = "/mnt/nfs/rigenenfs/workspace/lea/EX_TERR/Data/Blocks.txt", cross_val_PC_SD = "???", traits_dir = ".", LDpred2_model = "auto", outcome_db = "UKB", mask = "mask", mask_dir = "/mnt/nfs/rigenenfs/workspace/maos/Geno_PC_external_GWAS/Masked_data"
 run_earth <- function(ids,
                       PC_std_threshold,
                       size = 5000,
@@ -19,11 +20,10 @@ run_earth <- function(ids,
                       cross_val_PC_SD,
                       traits_dir,
                       LDpred2_model,
-                      beta_dir,
                       outcome_db,
                       mask = "no_mask",
-                      mask_dir = NULL,
-                      output_dir) {
+                      mask_dir = NULL
+                      ) {
   suppressMessages(library("data.table"))
   suppressMessages(library(earth))
   suppressMessages(library(caret))
@@ -114,15 +114,15 @@ run_earth <- function(ids,
   rm(geno_PCA)
   gc()
 
-  write.table(earth_PRS, paste0(output_dir, "/Earth_PRS_PC_std_threshold_", PC_std_threshold, "_index_", ids, "_val.txt"), col.names = T, row.names = F, quote = F, sep = "\t")
+  write.table(earth_PRS, file.path(dir, "Geno_disc_PRS", paste0("Earth_PRS_PC_std_threshold_", PC_std_threshold, "_index_", ids, "_val.txt")), col.names = T, row.names = F, quote = F, sep = "\t")
 
   val_PRS <- earth_PRS
 
   # Get true validation PRS
-  if (file.exists(paste0("Geno_disc_PCA/Geno_PCA_PC_std_threshold_", PC_std_threshold, "_", ids, "_disc.txt"))) {
-    geno_PCA <- as.matrix(fread(paste0("Geno_disc_PCA/Geno_PCA_PC_std_threshold_", PC_std_threshold, "_", ids, "_disc.txt"), header = F))
+  if (file.exists(file.path(dir, "Geno_disc_PCA", paste0("Geno_PCA_PC_std_threshold_", PC_std_threshold, "_", ids, "_disc.txt")))) {
+    geno_PCA <- as.matrix(fread(file.path(dir, "Geno_disc_PCA", paste0("Geno_PCA_PC_std_threshold_", PC_std_threshold, "_", ids, "_disc.txt")), header = F))
   } else {
-    geno_PCA <- as.matrix(fread(paste0("Geno_disc_PCA/Geno_PCA_PC_std_threshold_", PC_std_threshold, "_", ids, "_disc.txt"), header = F))
+    geno_PCA <- as.matrix(fread(file.path(dir, "Geno_disc_PCA", paste0("Geno_PCA_PC_std_threshold_", PC_std_threshold, "_", ids, "_disc.txt")), header = F))
   }
 
 
@@ -131,7 +131,7 @@ run_earth <- function(ids,
   rm(geno_PCA)
   gc()
 
-  write.table(earth_PRS, paste0(output_dir, "/Earth_PRS_PC_std_threshold_", PC_std_threshold, "_index_", ids, "_disc.txt"), col.names = T, row.names = F, quote = F, sep = "\t")
+  write.table(earth_PRS, file.path(dir, "Geno_disc_PRS", paste0("Earth_PRS_PC_std_threshold_", PC_std_threshold, "_index_", ids, "_disc.txt")), col.names = T, row.names = F, quote = F, sep = "\t")
 
   return(list(val_earth_PRS = val_PRS, disc_earth_PRS = earth_PRS))
 }
