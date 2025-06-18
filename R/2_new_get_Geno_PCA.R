@@ -89,6 +89,10 @@ geno_PCA <- function(id,
     print(paste("ids", id, "number of ", i, "is done"))
   }
 
+  if (!dir.exists(file.path(traits_dir, paste0("Traits_", LDpred2_model), "Geno_disc_PCA"))) {
+    dir.create(file.path(traits_dir, paste0("Traits_", LDpred2_model), "Geno_disc_PCA"), recursive = TRUE)
+  }
+
   write.table(geno_PCA, file.path(traits_dir, paste0("Traits_", LDpred2_model), "Geno_disc_PCA", paste0("Geno_PCA_PC_std_threshold_", PC_std_threshold, "_", id, "_", flag, ".txt")), col.names = F, row.names = F, quote = F, sep = "\t")
 
   return(list(geno_pc = geno_PCA))
