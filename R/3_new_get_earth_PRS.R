@@ -21,8 +21,7 @@ run_earth <- function(ids,
                       LDpred2_model,
                       outcome_db,
                       mask = "no_mask",
-                      mask_dir = NULL,
-                      chrs = 1:22) {
+                      mask_dir = NULL) {
   suppressMessages(library("data.table"))
   suppressMessages(library(earth))
   suppressMessages(library(caret))
@@ -61,7 +60,7 @@ run_earth <- function(ids,
   beta_discovery <- as.numeric()
   PC_SD <- as.numeric()
 
-  for (chr in chrs)
+  for (chr in 1:22)
   {
     for (set in 1:block[chr])
     {
