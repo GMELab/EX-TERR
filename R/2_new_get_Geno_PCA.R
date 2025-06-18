@@ -16,7 +16,8 @@ geno_PCA <- function(id,
                      rotations_dir,
                      cv_groups,
                      traits_dir,
-                     LDpred2_model) {
+                     LDpred2_model,
+                     chr = NULL) {
   suppressMessages(library("data.table"))
 
   if (!file.exists(file.path(cv_groups))) {
@@ -74,6 +75,10 @@ geno_PCA <- function(id,
   for (i in seq_len(dim(blocks)[1]))
   {
     item <- blocks[i, ]
+
+    if (!is.null(chr) && item[1] != chr) {
+      next
+    }
 
     geno_data_PCA <- get_PCA_geno(item)
     geno_PCA <- cbind(geno_PCA, geno_data_PCA)
