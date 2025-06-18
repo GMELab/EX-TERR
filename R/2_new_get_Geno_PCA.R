@@ -9,13 +9,14 @@
 #' @param return Element geno_pc.
 #' @export
 geno_PCA <- function(id,
-                     flag = c("disc", "val"),
+                     flag,
                      PC_std_threshold,
                      genotype_dir,
                      outcome_db,
                      rotations_dir,
                      cv_groups,
-                     output_dir = NULL) {
+                     traits_dir,
+                     LDpred2_model) {
   suppressMessages(library("data.table"))
 
   if (!file.exists(file.path(cv_groups))) {
@@ -83,9 +84,7 @@ geno_PCA <- function(id,
     print(paste("ids", id, "number of ", i, "is done"))
   }
 
-  if (!is.null(output_dir)) {
-    write.table(geno_PCA, file.path(output_dir, paste0("Geno_PCA_PC_std_threshold_", PC_std_threshold, "_", id, "_", flag, ".txt")), col.names = F, row.names = F, quote = F, sep = "\t")
-  }
+  write.table(geno_PCA, file.path(traits_dir, paste0("Traits_", LDpred2_model), "Geno_disc_PCA", paste0("Geno_PCA_PC_std_threshold_", PC_std_threshold, "_", id, "_", flag, ".txt")), col.names = F, row.names = F, quote = F, sep = "\t")
 
   return(list(geno_pc = geno_PCA))
 }
