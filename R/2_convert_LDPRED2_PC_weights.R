@@ -11,9 +11,9 @@
 #' @param bim_dir Path to directory containing outcome genotype .bim files divided into chromsome and set. Must be in the form <outcome_db>_09_<chr>_<set>.bim
 #' @return Returns element beta
 #' @export
-convert_LDpred2 <- function(trait_type = c("auto", "grid", "outcome"),
+convert_LDpred2 <- function(trait_type,
                             chr,
-                            flag = c("disc", "val"),
+                            flag,
                             size = 5000,
                             outcome_db,
                             rotations_dir,
