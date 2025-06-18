@@ -28,7 +28,7 @@ geno_PCA <- function(id,
     set <- item[2]
     group_id <- item[3]
 
-    load(file.path(genotype_dir, paste0("Geno_", flag, "/UKB_09_", chr, "_", set, ".RData"))) # load genotypes
+    load(file.path(genotype_dir, "UKB_09_", chr, "_", set, ".RData")) # load genotypes
 
 
     if (grepl(flag, rotations_dir)) { # Ensure correct set: disc or val
