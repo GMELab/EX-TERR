@@ -11,7 +11,6 @@
 #' @param output_dir Path to output directory for earth PRS.
 #' @return Returns a list of two elements: disc_earth_PRS and val_earth_PRS
 #' @export
-run_earth(ids = 1, PC_std_threshold = 1, blocks = "/mnt/nfs/rigenenfs/workspace/lea/EX_TERR/Data/Blocks.txt", cross_val_PC_SD = "???", traits_dir = ".", LDpred2_model = "auto", outcome_db = "UKB", mask = "mask", mask_dir = "/mnt/nfs/rigenenfs/workspace/maos/Geno_PC_external_GWAS/Masked_data"
 run_earth <- function(ids,
                       PC_std_threshold,
                       size = 5000,
@@ -22,8 +21,7 @@ run_earth <- function(ids,
                       LDpred2_model,
                       outcome_db,
                       mask = "no_mask",
-                      mask_dir = NULL
-                      ) {
+                      mask_dir = NULL) {
   suppressMessages(library("data.table"))
   suppressMessages(library(earth))
   suppressMessages(library(caret))
