@@ -119,6 +119,7 @@ convert_LDpred2 <- function(trait_type,
   }
 
   bim <- as.matrix(fread(bim_file, header = F))
+  print(dim(ldpred2_beta))
   ldpred2_beta_chr <- ldpred2_beta[which(as.numeric(bim[, 1]) == chr), , drop = FALSE]
 
   if (!dir.exists(file.path(trait_dir, paste0("Traits_", LDpred2_model), "Betas"))) {
