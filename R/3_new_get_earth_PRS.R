@@ -79,6 +79,7 @@ run_earth <- function(ids,
   index_test <- which(PC_SD_Data[, 3] == ids & PC_SD_Data[, 5] >= PC_std_threshold)
   index_train <- which(PC_SD_Data[, 3] != ids & PC_SD_Data[, 5] >= PC_std_threshold)
 
+  print(dim(beta_validation))
   beta_validation_train <- beta_validation[index_train, ]
 
   predict_earth <- as.numeric()
