@@ -76,8 +76,8 @@ run_earth <- function(ids,
   dim(beta_discovery)
 
   PC_SD_Data <- as.matrix(fread(cross_val_PC_SD))
-  index_test <- which(PC_SD_Data[, 4] == ids & PC_SD_Data[, 5] >= PC_std_threshold)
-  index_train <- which(PC_SD_Data[, 4] != ids & PC_SD_Data[, 5] >= PC_std_threshold)
+  index_test <- which(PC_SD_Data[, 3] == ids & PC_SD_Data[, 5] >= PC_std_threshold)
+  index_train <- which(PC_SD_Data[, 3] != ids & PC_SD_Data[, 5] >= PC_std_threshold)
 
   beta_validation_train <- beta_validation[index_train, ]
 
