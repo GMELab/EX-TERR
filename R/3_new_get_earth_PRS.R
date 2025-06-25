@@ -67,17 +67,17 @@ run_earth <- function(ids,
       ukb_dis_beta <- as.matrix(fread(file.path(dir, "Betas", paste0(outcome_db, "_LDPRED2_PC_Betas_chr_", chr, "_", set, "_disc.txt")), header = T))
       PC_SD <- c(PC_SD, ukb_dis_beta[, 1])
 
-      beta_validation <- rbind(beta_validation, ukb_dis_beta[, -1])
+      beta_validation <- cbind(beta_validation, ukb_dis_beta[, -1])
 
       ldpred2_beta <- as.matrix(fread(file.path(dir, "Betas", paste0("GWAS_LDPRED2_PC_Betas_chr_", chr, "_", set, "_disc.txt")), header = T))
-      beta_discovery <- rbind(beta_discovery, ldpred2_beta[, -1])
+      beta_discovery <- cbind(beta_discovery, ldpred2_beta[, -1])
     }
   }
   dim(beta_discovery)
 
   PC_SD_Data <- as.matrix(fread(cross_val_PC_SD))
-  index_test <- which(PC_SD_Data[, 3] == ids & PC_SD_Data[, 5] >= PC_std_threshold)
-  index_train <- which(PC_SD_Data[, 3] != ids & PC_SD_Data[, 5] >= PC_std_threshold)
+  index_test <- which(PC_SD_Data[, 4] == ids & PC_SD_Data[, 5] >= PC_std_threshold)
+  index_train <- which(PC_SD_Data[, 4] != ids & PC_SD_Data[, 5] >= PC_std_threshold)
 
   print(dim(beta_validation))
   beta_validation_train <- beta_validation[index_train, ]
