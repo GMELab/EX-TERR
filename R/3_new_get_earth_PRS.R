@@ -68,10 +68,10 @@ run_earth <- function(ids,
       print(dim(ukb_dis_beta))
       PC_SD <- c(PC_SD, ukb_dis_beta[, 1])
 
-      beta_validation <- c(beta_validation, ukb_dis_beta[, -1])
+      beta_validation <- rbind(beta_validation, ukb_dis_beta[, -1, drop = FALSE])
 
       ldpred2_beta <- as.matrix(fread(file.path(dir, "Betas", paste0("GWAS_LDPRED2_PC_Betas_chr_", chr, "_", set, "_disc.txt")), header = T))
-      beta_discovery <- c(beta_discovery, ldpred2_beta[, -1])
+      beta_discovery <- rbind(beta_discovery, ldpred2_beta[, -1, drop = FALSE])
     }
   }
   dim(beta_discovery)
