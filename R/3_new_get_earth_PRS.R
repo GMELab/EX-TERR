@@ -65,6 +65,7 @@ run_earth <- function(ids,
     for (set in 1:block[chr])
     {
       ukb_dis_beta <- as.matrix(fread(file.path(dir, "Betas", paste0(outcome_db, "_LDPRED2_PC_Betas_chr_", chr, "_", set, "_disc.txt")), header = T))
+      print(dim(ukb_dis_beta))
       PC_SD <- c(PC_SD, ukb_dis_beta[, 1])
 
       beta_validation <- rbind(beta_validation, ukb_dis_beta[, -1])
