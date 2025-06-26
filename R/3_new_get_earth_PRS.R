@@ -83,7 +83,7 @@ run_earth <- function(ids,
   print(dim(beta_validation))
   print(head(index_test))
   print(max(index_test))
-  beta_validation_train <- beta_validation[index_train, ]
+  beta_validation_train <- beta_validation[index_train, , drop = FALSE]
 
   predict_earth <- as.numeric()
   for (i in seq_len(dim(beta_validation)[2]))
