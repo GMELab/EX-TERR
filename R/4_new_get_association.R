@@ -87,6 +87,7 @@ get_assoc <- function(flag,
     print(class(earth_PRS))
     print(dim(earth_PRS[[ids]]))
     print(class(earth_PRS[[ids]]))
+    print(colnames(earth_PRS[[ids]]))
     print(i)
     if (max(pheno_data[, i]) == 1 && min(pheno_data[, i]) == 0) {
       if (max(earth_PRS[[ids]][, i]) != 0 && min(earth_PRS[[ids]][, i]) != 0) {
