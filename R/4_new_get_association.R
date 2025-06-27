@@ -83,8 +83,10 @@ get_assoc <- function(flag,
   for (i in seq_len(dim(pheno_norm)[2]))
   {
     trait <- colnames(pheno_norm)[i]
-    print(paste(dim(earth_PRS), class(earth_PRS)))
-    print(paste(dim(earth_PRS[[ids]]), class(earth_PRS[[ids]])))
+    print(dim(earth_PRS))
+    print(class(earth_PRS))
+    print(dim(earth_PRS[[ids]]))
+    print(class(earth_PRS[[ids]]))
     if (max(pheno_data[, i]) == 1 && min(pheno_data[, i]) == 0) {
       if (max(earth_PRS[[ids]][, i]) != 0 && min(earth_PRS[[ids]][, i]) != 0) {
         temp3 <- summary(glm(pheno_norm[, i] ~ standardization(earth_PRS[[ids]][, i]) + Age[, 2] + Sex[, 2] + PCs[, c(2:11)], family = binomial))
