@@ -69,7 +69,6 @@ run_earth <- function(ids,
     for (set in 1:block[chr])
     {
       ukb_dis_beta <- as.matrix(fread(file.path(dir, "Betas", paste0(outcome_db, "_LDPRED2_PC_Betas_chr_", chr, "_", set, "_disc.txt")), header = T))
-      print(dim(ukb_dis_beta))
       PC_SD <- c(PC_SD, ukb_dis_beta[, 1])
 
       beta_validation <- rbind(beta_validation, ukb_dis_beta[, -1, drop = FALSE])
@@ -84,9 +83,6 @@ run_earth <- function(ids,
   index_test <- which(PC_SD_Data[, 4] == ids & PC_SD_Data[, 5] >= PC_std_threshold)
   index_train <- which(PC_SD_Data[, 4] != ids & PC_SD_Data[, 5] >= PC_std_threshold)
 
-  print(dim(beta_validation))
-  print(head(index_test))
-  print(max(index_test))
   beta_validation_train <- beta_validation[index_train, , drop = FALSE]
 
   predict_earth <- as.numeric()
