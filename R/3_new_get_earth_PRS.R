@@ -54,6 +54,10 @@ run_earth <- function(ids,
   # Main function
   dir <- file.path(traits_dir, paste0("Traits_", LDpred2_model))
 
+  if (!dir.exists(file.path(dir, "Geno_disc_PRS"))) {
+    dir.create(file.path(dir, "Geno_disc_PRS"), recursive = TRUE)
+  }
+
   block <- as.matrix(fread(blocks))
 
   beta_validation <- as.numeric()
