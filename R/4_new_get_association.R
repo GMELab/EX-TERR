@@ -48,9 +48,9 @@ get_assoc <- function(flag,
 
   # Main function
 
-  Age <- as.matrix(fread(file.path(corrections_dir, paste0("Age", flag, ".txt")), header = T))
-  Sex <- as.matrix(fread(file.path(corrections_dir, paste0("Sex", flag, ".txt")), header = T))
-  PCs <- as.matrix(fread(file.path(corrections_dir, paste0("PCs", flag, ".txt")), header = T))
+  Age <- as.matrix(fread(file.path(corrections_dir, paste0("Age_", flag, ".txt")), header = T))
+  Sex <- as.matrix(fread(file.path(corrections_dir, paste0("Sex_", flag, ".txt")), header = T))
+  PCs <- as.matrix(fread(file.path(corrections_dir, paste0("PCs_", flag, ".txt")), header = T))
 
   phenos <- data.frame(fread(file.path(pheno_dir, paste0("Pheno_", flag, ".txt")), header = T))
   pheno_data <- phenos[, -1]
