@@ -116,6 +116,8 @@ run_earth <- function(ids,
     geno_PCA <- as.matrix(fread(file.path(dir, "Geno_disc_PCA", paste0("Geno_PCA_PC_std_threshold_", PC_std_threshold, "_", ids, "_val.txt")), header = F))
   }
   earth_PRS <- geno_PCA %*% predict_earth
+  print("predict_earth done")
+  print(dim(predict_earth))
 
   rm(geno_PCA)
   gc()
