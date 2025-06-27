@@ -65,7 +65,7 @@ get_assoc <- function(flag,
   earth_PRS <- list()
   for (ids in 1:5)
   {
-    temp <- as.matrix(fread(file.path(geno_disc_dir, paste0("Earth_PRS_PC_std_threshold_", PC_std_threshold, "_index_", ids, "_", flag, flag_2, ".txt"))))
+    temp <- as.matrix(fread(file.path(geno_disc_dir, paste0("Earth_PRS_PC_std_threshold_", PC_std_threshold, "_", ids, "_", flag, flag_2, ".txt"))))
     temp[which(is.na(temp))] <- 0
     earth_PRS[[ids]] <- temp
   }
