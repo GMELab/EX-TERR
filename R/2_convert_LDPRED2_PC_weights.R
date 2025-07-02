@@ -98,7 +98,7 @@ convert_LDpred2 <- function(trait_type,
       ldpred2_beta <- GWAS_LDPRED2_betas
     }
   } else if (LDpred2_model == "grid") {
-    traits_grid <- as.matrix(fread(file.path(trait_list_dir, paste0("Gwas_list_", LDpred2_model, ".txt"), header = F)))
+    traits_grid <- as.matrix(fread(file.path(trait_list_dir, paste0("Gwas_list_", LDpred2_model, ".txt")), header = F))
 
     if (!file.exists(file.path(trait_dir, paste0("Traits_", LDpred2_model), "GWAS_LDPRED2_betas.RData"))) {
       ldpred2_beta <- collect_LDPRED2_betas(traits_grid, "grid")
