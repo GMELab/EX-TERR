@@ -69,7 +69,7 @@ get_block_PRS <- function(chr,
 
 
   # Main function
-  block <- as.matrix(blocks, header = F)
+  block <- as.matrix(fread(blocks), header = F)
 
   if (LDpred2_model == "auto") {
     traits_auto <- as.matrix(fread(file.path(trait_list_dir, paste0("Gwas_list_", LDpred2_model, ".txt")), header = F))
