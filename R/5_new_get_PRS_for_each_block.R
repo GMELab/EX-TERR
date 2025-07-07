@@ -9,7 +9,7 @@
 get_block_PRS <- function(chr,
                           flag,
                           size = 5000,
-                          trait_dir,
+                          traits_dir,
                           genotype_dir,
                           blocks,
                           trait_list_dir,
@@ -74,22 +74,22 @@ get_block_PRS <- function(chr,
   if (LDpred2_model == "auto") {
     traits_auto <- as.matrix(fread(file.path(trait_list_dir, paste0("Gwas_list_", LDpred2_model, ".txt")), header = F))
 
-    if (!file.exists(file.path(trait_dir, paste0("Traits_", LDpred2_model), "GWAS_LDPRED2_betas.RData"))) {
+    if (!file.exists(file.path(traits_dir, paste0("Traits_", LDpred2_model), "GWAS_LDPRED2_betas.RData"))) {
       ldpred2_beta <- collect_LDPRED2_betas(traits_auto, "auto")
     } else {
       # load(paste0("/genetics3/maos/Geno_PC_external_GWAS/Traits_auto/GWAS_LDPRED2_betas.RData"))
-      load(file.path(trait_dir, paste0("Traits_", LDpred2_model), "GWAS_LDPRED2_betas.RData"))
+      load(file.path(traits_dir, paste0("Traits_", LDpred2_model), "GWAS_LDPRED2_betas.RData"))
 
       ldpred2_beta <- GWAS_LDPRED2_betas
     }
   } else if (LDpred2_model == "grid") {
     traits_grid <- as.matrix(fread(file.path(trait_list_dir, paste0("Gwas_list_", LDpred2_model, ".txt")), header = F))
 
-    if (!file.exists(file.path(trait_dir, paste0("Traits_", LDpred2_model), "GWAS_LDPRED2_betas.RData"))) {
+    if (!file.exists(file.path(traits_dir, paste0("Traits_", LDpred2_model), "GWAS_LDPRED2_betas.RData"))) {
       ldpred2_beta <- collect_LDPRED2_betas(traits_grid, "grid")
     } else {
       # load(paste0("/genetics3/maos/Geno_PC_external_GWAS/Traits_GRID/GWAS_LDPRED2_betas.RData"))
-      load(file.path(trait_dir, paste0("Traits_", LDpred2_model), "GWAS_LDPRED2_betas.RData"))
+      load(file.path(traits_dir, paste0("Traits_", LDpred2_model), "GWAS_LDPRED2_betas.RData"))
       ldpred2_beta <- GWAS_LDPRED2_betas
     }
   } else {
