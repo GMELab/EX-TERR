@@ -4,7 +4,7 @@
 #' @param traits_dir Path to the directory containing LDpred2 output sorted by traits.
 #' @param genotype_dir Path to directory containing genotype files. Directory contains directories Geno_<flag> and files <outcome_db>_09_<chr>_<set>.Rdata
 #' @param blocks Path to the blocks file.
-#' @param traits_list_dir Path to directory containing traits_list sorted by ldpred_model: gwas_list_auto.txt and gwas_list_grid.txt
+#' @param trait_list_dir Path to directory containing traits_list sorted by ldpred_model: gwas_list_auto.txt and gwas_list_grid.txt
 #' @export
 get_block_PRS <- function(chr,
                           flag,
@@ -12,7 +12,7 @@ get_block_PRS <- function(chr,
                           traits_dir,
                           genotype_dir,
                           blocks,
-                          traits_list_dir,
+                          trait_list_dir,
                           outcome_db,
                           output_dir) {
   suppressMessages(library("data.table"))
@@ -70,8 +70,8 @@ get_block_PRS <- function(chr,
   # Main function
   block <- as.matrix(blocks, header = F)
 
-  traits_grid <- as.matrix(fread(file.path(traits_list_dir, "Gwas_list_grid.txt"), header = F))
-  traits_auto <- as.matrix(fread(file.path(traits_list_dir, "Gwas_list_auto.txt"), header = F))
+  traits_grid <- as.matrix(fread(file.path(trait_list_dir, "Gwas_list_grid.txt"), header = F))
+  traits_auto <- as.matrix(fread(file.path(trait_list_dir, "Gwas_list_auto.txt"), header = F))
 
   grid_beta <- collect_LDPRED2_betas(traits_grid, "auto")
 
