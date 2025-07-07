@@ -107,7 +107,7 @@ get_block_PRS <- function(chr,
     SNP_starting <- SNP_ending + 1
     SNP_ending <- SNP_ending + dim(bim)[1]
 
-    dummy <- get_PRS(ldpred2_beta_chr[SNP_starting:SNP_ending, ])
+    dummy <- get_PRS(ldpred2_beta_chr[SNP_starting:SNP_ending, , drop = FALSE])
 
     print(paste("chr", chr, "set", set, "is done"))
   }
