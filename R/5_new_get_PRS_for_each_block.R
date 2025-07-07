@@ -9,7 +9,7 @@
 get_block_PRS <- function(chr,
                           flag,
                           size = 5000,
-                          traits_dir,
+                          trait_dir,
                           genotype_dir,
                           blocks,
                           trait_list_dir,
