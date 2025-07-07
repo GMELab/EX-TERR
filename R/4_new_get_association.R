@@ -58,7 +58,7 @@ get_assoc <- function(flag,
 
   # Match fam order
   fam <- data.frame(fread(file.path(genotype_dir, paste0("Geno_", flag), paste0(outcome_db, "_final.fam"))))
-  phenos <- as.matrix(phenos[match(fam[, 1, drop = FALSE], phenos$eid), ])
+  phenos <- as.matrix(phenos[match(fam[, 1], phenos$eid), ])
   pheno_data <- phenos[, -1, drop = FALSE]
   pheno_norm <- standardizing_trait(pheno_data)
   print(dim(pheno_norm))
