@@ -24,30 +24,30 @@ LASSO_cv <- function(ids,
   test_blocks <- blocks_orig[which(blocks_orig[, 4] == ids), ]
 
   # Get train_PRS and test_PRS
-  train_prs <- as.matrix(fread(file.path(prs_dir, "Single_PRS", "PRS_chr_1_1_1_disc.txt")))
+  train_prs <- as.matrix(fread(file.path(prs_dir, "PRS_chr_1_1_1_disc.txt")))
   train_PRS <- matrix(0, ncol = dim(train_prs)[2], nrow = dim(train_prs)[1])
   for (i in seq_len(dim(train_blocks)[1]))
   {
     item <- train_blocks[i, ]
-    train_prs <- as.matrix(fread(file.path(prs_dir, "Single_PRS", paste0("PRS_chr_", item[1], "_", item[2], "_", item[3], "_disc.txt"))))
+    train_prs <- as.matrix(fread(file.path(prs_dir, paste0("PRS_chr_", item[1], "_", item[2], "_", item[3], "_disc.txt"))))
     train_PRS <- train_PRS + train_prs
   }
 
-  one_out_prs <- as.matrix(fread(file.path(prs_dir, "Single_PRS", "PRS_chr_1_1_1_disc.txt"))) # This is one out group in discovery set
+  one_out_prs <- as.matrix(fread(file.path(prs_dir, "PRS_chr_1_1_1_disc.txt"))) # This is one out group in discovery set
   one_out_PRS <- matrix(0, ncol = dim(one_out_prs)[2], nrow = dim(one_out_prs)[1])
   for (i in seq_len(dim(test_blocks)[1]))
   {
     item <- test_blocks[i, ]
-    one_out_prs <- as.matrix(fread(file.path(prs_dir, "Single_PRS", paste0("PRS_chr_", item[1], "_", item[2], "_", item[3], "_disc.txt"))))
+    one_out_prs <- as.matrix(fread(file.path(prs_dir, paste0("PRS_chr_", item[1], "_", item[2], "_", item[3], "_disc.txt"))))
     one_out_PRS <- one_out_PRS + one_out_prs
   }
 
-  test_prs <- as.matrix(fread(file.path(prs_dir, "Single_PRS", "PRS_chr_1_1_1_val.txt"))) # This is one out group in validation set
+  test_prs <- as.matrix(fread(file.path(prs_dir, "PRS_chr_1_1_1_val.txt"))) # This is one out group in validation set
   test_PRS <- matrix(0, ncol = dim(test_prs)[2], nrow = dim(test_prs)[1])
   for (i in seq_len(dim(test_blocks)[1]))
   {
     item <- test_blocks[i, ]
-    test_prs <- as.matrix(fread(file.path(prs_dir, "Single_PRS", paste0("PRS_chr_", item[1], "_", item[2], "_", item[3], "_val.txt"))))
+    test_prs <- as.matrix(fread(file.path(prs_dir, paste0("PRS_chr_", item[1], "_", item[2], "_", item[3], "_val.txt"))))
     test_PRS <- test_PRS + test_prs
   }
 
