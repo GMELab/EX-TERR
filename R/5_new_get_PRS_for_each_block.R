@@ -98,7 +98,7 @@ get_block_PRS <- function(chr,
 
   bim <- as.matrix(fread(file.path(genotype_dir, "Geno_disc", paste0(outcome_db, "_final.bim")), header = F))
 
-  ldpred2_beta_chr <- ldpred2_beta[which(as.numeric(bim[, 1]) == chr), ]
+  ldpred2_beta_chr <- ldpred2_beta[which(as.numeric(bim[, 1]) == chr), , drop = FALSE]
 
   SNP_ending <- 0
   for (set in 1:block[chr])
