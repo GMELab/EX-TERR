@@ -53,13 +53,13 @@ get_assoc <- function(flag,
   PCs <- as.matrix(fread(file.path(corrections_dir, paste0("PCs_", flag, ".txt")), header = T))
 
   phenos <- data.frame(fread(file.path(pheno_dir, paste0("Pheno_", flag, ".txt")), header = T))
-  pheno_data <- phenos[, -1]
+  pheno_data <- phenos[, -1, drop = FALSE]
   pheno_norm <- standardizing_trait(pheno_data)
 
   # Match fam order
   fam <- data.frame(fread(file.path(genotype_dir, paste0("Geno_", flag), paste0(outcome_db, "_final.fam"))))
-  phenos <- as.matrix(phenos[match(fam[, 1], phenos$eid), ])
-  pheno_data <- phenos[, -1]
+  phenos <- as.matrix(phenos[match(fam[, 1, drop = FALSE], phenos$eid), ])
+  pheno_data <- phenos[, -1, drop = FALSE]
   pheno_norm <- standardizing_trait(pheno_data)
 
   earth_PRS <- list()
@@ -82,33 +82,27 @@ get_assoc <- function(flag,
   Earth_dicho <- c("Trait", "beta", "beta_SE", "pval", "OR")
   for (i in seq_len(dim(pheno_norm)[2]))
   {
-    trait <- colnames(pheno_norm)[i]
-    print(dim(earth_PRS))
-    print(class(earth_PRS))
-    print(dim(earth_PRS[[ids]]))
-    print(class(earth_PRS[[ids]]))
-    print(colnames(earth_PRS[[ids]]))
-    print(i)
+    pheno <- colnames(pheno_norm)[i]
     if (max(pheno_data[, i]) == 1 && min(pheno_data[, i]) == 0) {
       if (max(earth_PRS[[ids]][, i]) != 0 && min(earth_PRS[[ids]][, i]) != 0) {
         temp3 <- summary(glm(pheno_norm[, i] ~ standardization(earth_PRS[[ids]][, i]) + Age[, 2] + Sex[, 2] + PCs[, c(2:11)], family = binomial))
-        item3 <- c(trait, coef(temp3)[2, c(1, 2, 4)], exp(coef(temp3)[2, 1]))
+        item3 <- c(pheno, coef(temp3)[2, c(1, 2, 4)], exp(coef(temp3)[2, 1]))
         Earth_dicho <- rbind(Earth_dicho, item3)
       } else {
-        item3 <- c(trait, "NA", "NA", "NA", "NA")
+        item3 <- c(pheno, "NA", "NA", "NA", "NA")
         Earth_dicho <- rbind(Earth_dicho, item3)
-        item <- c(trait, ids)
+        item <- c(pheno, ids)
         Earth_NAs <- rbind(Earth_NAs, item)
       }
     } else {
       if (max(earth_PRS[[ids]][, i]) != 0 && min(earth_PRS[[ids]][, i]) != 0) {
         temp1 <- summary(lm(pheno_norm[, i] ~ standardization(earth_PRS[[ids]][, i]) + Age[, 2] + Sex[, 2] + PCs[, c(2:11)]))
-        item1 <- c(trait, coef(temp1)[2, c(1, 2, 4)], temp1$adj.r.squared)
+        item1 <- c(pheno, coef(temp1)[2, c(1, 2, 4)], temp1$adj.r.squared)
         Earth_cont <- rbind(Earth_cont, item1)
       } else {
-        item1 <- c(trait, "NA", "NA", "NA", "NA")
+        item1 <- c(pheno, "NA", "NA", "NA", "NA")
         Earth_cont <- rbind(Earth_cont, item1)
-        item <- c(trait, ids)
+        item <- c(pheno, ids)
         Earth_NAs <- rbind(Earth_NAs, item)
       }
     }
