@@ -32,6 +32,7 @@ get_assoc <- function(flag,
     pheno_norm <- as.numeric()
     for (i in seq_len(dim(pheno_data)[2]))
     {
+      print("STD", i)
       if (max(pheno_data[, i], na.rm = T) == 1 && min(pheno_data[, i], na.rm = T) == 0) {
         Y_norm <- pheno_data[, i]
         Y_norm[which(is.na(Y_norm))] <- 0
@@ -58,10 +59,9 @@ get_assoc <- function(flag,
 
   # Match fam order
   fam <- data.frame(fread(file.path(genotype_dir, paste0("Geno_", flag), paste0(outcome_db, "_final.fam"))))
-  phenos <- as.matrix(phenos[match(fam[, 1], phenos$eid), ])
+  phenos <- as.matrix(phenos[match(fam[, 1], phenos[, 1]), ])
   pheno_data <- phenos[, -1, drop = FALSE]
   pheno_norm <- standardizing_trait(pheno_data)
-  print(dim(pheno_norm))
 
   earth_PRS <- list()
   for (ids in 1:5)
@@ -84,6 +84,7 @@ get_assoc <- function(flag,
   for (i in seq_len(dim(pheno_norm)[2]))
   {
     pheno <- colnames(pheno_norm)[i]
+    print(pheno, i)
     if (max(pheno_data[, i]) == 1 && min(pheno_data[, i]) == 0) {
       if (max(earth_PRS[[ids]][, i]) != 0 && min(earth_PRS[[ids]][, i]) != 0) {
         temp3 <- summary(glm(pheno_norm[, i] ~ standardization(earth_PRS[[ids]][, i]) + Age[, 2] + Sex[, 2] + PCs[, c(2:11)], family = binomial))
