@@ -41,10 +41,10 @@ get_block_PRS <- function(chr,
   }
 
 
-  load(file.path(genotype_dir, paste0("Geno_", flag), paste0(outcome_db, "_09_", chr, "_", set, ".RData")))
   get_PRS <- function(adj_betas) {
     cycles <- ceiling(dim(adj_betas)[1] / size)
     ending <- 0
+    load(file.path(genotype_dir, paste0("Geno_", flag), paste0(outcome_db, "_09_", chr, "_", set, ".RData")))
 
     for (i in 1:cycles)
     {
