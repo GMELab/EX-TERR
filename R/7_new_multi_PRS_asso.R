@@ -51,6 +51,7 @@ multi_PRS_asso <- function(
 
         Results <- c("Traits", "Beta", "beta_se", "pval", "adj_r2")
         cont_trait <- colnames(one_cont_PRS)
+        print(cont_trait)
         for (i in seq_along(cont_trait))
         {
                 trait <- cont_trait[i]
