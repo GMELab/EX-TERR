@@ -49,6 +49,7 @@ multi_PRS_asso <- function(
                 one_dicho_PRS <- one_dicho_PRS + one_dicho_prs
         }
 
+        print("FIRST")
         if (nrow(one_cont_PRS) > 0) {
                 Results <- c("Traits", "Beta", "beta_se", "pval", "adj_r2")
                 cont_trait <- colnames(one_cont_PRS)
@@ -69,6 +70,7 @@ multi_PRS_asso <- function(
                 write.table(Results, file.path(prs_dir, paste0("R7_LASSO_Asso_cont_disc", flag_2, ".txt")), col.names = F, row.names = F, quote = F, sep = "\t")
         }
 
+        print("SECOND")
         if (nrow(one_dicho_PRS) > 0) {
                 Results <- c("Traits", "Beta", "beta_se", "pval", "OR")
                 dicho_trait <- colnames(one_dicho_PRS)
@@ -114,6 +116,7 @@ multi_PRS_asso <- function(
         sex <- Sex[, 2]
         pcs <- PCs[, 2:11]
 
+        print("THIRD")
         if (nrow(one_cont_PRS) > 0) {
                 Results <- c("Traits", "Beta", "beta_se", "pval", "adj_r2")
                 cont_trait <- colnames(one_cont_PRS)
@@ -134,6 +137,7 @@ multi_PRS_asso <- function(
                 write.table(Results, file.path(prs_dir, paste0("R7_LASSO_Asso_cont_val", flag_2, ".txt")), col.names = F, row.names = F, quote = F, sep = "\t")
         }
 
+        print("FOURTH")
         if (nrow(one_dicho_PRS) > 0) {
                 Results <- c("Traits", "Beta", "beta_se", "pval", "OR")
                 dicho_trait <- colnames(one_dicho_PRS)
