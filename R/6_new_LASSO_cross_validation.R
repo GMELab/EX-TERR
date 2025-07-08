@@ -52,10 +52,6 @@ LASSO_cv <- function(ids,
     test_PRS <- test_PRS + test_prs
   }
 
-  print(dim(train_PRS))
-  print(dim(one_out_PRS))
-  print(dim(test_PRS))
-
   # LASSO training
   continuous_trait <- as.numeric()
   one_out_PRS_cont_train <- as.numeric()
@@ -131,6 +127,7 @@ LASSO_cv <- function(ids,
     print(paste("IDs", ids, i, trait, "is done"))
   }
 
+  print(dim(one_out_PRS_cont_train))
   colnames(one_out_PRS_cont_train) <- continuous_trait
   colnames(one_out_PRS_cont_test) <- continuous_trait
 
