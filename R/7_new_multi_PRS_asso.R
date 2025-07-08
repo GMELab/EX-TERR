@@ -146,11 +146,15 @@ multi_PRS_asso <- function(
                         trait <- dicho_trait[i]
 
                         phenos <- as.matrix(fread(file.path(pheno_dir, paste0(trait, "_val.txt")), header = T))
+                        print(trait)
+                        print(dim(phenos))
 
                         pheno_norm <- phenos[, 3, drop = F]
                         pheno_norm <- ifelse(pheno_norm != 0, 1, 0)
+                        print(dim(pheno_norm))
 
                         multi_PRS <- one_dicho_PRS[, i, drop = FALSE]
+                        print(dim(multi_PRS))
 
                         temp <- summary(glm(pheno_norm ~ standardization(multi_PRS) + age + sex + pcs, family = "binomial"))
                         item <- c(trait, coef(temp)[2, c(1, 2, 4)], exp(coef(temp)[2, 1]))
