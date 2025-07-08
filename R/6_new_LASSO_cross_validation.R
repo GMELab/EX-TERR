@@ -73,9 +73,9 @@ LASSO_cv <- function(ids,
       mask_gwas <- as.matrix(fread(file.path(mask_dir, paste0(trait, "_masked.txt")), header = F))
       mask_ids <- match(mask_gwas, colnames(train_PRS))
 
-      x_train <- x_train[, -mask_ids]
-      one_train <- one_train[, -mask_ids]
-      one_test <- one_test[, -mask_ids]
+      x_train <- x_train[, -mask_ids, drop = FALSE]
+      one_train <- one_train[, -mask_ids, drop = FALSE]
+      one_test <- one_test[, -mask_ids, drop = FALSE]
     }
 
     # phenos = as.matrix(fread(paste0("/genetics3/maos/Geno_PC_external_GWAS/Traits_UKB/", trait, "/Pheno/", trait, "_disc_updated.txt"), header = T))
