@@ -8,7 +8,8 @@
 LASSO_cv <- function(ids,
                      cv_group,
                      outcome_list,
-                     mask_dir,
+                     mask,
+                     mask_dir = NULL,
                      pheno_dir,
                      prs_dir) {
   suppressMessages(library("data.table"))
@@ -73,7 +74,7 @@ LASSO_cv <- function(ids,
     # 	if(file.exists(paste0("/genetics3/maos/Geno_PC_external_GWAS/Masked_data/20240814/", trait, "_masked.txt")))
     # 	{
     # 		mask_gwas = as.matrix(fread(paste0("/genetics3/maos/Geno_PC_external_GWAS/Masked_data/20240814/", trait, "_masked.txt"), header = F))
-    if (file.exists(file.path(mask_dir, paste0(trait, "_masked.txt")))) {
+    if (mask == "mask" && file.exists(file.path(mask_dir, paste0(trait, "_masked.txt")))) {
       mask_gwas <- as.matrix(fread(file.path(mask_dir, paste0(trait, "_masked.txt")), header = F))
       mask_ids <- match(mask_gwas, colnames(train_PRS))
 
