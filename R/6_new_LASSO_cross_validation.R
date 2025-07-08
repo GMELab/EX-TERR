@@ -87,29 +87,41 @@ LASSO_cv <- function(ids,
     # define response variable
     y_train <- phenos[, 3, drop = F]
     if (max(y_train) != 1 || min(y_train) != 0) {
-      # perform k-fold cross-validation to find optimal lambda value
-      cv_model <- cv.glmnet(x_train, y_train, alpha = 1)
-      # find optimal lambda value that minimizes test MSE
-      best_lambda <- cv_model$lambda.min
-      best_model <- glmnet(x_train, y_train, alpha = 1, lambda = best_lambda)
+      if (ncol(x_train) > 1) {
+        # perform k-fold cross-validation to find optimal lambda value
+        cv_model <- cv.glmnet(x_train, y_train, alpha = 1)
+        # find optimal lambda value that minimizes test MSE
+        best_lambda <- cv_model$lambda.min
+        best_model <- glmnet(x_train, y_train, alpha = 1, lambda = best_lambda)
 
-      lasso_predict_train <- predict(best_model, s = 0.2, newx = one_train)
-      lasso_predict_test <- predict(best_model, s = 0.2, newx = one_test)
+        lasso_predict_train <- predict(best_model, s = 0.2, newx = one_train)
+        lasso_predict_test <- predict(best_model, s = 0.2, newx = one_test)
+      } else {
+        best_model <- glm(y_train ~ x_train, family = "gaussian")
+        lasso_predict_train <- predict(best_model, newdata = data.frame(x_train = one_train))
+        lasso_predict_test <- predict(best_model, newdata = data.frame(x_train = one_test))
+      }
 
       one_out_PRS_cont_train <- cbind(one_out_PRS_cont_train, lasso_predict_train)
       one_out_PRS_cont_test <- cbind(one_out_PRS_cont_test, lasso_predict_test)
 
       continuous_trait <- c(continuous_trait, trait)
     } else {
-      # perform k-fold cross-validation to find optimal lambda value
-      cv_model <- cv.glmnet(x_train, y_train, alpha = 1, family = "binomial")
+      if (ncol(x_train) > 1) {
+        # perform k-fold cross-validation to find optimal lambda value
+        cv_model <- cv.glmnet(x_train, y_train, alpha = 1, family = "binomial")
 
-      # find optimal lambda value that minimizes test MSE
-      best_lambda <- cv_model$lambda.min
-      best_model <- glmnet(x_train, y_train, alpha = 1, lambda = best_lambda, family = "binomial")
+        # find optimal lambda value that minimizes test MSE
+        best_lambda <- cv_model$lambda.min
+        best_model <- glmnet(x_train, y_train, alpha = 1, lambda = best_lambda, family = "binomial")
 
-      lasso_predict_train <- predict(best_model, s = 0.2, newx = one_train)
-      lasso_predict_test <- predict(best_model, s = 0.2, newx = one_test)
+        lasso_predict_train <- predict(best_model, s = 0.2, newx = one_train)
+        lasso_predict_test <- predict(best_model, s = 0.2, newx = one_test)
+      } else {
+        best_model <- glm(y_train ~ x_train, family = "binomial")
+        lasso_predict_train <- predict(best_model, newdata = data.frame(x_train = one_train))
+        lasso_predict_test <- predict(best_model, newdata = data.frame(x_train = one_test))
+      }
 
       one_out_PRS_dicho_train <- cbind(one_out_PRS_dicho_train, lasso_predict_train)
       one_out_PRS_dicho_test <- cbind(one_out_PRS_dicho_test, lasso_predict_test)
