@@ -36,6 +36,8 @@ multi_PRS_asso <- function(
         # For association in discovery set
         one_dicho_prs <- as.matrix(fread(file.path(prs_dir, paste0("R6_LASSO_dicho_disc_1", flag_2, ".txt")))) # This is one out group in discovery set
         one_cont_prs <- as.matrix(fread(file.path(prs_dir, paste0("R6_LASSO_continuous_disc_1", flag_2, ".txt")))) # This is one out group in discovery set
+        print(dim(one_dicho_prs))
+        print(dim(one_cont_prs))
 
         one_dicho_PRS <- matrix(0, ncol = dim(one_dicho_prs)[2], nrow = dim(one_dicho_prs)[1])
         one_cont_PRS <- matrix(0, ncol = dim(one_cont_prs)[2], nrow = dim(one_cont_prs)[1])
@@ -51,7 +53,6 @@ multi_PRS_asso <- function(
 
         Results <- c("Traits", "Beta", "beta_se", "pval", "adj_r2")
         cont_trait <- colnames(one_cont_PRS)
-        print(cont_trait)
         for (i in seq_along(cont_trait))
         {
                 trait <- cont_trait[i]
