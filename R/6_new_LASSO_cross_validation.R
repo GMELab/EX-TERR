@@ -52,8 +52,11 @@ LASSO_cv <- function(ids,
     test_PRS <- test_PRS + test_prs
   }
 
+  print(dim(train_PRS))
+  print(dim(one_out_PRS))
+  print(dim(test_PRS))
+
   # LASSO training
-  # setwd("/genetics3/lea/FULL-EX-TERR/Geno_disc_PRS")
   continuous_trait <- as.numeric()
   one_out_PRS_cont_train <- as.numeric()
   one_out_PRS_cont_test <- as.numeric()
@@ -70,10 +73,6 @@ LASSO_cv <- function(ids,
     one_train <- one_out_PRS # one out in disc set
     one_test <- test_PRS # one out in val set
 
-
-    # 	if(file.exists(paste0("/genetics3/maos/Geno_PC_external_GWAS/Masked_data/20240814/", trait, "_masked.txt")))
-    # 	{
-    # 		mask_gwas = as.matrix(fread(paste0("/genetics3/maos/Geno_PC_external_GWAS/Masked_data/20240814/", trait, "_masked.txt"), header = F))
     if (mask == "mask" && file.exists(file.path(mask_dir, paste0(trait, "_masked.txt")))) {
       mask_gwas <- as.matrix(fread(file.path(mask_dir, paste0(trait, "_masked.txt")), header = F))
       mask_ids <- match(mask_gwas, colnames(train_PRS))
