@@ -53,11 +53,11 @@ LASSO_cv <- function(ids,
   }
 
   # LASSO training
-  continuous_trait <- as.numeric()
+  continuous_trait <- as.character()
   one_out_PRS_cont_train <- as.numeric()
   one_out_PRS_cont_test <- as.numeric()
 
-  dicho_trait <- as.numeric()
+  dicho_trait <- as.character()
   one_out_PRS_dicho_train <- as.numeric()
   one_out_PRS_dicho_test <- as.numeric()
 
