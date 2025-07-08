@@ -33,10 +33,6 @@ multi_PRS_asso <- function(
         sex <- Sex[, 2]
         pcs <- PCs[, 2:11]
 
-        if (!dir.exists("Multi_PRS")) {
-                stop("Change working directory. Must contain direcotry Multi_PRS")
-        }
-
         # For association in discovery set
         one_dicho_prs <- as.matrix(fread(file.path(prs_dir, paste0("R6_LASSO_dicho_disc_1", flag_2, ".txt")))) # This is one out group in discovery set
         one_cont_prs <- as.matrix(fread(file.path(prs_dir, paste0("R6_LASSO_continuous_disc_1", flag_2, ".txt")))) # This is one out group in discovery set
@@ -103,7 +99,7 @@ multi_PRS_asso <- function(
                 one_cont_prs <- as.matrix(fread(file.path(prs_dir, paste0("R6_LASSO_continuous_val_", ids, flag_2, ".txt"))))
                 one_cont_PRS <- one_cont_PRS + one_cont_prs
 
-                one_dicho_prs <- as.matrix(fread(file.path(prs_dir, paste0("Multi_PRS/R6_LASSO_dicho_val_", ids, flag_2, ".txt"))))
+                one_dicho_prs <- as.matrix(fread(file.path(prs_dir, paste0("R6_LASSO_dicho_val_", ids, flag_2, ".txt"))))
                 one_dicho_PRS <- one_dicho_PRS + one_dicho_prs
         }
 
