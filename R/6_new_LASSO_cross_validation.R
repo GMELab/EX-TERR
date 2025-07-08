@@ -127,7 +127,11 @@ LASSO_cv <- function(ids,
     print(paste("IDs", ids, i, trait, "is done"))
   }
 
-  print(dim(one_out_PRS_cont_train))
+  one_out_PRS_cont_train <- as.matrix(one_out_PRS_cont_train)
+  one_out_PRS_cont_test <- as.matrix(one_out_PRS_cont_test)
+  one_out_PRS_dicho_train <- as.matrix(one_out_PRS_dicho_train)
+  one_out_PRS_dicho_test <- as.matrix(one_out_PRS_dicho_test)
+
   colnames(one_out_PRS_cont_train) <- continuous_trait
   colnames(one_out_PRS_cont_test) <- continuous_trait
 
