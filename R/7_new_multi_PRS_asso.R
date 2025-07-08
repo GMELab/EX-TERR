@@ -154,7 +154,7 @@ multi_PRS_asso <- function(
                         print(dim(pheno_norm))
 
                         multi_PRS <- one_dicho_PRS[, i, drop = FALSE]
-                        print(dim(multi_PRS))
+                        print(head(one_dicho_PRS))
 
                         temp <- summary(glm(pheno_norm ~ standardization(multi_PRS) + age + sex + pcs, family = "binomial"))
                         item <- c(trait, coef(temp)[2, c(1, 2, 4)], exp(coef(temp)[2, 1]))
