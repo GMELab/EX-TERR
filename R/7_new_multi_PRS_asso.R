@@ -51,42 +51,45 @@ multi_PRS_asso <- function(
                 one_dicho_PRS <- one_dicho_PRS + one_dicho_prs
         }
 
-        Results <- c("Traits", "Beta", "beta_se", "pval", "adj_r2")
-        cont_trait <- colnames(one_cont_PRS)
-        for (i in seq_along(cont_trait))
-        {
-                trait <- cont_trait[i]
+        if (nrow(one_cont_PRS) > 0) {
+                Results <- c("Traits", "Beta", "beta_se", "pval", "adj_r2")
+                cont_trait <- colnames(one_cont_PRS)
+                for (i in seq_along(cont_trait))
+                {
+                        trait <- cont_trait[i]
 
-                phenos <- as.matrix(fread(paste0(pheno_dir, "/", trait, "_disc.txt"), header = T))
-                pheno_resid <- resid(lm(phenos[, 3] ~ age + sex + pcs))
-                pheno_norm <- standardization(pheno_resid)
+                        phenos <- as.matrix(fread(paste0(pheno_dir, "/", trait, "_disc.txt"), header = T))
+                        pheno_resid <- resid(lm(phenos[, 3] ~ age + sex + pcs))
+                        pheno_norm <- standardization(pheno_resid)
 
-                multi_PRS <- one_cont_PRS[, i]
+                        multi_PRS <- one_cont_PRS[, i]
 
-                temp <- summary(lm(pheno_norm ~ standardization(multi_PRS)))
-                item <- c(trait, coef(temp)[2, c(1, 2, 4)], temp$adj.r.squared)
-                Results <- rbind(Results, item)
-        }
-        write.table(Results, file.path(prs_dir, paste0("R7_LASSO_Asso_cont_disc", flag_2, ".txt")), col.names = F, row.names = F, quote = F, sep = "\t")
-
-        Results <- c("Traits", "Beta", "beta_se", "pval", "OR")
-        dicho_trait <- colnames(one_dicho_PRS)
-
-        for (i in 1:length(dicho_trait))
-        {
-                trait <- dicho_trait[i]
-                phenos <- as.matrix(fread(file.path(pheno_dir, paste0(trait, "_disc.txt")), header = T))
-                pheno_norm <- phenos[, 3, drop = F]
-                pheno_norm <- ifelse(pheno_norm != 0, 1, 0)
-
-                multi_PRS <- one_dicho_PRS[, i]
-
-                temp <- summary(glm(pheno_norm ~ standardization(multi_PRS) + age + sex + pcs, family = "binomial"))
-                item <- c(trait, coef(temp)[2, c(1, 2, 4)], exp(coef(temp)[2, 1]))
-                Results <- rbind(Results, item)
+                        temp <- summary(lm(pheno_norm ~ standardization(multi_PRS)))
+                        item <- c(trait, coef(temp)[2, c(1, 2, 4)], temp$adj.r.squared)
+                        Results <- rbind(Results, item)
+                }
+                write.table(Results, file.path(prs_dir, paste0("R7_LASSO_Asso_cont_disc", flag_2, ".txt")), col.names = F, row.names = F, quote = F, sep = "\t")
         }
 
-        write.table(Results, file.path(prs_dir, paste0("R7_LASSO_Asso_dicho_disc", flag_2, ".txt")), col.names = F, row.names = F, quote = F, sep = "\t")
+        if (nrow(one_dicho_PRS) > 0) {
+                Results <- c("Traits", "Beta", "beta_se", "pval", "OR")
+                dicho_trait <- colnames(one_dicho_PRS)
+
+                for (i in seq_along(dicho_trait))
+                {
+                        trait <- dicho_trait[i]
+                        phenos <- as.matrix(fread(file.path(pheno_dir, paste0(trait, "_disc.txt")), header = T))
+                        pheno_norm <- phenos[, 3, drop = F]
+                        pheno_norm <- ifelse(pheno_norm != 0, 1, 0)
+
+                        multi_PRS <- one_dicho_PRS[, i]
+
+                        temp <- summary(glm(pheno_norm ~ standardization(multi_PRS) + age + sex + pcs, family = "binomial"))
+                        item <- c(trait, coef(temp)[2, c(1, 2, 4)], exp(coef(temp)[2, 1]))
+                        Results <- rbind(Results, item)
+                }
+                write.table(Results, file.path(prs_dir, paste0("R7_LASSO_Asso_dicho_disc", flag_2, ".txt")), col.names = F, row.names = F, quote = F, sep = "\t")
+        }
 
 
         # For association in validation set
@@ -113,44 +116,46 @@ multi_PRS_asso <- function(
         sex <- Sex[, 2]
         pcs <- PCs[, 2:11]
 
-        Results <- c("Traits", "Beta", "beta_se", "pval", "adj_r2")
-        cont_trait <- colnames(one_cont_PRS)
-        for (i in seq_along(cont_trait))
-        {
-                trait <- cont_trait[i]
+        if (nrow(one_cont_PRS) > 0) {
+                Results <- c("Traits", "Beta", "beta_se", "pval", "adj_r2")
+                cont_trait <- colnames(one_cont_PRS)
+                for (i in seq_along(cont_trait))
+                {
+                        trait <- cont_trait[i]
 
-                phenos <- as.matrix(fread(file.path(pheno_dir, paste0(trait, "_val.txt")), header = T))
-                pheno_resid <- resid(lm(phenos[, 3] ~ age + sex + pcs))
-                pheno_norm <- standardization(pheno_resid)
+                        phenos <- as.matrix(fread(file.path(pheno_dir, paste0(trait, "_val.txt")), header = T))
+                        pheno_resid <- resid(lm(phenos[, 3] ~ age + sex + pcs))
+                        pheno_norm <- standardization(pheno_resid)
 
-                multi_PRS <- one_cont_PRS[, i]
+                        multi_PRS <- one_cont_PRS[, i]
 
-                temp <- summary(lm(pheno_norm ~ standardization(multi_PRS)))
-                item <- c(trait, coef(temp)[2, c(1, 2, 4)], temp$adj.r.squared)
-                Results <- rbind(Results, item)
-        }
-        write.table(Results, file.path(prs_dir, paste0("R7_LASSO_Asso_cont_val", flag_2, ".txt")), col.names = F, row.names = F, quote = F, sep = "\t")
-
-        Results <- c("Traits", "Beta", "beta_se", "pval", "OR")
-        dicho_trait <- colnames(one_dicho_PRS)
-
-        for (i in 1:length(dicho_trait))
-        {
-                trait <- dicho_trait[i]
-
-                phenos <- as.matrix(fread(file.path(pheno_dir, paste0(trait, "_val.txt")), header = T))
-
-                pheno_norm <- phenos[, 3, drop = F]
-                pheno_norm <- ifelse(pheno_norm != 0, 1, 0)
-
-                multi_PRS <- one_dicho_PRS[, i]
-
-                temp <- summary(glm(pheno_norm ~ standardization(multi_PRS) + age + sex + pcs, family = "binomial"))
-                item <- c(trait, coef(temp)[2, c(1, 2, 4)], exp(coef(temp)[2, 1]))
-                Results <- rbind(Results, item)
+                        temp <- summary(lm(pheno_norm ~ standardization(multi_PRS)))
+                        item <- c(trait, coef(temp)[2, c(1, 2, 4)], temp$adj.r.squared)
+                        Results <- rbind(Results, item)
+                }
+                write.table(Results, file.path(prs_dir, paste0("R7_LASSO_Asso_cont_val", flag_2, ".txt")), col.names = F, row.names = F, quote = F, sep = "\t")
         }
 
-        write.table(Results, file.path(prs_dir, paste0("R7_LASSO_Asso_dicho_val", flag_2, ".txt")), col.names = F, row.names = F, quote = F, sep = "\t")
+        if (nrow(one_dicho_PRS) > 0) {
+                Results <- c("Traits", "Beta", "beta_se", "pval", "OR")
+                dicho_trait <- colnames(one_dicho_PRS)
+                for (i in seq_along(dicho_trait))
+                {
+                        trait <- dicho_trait[i]
+
+                        phenos <- as.matrix(fread(file.path(pheno_dir, paste0(trait, "_val.txt")), header = T))
+
+                        pheno_norm <- phenos[, 3, drop = F]
+                        pheno_norm <- ifelse(pheno_norm != 0, 1, 0)
+
+                        multi_PRS <- one_dicho_PRS[, i]
+
+                        temp <- summary(glm(pheno_norm ~ standardization(multi_PRS) + age + sex + pcs, family = "binomial"))
+                        item <- c(trait, coef(temp)[2, c(1, 2, 4)], exp(coef(temp)[2, 1]))
+                        Results <- rbind(Results, item)
+                }
+                write.table(Results, file.path(prs_dir, paste0("R7_LASSO_Asso_dicho_val", flag_2, ".txt")), col.names = F, row.names = F, quote = F, sep = "\t")
+        }
 
         return(list(results = Results))
 }
