@@ -36,8 +36,6 @@ multi_PRS_asso <- function(
         # For association in discovery set
         one_dicho_prs <- as.matrix(fread(file.path(prs_dir, paste0("R6_LASSO_dicho_disc_1", flag_2, ".txt")))) # This is one out group in discovery set
         one_cont_prs <- as.matrix(fread(file.path(prs_dir, paste0("R6_LASSO_continuous_disc_1", flag_2, ".txt")))) # This is one out group in discovery set
-        print(dim(one_dicho_prs))
-        print(dim(one_cont_prs))
 
         one_dicho_PRS <- matrix(0, ncol = dim(one_dicho_prs)[2], nrow = dim(one_dicho_prs)[1])
         one_cont_PRS <- matrix(0, ncol = dim(one_cont_prs)[2], nrow = dim(one_cont_prs)[1])
@@ -62,7 +60,7 @@ multi_PRS_asso <- function(
                         pheno_resid <- resid(lm(phenos[, 3] ~ age + sex + pcs))
                         pheno_norm <- standardization(pheno_resid)
 
-                        multi_PRS <- one_cont_PRS[, i]
+                        multi_PRS <- one_cont_PRS[, i, drop = FALSE]
 
                         temp <- summary(lm(pheno_norm ~ standardization(multi_PRS)))
                         item <- c(trait, coef(temp)[2, c(1, 2, 4)], temp$adj.r.squared)
@@ -82,7 +80,7 @@ multi_PRS_asso <- function(
                         pheno_norm <- phenos[, 3, drop = F]
                         pheno_norm <- ifelse(pheno_norm != 0, 1, 0)
 
-                        multi_PRS <- one_dicho_PRS[, i]
+                        multi_PRS <- one_dicho_PRS[, i, drop = FALSE]
 
                         temp <- summary(glm(pheno_norm ~ standardization(multi_PRS) + age + sex + pcs, family = "binomial"))
                         item <- c(trait, coef(temp)[2, c(1, 2, 4)], exp(coef(temp)[2, 1]))
@@ -127,7 +125,7 @@ multi_PRS_asso <- function(
                         pheno_resid <- resid(lm(phenos[, 3] ~ age + sex + pcs))
                         pheno_norm <- standardization(pheno_resid)
 
-                        multi_PRS <- one_cont_PRS[, i]
+                        multi_PRS <- one_cont_PRS[, i, drop = FALSE]
 
                         temp <- summary(lm(pheno_norm ~ standardization(multi_PRS)))
                         item <- c(trait, coef(temp)[2, c(1, 2, 4)], temp$adj.r.squared)
@@ -148,7 +146,7 @@ multi_PRS_asso <- function(
                         pheno_norm <- phenos[, 3, drop = F]
                         pheno_norm <- ifelse(pheno_norm != 0, 1, 0)
 
-                        multi_PRS <- one_dicho_PRS[, i]
+                        multi_PRS <- one_dicho_PRS[, i, drop = FALSE]
 
                         temp <- summary(glm(pheno_norm ~ standardization(multi_PRS) + age + sex + pcs, family = "binomial"))
                         item <- c(trait, coef(temp)[2, c(1, 2, 4)], exp(coef(temp)[2, 1]))
