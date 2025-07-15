@@ -3,7 +3,7 @@
 #' @param outcome_db Name of outcome database (e.g. UKB).
 #' @param rds_in .rds file for target outcome genotypes
 #' @param bed_in .bed file for target outcome genotypes. Required if .rds file not available.
-#' @param sumstats_dir Path to directory containing summary statistics. File should have the name and format of 4.final.txt.gz
+#' @param sumstats_dir Path to directory containing summary statistics. File should have the name and format of [traits]_sumstats.txt
 #' @param freq_dir Path to directory containing MAF files. Each file must be in the form of UKB_09_freq_<chr>_<set>.frq.
 #' @param ref_allele_dir Path to the directory containing ref_allele files. Files will be in the form ref_allele_09 and ref_allele_09_from_<outcome>.
 #' @param traits_dir Path to the directory where the output files will be saved. If NULL, the files will not be saved.
@@ -106,7 +106,7 @@ run_LDPred2 <- function(blocks,
     Sex <- as.matrix(fread(file.path(corrections_dir, "Sex_disc.txt"), header = T))
     PCs <- as.matrix(fread(file.path(corrections_dir, "PCs_disc.txt"), header = T))
   }
-  sumstats <- bigreadr::fread2(file.path(sumstats_dir, trait, "4_final.txt.gz"))
+  sumstats <- bigreadr::fread2(file.path(sumstats_dir, paste0(trait, "_sumstats.txt")))
   # LDpred 2 require the header to follow the exact naming
   names(sumstats) <- c("rsid", "chr", "pos", "a0", "a1", "beta", "beta_se", "N", "p")
 
