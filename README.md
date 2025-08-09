@@ -300,7 +300,8 @@ Input parameters:
 | `ncores` | Number of cores used. |
 
 This function returns a list containing two elements: `ldpred2_betadj` & `ldpred2_beta`. These are weights 
-after LDpred2 adjustment. `ldpred2_betadj` contains standardized weights, adjusted for allele frequency. 
+after LDpred2 adjustment. `ldpred2_betadj` contains standardized weights, adjusted for allele frequency, 
+where $\hat{\beta}_{text{adj}} = \hat{\beta} \times \sqrt{2 \times \text{MAF} (1 - \text{MAF})}$
 
 
 ## License
