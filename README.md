@@ -276,7 +276,20 @@ If the file is not initially generated, `get_Rotations.R` generates rotation mat
 
 
 ### Part 1: LDPRED2 Conversion
-The 
+All association weightings are initially converted by the LDpred2 model in order to optimize input scores. As such, once summary statistics for 
+both external GWAS and internal database associations are obtained, the function `run_LDPred2` allows use of LDPred2 
+to reweigh any input weights.
+
+Input parameters:
+
+ | Parameter | Description|
+ |-----|---------|
+ | `blocks` | Path to blocks file |
+ | 1002 | 2.12  | 
+ | 1004 | 1.89  |
+ | 1005 | 2.01  | 
+
+
 
 ## License
 
