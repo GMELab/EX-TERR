@@ -285,10 +285,22 @@ Input parameters:
  | Parameter | Description|
  |-----|---------|
  | `blocks` | Path to blocks file |
- | 1002 | 2.12  | 
- | 1004 | 1.89  |
- | 1005 | 2.01  | 
+ | `trait` | Name of trait |
+ | `outcome_db` | Name of outcome database (e.g. UKB). |
+ | `rds_in` | .rds file for target outcome genotypes |
+ | `bed_in` | .bed file for target outcome genotypes. Required if .rds file not available. |
+ | `sumstats_dir` | Path to directory containing summary statistics. File should have the name and format of `[traits]_sumstats.txt` |
+ | `freq_dir` | Path to directory containing MAF files. Each file must be in the form of `UKB_09_freq_<chr>_<set>.frq`. |
+ | `ref_allele_dir` | Path to the directory containing ref_allele files. Files will be in the form `ref_allele_09` and `ref_allele_09_from_<outcome>`. |
+ | `traits_dir` | Path to the directory where the output files will be saved. If `NULL`, the files will not be saved. |
+ | `trait_type` | Whether trait is "gwas" or "outcome". |
+ | `LDpred2_model` | Use `auto` (no phenotype data available) or `grid` (phenotype data available) for LDpred2. |
+ | `phenotype` | Path to the phenotype file, required only when using the "grid" model. |
+ | `corrections_dir` | Path to directory containing corrections for Age, Sex and PCs. Files should be in the form `<correction>_disc.txt` |
+| `ncores` | Number of cores used. |
 
+This function returns a list containing two elements: `ldpred2_betadj` & `ldpred2_beta`. These are weights 
+after LDpred2 adjustment. `ldpred2_betadj` contains standardized weights, adjusted for allele frequency. 
 
 
 ## License
