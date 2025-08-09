@@ -55,6 +55,8 @@ and `glmnet`.
 
 The following figure extracted shows a general overview of the overall EX-TERR pipeline:
 
+![Alt text](readme_figures/10-15-FINAL_EXTERR_flowchart.png)
+
 ### Data Formatting & Required Files
 
 EX-TERR requires specific file formats and data preparation in order to execute pipeline.
@@ -274,6 +276,7 @@ If the file is not initially generated, `get_Rotations.R` generates rotation mat
 
 
 ### Part 1: LDPRED2 Conversion
+The 
 
 ## License
 
