@@ -303,6 +303,39 @@ This function returns a list containing two elements: `ldpred2_betadj` & `ldpred
 after LDpred2 adjustment. `ldpred2_betadj` contains standardized weights, adjusted for allele frequency (MAF), 
 where $\hat{\beta}_{\text{adj}} = \hat{\beta} \times \sqrt{2 \times \text{MAF} (1 - \text{MAF})}$. 
 
+### Part 2: Thresholding of Rotated LDpred2 Weights by rotation SD.
+
+In order to improve efficiency and reduce noise by dimension reduction, variant information is rotated using matrices
+generated through the `get_rotations()` function. This function only needs to be performed once using the full genotype
+data even before the initiation of the entire pipeline, requiring genotype data, chromosome number,
+number of continguous variants per block (default = 5000) and the blocks file. 
+
+Once rotations are obtained and the SD are calculated for each rotation, the `convert_LDpred2` consolidates
+generated LDpred2 weights for all external GWAS traits and matches them to their correponding rotation SD.
+Required arguments are followed:
+
+ | Parameter | Description|
+ |-----|---------|
+ | `trait_type` | Specifies type of trait and storage directory: `auto`, `grid` or `outcome` |
+ | `chr` | Chromosome number (1..22) |
+ | `flag` | Set label specifying train or test set |
+ | `size` | Size/number of contiguous variants and thus rotated components per block (default = 5000) |
+ | `outcome_db` | Name of outcome database (e.g. UKB). |
+ | `rotations_dir` | Path to directory containing rotations (as generated from above). File must be in the 
+ form `G_PC_SD_<chr>_set_<set>_id_<id>.Rdata`| 
+ | `LDpred2_model` | Use `auto` (no phenotype data available) or `grid` (phenotype data available) for LDpred2. |
+ | `traits_dir` | Path to the directory where the output files will be saved. If `NULL`, the files will not be saved. |
+ | `trait_list_dir` |  Path to directory that contains trait list files. Must be in the format `Gwas_list_<LDpred2_model>` |
+ | `blocks` | Path to blocks file |
+ | `bim_dir` | Path to directory containing outcome genotype .bim files divided into chromsome and set. Must be in the form `<outcome_db>_09_<chr>_<set>.bim` |
+ | `bim_file` | Full .bim file for entire genotype, without division into chromosomes or sets. |
+ 
+Output is returned per set (train/test) for each chromsome and for both independent (GWAS) and dependent (outcome) data. 
+
+Subsequently, 
+
+
+
 
 ## License
 
