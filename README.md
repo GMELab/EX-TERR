@@ -18,7 +18,7 @@ combine and priortize polygenic genetic information from multiple different trai
 - [Data Formatting & Required Files](#data-formatting--required-files)
 - [Part 1: LDpred2 Conversion](#part-1-ldpred2-conversion)
 - [Part 2: Thresholding of Rotated LDpred2 Weights by SD](#part-2-thresholding-of-rotated-ldpred2-weights-by-sd)
-- 
+- [Part 3: Earth Polygenic Risk Score](#part-3-earth-polygenic-risk-score)
 
 ## Installation
 The direct installation of EX-TERR can be performed using `devtools::install_github`:
@@ -305,6 +305,8 @@ This function returns a list containing two elements: `ldpred2_betadj` & `ldpred
 after LDpred2 adjustment. `ldpred2_betadj` contains standardized weights, adjusted for allele frequency (MAF), 
 where $\hat{\beta}_{\text{adj}} = \hat{\beta} \times \sqrt{2 \times \text{MAF} (1 - \text{MAF})}$. 
 
+<br>
+
 ### Part 2: Thresholding of Rotated LDpred2 Weights by SD
 
 In order to improve efficiency and reduce noise by dimension reduction, variant information is rotated using matrices
@@ -347,7 +349,11 @@ conservative and lower would be less conservative. Arguments for this function a
  | `cv_groups` | Path to cross validation groups file `Cross_validation_groups.txt` |
  | `output_dir`| Name of target output directory |
 
-Output are filtered rotated matrices of genotype data for each fold. 
+Output are filtered rotated matrices of genotype data for each of the five CV folds. 
+
+<br>
+
+### Part 3: Earth Polygenic Risk Score
 
 ## License
 
