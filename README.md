@@ -17,7 +17,8 @@ combine and priortize polygenic genetic information from multiple different trai
 - [Contact Information](#contact-information)
 - [Data Formatting & Required Files](#data-formatting--required-files)
 - [Part 1: LDpred2 Conversion](#part-1-ldpred2-conversion)
-- [Part 2: LDpred2 Conversion](#part-1-ldpred2-conversion)
+- [Part 2: Thresholding of Rotated LDpred2 Weights by SD](#part-2-thresholding-of-rotated-ldpred2-weights-by-sd)
+- 
 
 ## Installation
 The direct installation of EX-TERR can be performed using `devtools::install_github`:
@@ -304,7 +305,7 @@ This function returns a list containing two elements: `ldpred2_betadj` & `ldpred
 after LDpred2 adjustment. `ldpred2_betadj` contains standardized weights, adjusted for allele frequency (MAF), 
 where $\hat{\beta}_{\text{adj}} = \hat{\beta} \times \sqrt{2 \times \text{MAF} (1 - \text{MAF})}$. 
 
-### Part 2: Thresholding of Rotated LDpred2 Weights by rotation SD.
+### Part 2: Thresholding of Rotated LDpred2 Weights by SD
 
 In order to improve efficiency and reduce noise by dimension reduction, variant information is rotated using matrices
 generated through the `get_rotations()` function. This function only needs to be performed once using the full genotype
