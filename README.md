@@ -17,6 +17,7 @@ combine and priortize polygenic genetic information from multiple different trai
 - [Contact Information](#contact-information)
 - [Data Formatting & Required Files](#data-formatting--required-files)
 - [Part 1: LDpred2 Conversion](#part-1-ldpred2-conversion)
+- [Part 2: LDpred2 Conversion](#part-1-ldpred2-conversion)
 
 ## Installation
 The direct installation of EX-TERR can be performed using `devtools::install_github`:
@@ -314,7 +315,7 @@ Once rotations are obtained and the SD are calculated for each rotation, the `co
 generated LDpred2 weights for all external GWAS traits and matches them to their correponding rotation SD.
 Required arguments are followed:
 
- | Parameter | Description|
+ | Parameter | Description |
  |-----|---------|
  | `trait_type` | Specifies type of trait and storage directory: `auto`, `grid` or `outcome` |
  | `chr` | Chromosome number (1..22) |
@@ -331,10 +332,21 @@ Required arguments are followed:
  
 Output is returned per set (train/test) for each chromsome and for both independent (GWAS) and dependent (outcome) data. 
 
-Subsequently, 
+Subsequently, the `geno_PCA` function uses the consolidated information to properly threshold and filter the information
+according to the desired threshold. An SD threshold of 1.0 can be considered default, and anything higher would be more
+conservative and lower would be less conservative. Arguments for this function are as followed:
 
+ | Parameter | Description |
+ |-----|---------|
+ | `id` | Fold id number (1..5) |
+ | `flag` | Set label specifying train or test set |
+ | `PC_std_threshold` | SD threshold for filtering of rotated genotype data (e.g. 1.0) |
+ | `outcome_db` | Name of outcome database (e.g. UKB). |
+ | `rotations_dir` | Path to directory containing rotations (as generated from above). File must be in the form `G_PC_SD_<chr>_set_<set>_id_<id>.Rdata`| 
+ | `cv_groups` | Path to cross validation groups file `Cross_validation_groups.txt` |
+ | `output_dir`| Name of target output directory |
 
-
+Output are filtered rotated matrices of genotype data for each fold. 
 
 ## License
 
