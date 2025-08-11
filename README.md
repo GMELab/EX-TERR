@@ -297,7 +297,7 @@ Input parameters:
  | `LDpred2_model` | Use `auto` (no phenotype data available) or `grid` (phenotype data available) for LDpred2. |
  | `phenotype` | Path to the phenotype file, required only when using the "grid" model. |
  | `corrections_dir` | Path to directory containing corrections for Age, Sex and PCs. Files should be in the form `<correction>_disc.txt` |
-| `ncores` | Number of cores used. |
+ | `ncores` | Number of cores used. |
 
 This function returns a list containing two elements: `ldpred2_betadj` & `ldpred2_beta`. These are weights 
 after LDpred2 adjustment. `ldpred2_betadj` contains standardized weights, adjusted for allele frequency (MAF), 
