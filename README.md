@@ -321,8 +321,7 @@ Required arguments are followed:
  | `flag` | Set label specifying train or test set |
  | `size` | Size/number of contiguous variants and thus rotated components per block (default = 5000) |
  | `outcome_db` | Name of outcome database (e.g. UKB). |
- | `rotations_dir` | Path to directory containing rotations (as generated from above). File must be in the 
- form `G_PC_SD_<chr>_set_<set>_id_<id>.Rdata`| 
+ | `rotations_dir` | Path to directory containing rotations (as generated from above). File must be in the form `G_PC_SD_<chr>_set_<set>_id_<id>.Rdata`| 
  | `LDpred2_model` | Use `auto` (no phenotype data available) or `grid` (phenotype data available) for LDpred2. |
  | `traits_dir` | Path to the directory where the output files will be saved. If `NULL`, the files will not be saved. |
  | `trait_list_dir` |  Path to directory that contains trait list files. Must be in the format `Gwas_list_<LDpred2_model>` |
