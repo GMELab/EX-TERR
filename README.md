@@ -20,6 +20,7 @@ combine and priortize polygenic genetic information from multiple different trai
 - [Part 1: LDpred2 Conversion](#part-1-ldpred2-conversion)
 - [Part 2: Thresholding of Rotated LDpred2 Weights by SD](#part-2-thresholding-of-rotated-ldpred2-weights-by-sd)
 - [Part 3: Earth Polygenic Risk Score](#part-3-earth-polygenic-risk-score)
+- [Part 4: PRS Association](#part-4-prs-association)
 
 ## Installation
 The direct installation of EX-TERR can be performed using `devtools::install_github`:
@@ -369,13 +370,36 @@ and requires all previously processsed files and the following arguments:
  | `traits_dir` | Path to directory where initial LDpred2 weights were saved | 
  | `LDpred2_model` | Use `auto` (no phenotype data available) or `grid` (phenotype data available) for LDpred2. |
  | `outcome_db` | Name of outcome database (e.g. UKB). |
- | `mask` | Options are  or Specifies whether or not to apply masking condition (leaving out most highly associated trait)|
+ | `mask` | Options are `mask` and `no_mask`. Specifies whether or not to apply masking condition (leaving out most highly associated trait)|
  | `mask_dir` | Path to directory containing data for masking. Not required if mask set to `no_mask`. Files must be in the format *_masked.txt | 
  | `output_dir`| Name of target output directory for PRS modified by earth |
 
  The final output are earth PRS across each of the 5-folds in both the training and test set. 
 
- 
+ <br>
+
+ ### Part 4: PRS Association
+
+ The `get_assoc` function generates associations for earth PRS in both training and test sets, 
+ providing outputs in the form of $R^2$ values for continuous traits and odds ratios (OR) for dichotomous traits. 
+ Arguments are as followed: 
+
+  | Parameter | Description |
+ |-----|---------|
+ | `flag` | Set label specifying train or test set |
+ | `PC_std_threshold` | SD threshold for filtering of rotated genotype data (e.g. 1.0) |
+ | `mask` | Options are `mask` and `no_mask`. Specifies whether or not to apply masking condition (leaving out most highly associated trait)|
+ | `corrections_dir` | Path to directory containing corrections for Age, Sex and PCs (can be adjusted as necessary). Files should be in the form `<correction>_<flag>.txt` | 
+ | `pheno_dir` | Path to directory containing phenotype file (per outcome trait). Name should be in the form `Pheno_<flag>.txt
+ | `genotype_dir | Path to directory containing genotype files. Directory contains directories Geno_<flag> and files <outcome_db>_final.fam |
+
+Output files contain association information, adjusted for corrections as specified. 
+
+<br>
+
+### Part 5: Consolidating PRS and Final PRS
+
+The final function in the EX-TERR pipeline is `get_block_PRS`, which consolidations PRS 
 
 
 ## License
