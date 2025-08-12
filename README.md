@@ -354,6 +354,11 @@ Output are filtered rotated matrices of genotype data for each of the five CV fo
 <br>
 
 ### Part 3: Earth Polygenic Risk Score
+This sequence of the pipeline executes the main regression methodology for EX-TERR, implementing Multi-Adaptive Regression 
+Splines (MARS) on the rotated LDpred2 weights. This segment applies this correction through the `run_earth` function
+and requires all previously processsed files and the following arguments:
+
+
 
 ## License
 
