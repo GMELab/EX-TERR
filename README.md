@@ -11,6 +11,7 @@ combine and priortize polygenic genetic information from multiple different trai
 > of EX-TERR can be referred to in the [corresponding manuscript](https://example.com).
 >
 > This R package automates the pipeline using functions: 
+> 
 
 ## Table of Contents
 - [Installation](#installation)
@@ -358,6 +359,23 @@ This sequence of the pipeline executes the main regression methodology for EX-TE
 Splines (MARS) on the rotated LDpred2 weights. This segment applies this correction through the `run_earth` function
 and requires all previously processsed files and the following arguments:
 
+ | Parameter | Description |
+ |-----|---------|
+ | `ids` | Fold id number (1..5) |
+ | `PC_std_threshold` | SD threshold for filtering of rotated genotype data (e.g. 1.0) |
+ | `size` | Size/number of contiguous variants and thus rotated components per block (default = 5000) |
+ | `degree` | Earth parameter allowing for interaction between independent variables (see manuscript for details). Default set to 3.| 
+ | `blocks` | Path to blocks file.  |
+ | `traits_dir` | Path to directory where initial LDpred2 weights were saved | 
+ | `LDpred2_model` | Use `auto` (no phenotype data available) or `grid` (phenotype data available) for LDpred2. |
+ | `outcome_db` | Name of outcome database (e.g. UKB). |
+ | `mask` | Options are  or Specifies whether or not to apply masking condition (leaving out most highly associated trait)|
+ | `mask_dir` | Path to directory containing data for masking. Not required if mask set to `no_mask`. Files must be in the format *_masked.txt | 
+ | `output_dir`| Name of target output directory for PRS modified by earth |
+
+ The final output are earth PRS across each of the 5-folds in both the training and test set. 
+
+ 
 
 
 ## License
