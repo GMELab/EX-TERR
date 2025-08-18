@@ -334,6 +334,18 @@ generated through the `get_rotations()` function. This function only needs to be
 data even before the initiation of the entire pipeline, requiring genotype data, chromosome number,
 number of continguous variants per block (default = 5000) and the blocks file. 
 
+```r
+cross_val_PC_SD(blocks_info = "Your_Path/Blocks_info.txt",
+                rotations_dir = "Your_Path/Rotation",
+                output_dir = "Your_Path")
+
+# Sample Blocks_info.txt format
+1  1  1
+1  1  2
+1  1  3
+1  1  4
+```
+
 Once rotations are obtained and the SD are calculated for each rotation, the `convert_LDpred2` consolidates
 generated LDpred2 weights for all external GWAS traits and matches them to their correponding rotation SD.
 Required arguments are followed:
