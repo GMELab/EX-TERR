@@ -307,6 +307,24 @@ This function returns a list containing two elements: `ldpred2_betadj` & `ldpred
 after LDpred2 adjustment. `ldpred2_betadj` contains standardized weights, adjusted for allele frequency (MAF), 
 where $\hat{\beta}_{\text{adj}} = \hat{\beta} \times \sqrt{2 \times \text{MAF} (1 - \text{MAF})}$. 
 
+Sample code is followed:
+
+```r
+# Run LDpred2 conversion
+run_LDpred2(blocks = "Your_Path/Blocks.txt",
+            trait = "GWAS_name",
+            outcome_db = "UKB",
+            rds_in = ,
+            bed_in = NULL,
+            sumstats = "Your_Path/sumstat_dir",
+            freq_dir = "Your_Path/freq_dir",
+            ref_allele_dir = "Your_Path/ref_allele_dir",
+            traits_dir = "Your_Path/Working_Dir",
+            traits_type = "",
+            LDpred2_model = "auto",
+            ncores = 5)
+```
+
 <br>
 
 ### Part 2: Thresholding of Rotated LDpred2 Weights by SD
@@ -369,7 +387,11 @@ for(chr_no in 1:22){
                   trait_list_dir =  "Your_Path/Traits_List_Dir",
                   blocks = "Your_Path/Blocks.txt",
                   bim_dir = "Your_Path/Geno_Storage_Dir",
-                  bim_file = "Your_Path/Geno_Storage_Dir/Geno_All/outcome_all.bim")}
+                  bim_file = "Your_Path/Geno_Storage_Dir/Geno_All/outcome_all.bim")
+}
+
+# Rotation of genotype data
+
 ```
 
 <br>
