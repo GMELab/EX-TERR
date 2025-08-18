@@ -393,7 +393,26 @@ and requires all previously processsed files and the following arguments:
  | `mask_dir` | Path to directory containing data for masking. Not required if mask set to `no_mask`. Files must be in the format *_masked.txt | 
  | `output_dir`| Name of target output directory for PRS modified by earth |
 
- The final output are earth PRS across each of the 5-folds in both the training and test set. 
+ The final output are earth PRS across each of the 5-folds in both the training and test set. `run_earth` can be executed as followed:
+
+```r
+# Run 'earth' PRS code across all 5 folds
+for(ids in 1:5){
+  run_earth(ids = i,
+            PC_std_threshold = 1.0,
+            size = 5000,
+            degree = 3,
+            blocks = "Your_Path/Blocks.txt",
+            cross_val_PC_SD = "Your_Path/Cross_validation_PC_SD.txt",
+            traits_dir = "Your_Path/Working_Dir",
+            LDpred2_model = "auto",
+            outcome_db = "UKB",
+            mask = "no_mask",
+            mask_dir = NULL)
++ }
+```
+
+
 
  <br>
 
