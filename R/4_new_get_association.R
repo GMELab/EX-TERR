@@ -2,8 +2,11 @@
 #' @param PC_std_threshold PC SD threshold for filtering of rotated genotype data
 #' @param mask Specifies whether or not to applying masking condition (leaving out most highly associated trait)
 #' @param corrections_dir Path to directory containing corrections for Age, Sex and PCs. Files should be in the form <correction>_<flag>.txt
-#' @param pheno_dir Path to directory containing phenotype file. Name should be in the form Pheno_<flag>.txt
 #' @param genotype_dir Path to directory containing genotype files. Directory contains directories Geno_<flag> and files <outcome_db>_final.fam
+#' @param pheno_dir Path to directory containing phenotype file. Name should be in the form Pheno_<flag>.txt
+#' @param outcome_db Name of outcome database (e.g. UKB).
+#' @param PRS_dir Location of output from the run_earth function (Geno_disc_PRS) 
+#' @param Desired path to output directory 
 #' @return A list containing two elements: earth_cont & earth_dicho
 #' @export
 get_assoc <- function(flag,
@@ -13,7 +16,7 @@ get_assoc <- function(flag,
                       genotype_dir,
                       pheno_dir,
                       outcome_db,
-                      geno_disc_dir,
+                      PRS_dir,
                       output_dir) {
   suppressMessages(library("data.table"))
 
@@ -65,17 +68,24 @@ get_assoc <- function(flag,
   earth_PRS <- list()
   for (ids in 1:5)
   {
-    temp <- as.matrix(fread(file.path(geno_disc_dir, paste0("Earth_PRS_PC_std_threshold_", PC_std_threshold, "_index_", ids, "_", flag, flag_2, ".txt"))))
+    temp <- as.matrix(fread(file.path(PRS_dir, paste0("Earth_PRS_PC_std_threshold_", PC_std_threshold, "_index_", ids, "_", flag, flag_2, ".txt"))))
     temp[which(is.na(temp))] <- 0
     earth_PRS[[ids]] <- temp
   }
 
+  
   earth_PRS[[6]] <- matrix(0, ncol = dim(temp)[2], nrow = dim(temp)[1])
   for (ids in 1:5)
   {
     earth_PRS[[6]] <- earth_PRS[[6]] + earth_PRS[[ids]]
   }
 
+  str(earth_PRS)
+  head(earth_PRS)
+  
+  str(pheno_norm)
+   
+ 
   Earth_NAs <- c("Trait", "cross_id")
   ids <- 6
   Earth_cont <- c("Trait", "beta", "beta_SE", "pval", "adj_r2")

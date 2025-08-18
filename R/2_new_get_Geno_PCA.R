@@ -1,4 +1,4 @@
-#' @param id Fold id number, from 1 to 5
+#' @param ids Fold id number, from 1 to 5
 #' @param flag Type of set: disc (discovery) or val (validation)
 #' @param PC_std_threshold PC SD threshold for filtering of rotated genotype data
 #' @param genotype_dir Directory containing genotype directions (either Geno_disc or Geno_val)
@@ -8,7 +8,8 @@
 #' @param output_dir Name of target output dir
 #' @param return Element geno_pc.
 #' @export
-geno_PCA <- function(id,
+
+geno_PCA <- function(ids,
                      flag,
                      PC_std_threshold,
                      genotype_dir,
@@ -16,7 +17,7 @@ geno_PCA <- function(id,
                      rotations_dir,
                      cv_groups,
                      traits_dir,
-                     LDpred2_model) {
+                     LDpred2_model = c("auto", "grid")) {
   suppressMessages(library("data.table"))
 
   if (!file.exists(file.path(cv_groups))) {
@@ -84,8 +85,8 @@ geno_PCA <- function(id,
     print(paste("ids", id, "number of ", i, "is done"))
   }
 
-  if (!dir.exists(file.path(traits_dir, paste0("Traits_", LDpred2_model), "Geno_disc_PCA"))) {
-    dir.create(file.path(traits_dir, paste0("Traits_", LDpred2_model), "Geno_disc_PCA"), recursive = TRUE)
+  if (!dir.exists(file.path(traits_dir, "Geno_disc_PCA"))) {
+    dir.create(file.path(traits_dir, "Geno_disc_PCA"), recursive = TRUE)
   }
 
   write.table(geno_PCA, file.path(traits_dir, paste0("Traits_", LDpred2_model), "Geno_disc_PCA", paste0("Geno_PCA_PC_std_threshold_", PC_std_threshold, "_", id, "_", flag, ".txt")), col.names = F, row.names = F, quote = F, sep = "\t")

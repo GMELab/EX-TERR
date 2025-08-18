@@ -3,12 +3,12 @@
 #' @param size Number of continguous variants per block. Default set to 5000.
 #' @param degree Degree parameter set for earth to determine allowed interactions. Default set to 3.
 #' @param blocks Path to the blocks file.
+#' @param cross_val_PC_SD 
 #' @param traits_dir Path to the directory where the LDpred2 output was saved.
 #' @param LDpred2_model Use "auto" (no phenotype data available) or "grid" (phenotype data available) for LDpred2.
 #' @param outcome_db Name of outcome database (e.g. UKB).
 #' @param mask Specifies whether or not to applying masking condition (leaving out most highly associated trait)
 #' @param mask_dir Path to directory containing data for masking. Not required if mask set to "no_mask". Files must be in the format *_masked.txt
-#' @param output_dir Path to output directory for earth PRS.
 #' @return Returns a list of two elements: disc_earth_PRS and val_earth_PRS
 #' @export
 run_earth <- function(ids,
@@ -40,6 +40,12 @@ run_earth <- function(ids,
   if (mask != "mask" && mask != "no_mask") {
     stop("Mask must be either 'mask' or 'no_mask'.")
   }
+  if (mask == "mask") {
+    flag_2 <- ""
+  } else {
+    flag_2 <- "_no_mask"
+  }
+
 
   # Mar to Earth predict function, no sign
   earth_predict <- function(beta_disc, beta_val, test_data, ind) {
@@ -52,7 +58,8 @@ run_earth <- function(ids,
   }
 
   # Main function
-  dir <- file.path(traits_dir, paste0("Traits_", LDpred2_model))
+  # dir <- file.path(traits_dir, paste0("Traits_", LDpred2_model))
+    dir <- file.path(traits_dir)
 
   if (!dir.exists(file.path(dir, "Geno_disc_PRS"))) {
     dir.create(file.path(dir, "Geno_disc_PRS"), recursive = TRUE)
@@ -112,13 +119,15 @@ run_earth <- function(ids,
     geno_PCA <- as.matrix(fread(file.path(dir, "Geno_disc_PCA", paste0("Geno_PCA_PC_std_threshold_", PC_std_threshold, "_", ids, "_val.txt")), header = F))
   }
   earth_PRS <- geno_PCA %*% predict_earth
+  
+  print(head(earth_PRS))
   print("predict_earth done")
   print(dim(predict_earth))
 
   rm(geno_PCA)
   gc()
 
-  write.table(earth_PRS, file.path(dir, "Geno_disc_PRS", paste0("Earth_PRS_PC_std_threshold_", PC_std_threshold, "_index_", ids, "_val.txt")), col.names = T, row.names = F, quote = F, sep = "\t")
+  write.table(earth_PRS, file.path(dir, "Geno_disc_PRS", paste0("Earth_PRS_PC_std_threshold_", PC_std_threshold, "_index_", ids, "_val", flag_2 ,".txt")), col.names = T, row.names = F, quote = F, sep = "\t")
 
   val_PRS <- earth_PRS
 
@@ -135,7 +144,7 @@ run_earth <- function(ids,
   rm(geno_PCA)
   gc()
 
-  write.table(earth_PRS, file.path(dir, "Geno_disc_PRS", paste0("Earth_PRS_PC_std_threshold_", PC_std_threshold, "_index_", ids, "_disc.txt")), col.names = T, row.names = F, quote = F, sep = "\t")
+  write.table(earth_PRS, file.path(dir, "Geno_disc_PRS", paste0("Earth_PRS_PC_std_threshold_", PC_std_threshold, "_index_", ids, "_disc", flag_2 ,".txt")), col.names = T, row.names = F, quote = F, sep = "\t")
 
   return(list(val_earth_PRS = val_PRS, disc_earth_PRS = earth_PRS))
 }

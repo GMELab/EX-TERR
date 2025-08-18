@@ -24,7 +24,7 @@ run_LDPred2 <- function(blocks,
                         ref_allele_dir,
                         traits_dir = NULL,
                         trait_type,
-                        LDpred2_model,
+                        LDpred2_model = c("auto", "grid"),
                         phenotype = NULL,
                         corrections_dir = NULL,
                         ncores) {
@@ -84,7 +84,7 @@ run_LDPred2 <- function(blocks,
   if (trait_type == "gwas") {
     dir <- file.path(traits_dir, paste0("Traits_", LDpred2_model))
   } else if (trait_type == "outcome") {
-    dir <- file.path(traits_dir, paste0("Traits_", outcome_db))
+    dir <- file.path(traits_dir, paste0("Traits_", trait_type))
   }
   if (!dir.exists(dir)) {
     dir.create(dir, recursive = TRUE)
