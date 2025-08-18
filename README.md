@@ -376,7 +376,7 @@ Sample code for the SD thresholding step is shown below:
 ```r
 # Attaching each LDpred2 weight to its corresponding SD 
 for(chr_no in 1:22){
-+ convert_LDpred2(trait_type = "outcome",
+   convert_LDpred2(trait_type = "outcome",
                   chr = chr_no,
                   flag = "disc",
                   size = 5000,
@@ -391,7 +391,17 @@ for(chr_no in 1:22){
 }
 
 # Rotation of genotype data
-
+for(id in 1:5){
+    ids = id,
+    flag = "disc",
+    PC_std_threshold = 1.0,
+    genotype_dir = "Your_Path/Geno_Dir",
+    outcome_db = "UKB",
+    rotations_dir = "Your_Path/Rotation",
+    cv_groups = "Your_Path/Cross_validation_groups.txt",
+    traits_dir = "Your_Path/Working_Dir",
+    LDpred2_model = "auto"
+}
 ```
 
 <br>
@@ -419,8 +429,8 @@ and requires all previously processsed files and the following arguments:
 
 ```r
 # Run 'earth' PRS code across all 5 folds
-for(ids in 1:5){
-  run_earth(ids = i,
+for(id in 1:5){
+  run_earth(ids = id,
             PC_std_threshold = 1.0,
             size = 5000,
             degree = 3,
@@ -456,11 +466,6 @@ for(ids in 1:5){
 Output files contain association information, adjusted for corrections as specified. 
 
 <br>
-
-### Part 5: Consolidating PRS and Final PRS
-
-The final function in the EX-TERR pipeline is `get_block_PRS`, which consolidations PRS 
-
 
 ## License
 
