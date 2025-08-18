@@ -15,7 +15,6 @@ combine and priortize polygenic genetic information from multiple different trai
 
 ## Table of Contents
 - [Installation](#installation)
-- [Contact Information](#contact-information)
 - [Data Formatting & Required Files](#data-formatting--required-files)
 - [Part 1: LDpred2 Conversion](#part-1-ldpred2-conversion)
 - [Part 2: Thresholding of Rotated LDpred2 Weights by SD](#part-2-thresholding-of-rotated-ldpred2-weights-by-sd)
