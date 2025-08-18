@@ -494,9 +494,11 @@ get_assoc(flag = "val",
 <br>
 
 ## License
+Distributed under the MIT License. See LICENSE.txt for more information.
 
 ## Contact Information
 For questions, feedback or other inquiries regarding the EX-TERR pipeline, please contact 
 Ann Le (annl.37@hotmail.com) or Guillaume Paré (pareg@mcmaster.ca). 
 
 ## Citation
+Citation information will be available upon publication. 
