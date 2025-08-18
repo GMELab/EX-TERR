@@ -351,7 +351,26 @@ conservative and lower would be less conservative. Arguments for this function a
  | `cv_groups` | Path to cross validation groups file `Cross_validation_groups.txt` |
  | `output_dir`| Name of target output directory |
 
-Output are filtered rotated matrices of genotype data for each of the five CV folds. 
+Output are filtered rotated matrices of genotype data for each of the five CV folds.
+
+Sample code for the SD thresholding step is shown below:
+
+```r
+# Attaching each LDpred2 weight to its corresponding SD 
+for(chr_no in 1:22){
++ convert_LDpred2(trait_type = "outcome",
+                  chr = chr_no,
+                  flag = "disc",
+                  size = 5000,
+                  outcome_db = "UKB",
+                  rotations_dir = "Your_Path/Rotations",
+                  LDpred2_model = "grid",
+                  traits_dir = "Your_Path/Working_Dir",
+                  trait_list_dir =  "Your_Path/Traits_List_Dir",
+                  blocks = "Your_Path/Blocks.txt",
+                  bim_dir = "Your_Path/Geno_Storage_Dir",
+                  bim_file = "Your_Path/Geno_Storage_Dir/Geno_All/outcome_all.bim")}
+```
 
 <br>
 
