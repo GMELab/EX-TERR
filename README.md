@@ -21,6 +21,9 @@ combine and priortize polygenic genetic information from multiple different trai
 - [Part 2: Thresholding of Rotated LDpred2 Weights by SD](#part-2-thresholding-of-rotated-ldpred2-weights-by-sd)
 - [Part 3: Earth Polygenic Risk Score](#part-3-earth-polygenic-risk-score)
 - [Part 4: PRS Association](#part-4-prs-association)
+- [License](#license)
+- [Contact Information](#contact-information)
+- [Citation](#citation)
 
 ## Installation
 The direct installation of EX-TERR can be performed using `devtools::install_github`:
