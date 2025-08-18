@@ -475,7 +475,19 @@ for(id in 1:5){
  | `pheno_dir` | Path to directory containing phenotype file (per outcome trait). Name should be in the form `Pheno_<flag>.txt
  | `genotype_dir | Path to directory containing genotype files. Directory contains directories Geno_<flag> and files <outcome_db>_final.fam |
 
-Output files contain association information, adjusted for corrections as specified. 
+Output files contain association information, adjusted for corrections as specified. Sample code is provided as followed:
+
+```r
+get_assoc(flag = "val",
+          PC_std_threshold = 1.0,
+          mask = "no_mask",
+          corrections_dir = "Your_Path/Corrections_Dir",
+          genotype_dir = "Your_Path/Geno_Dir",
+          pheno_dir = "Your_Path/Pheno_Dir",
+          outcome_db = "UKB",
+          PRS_dir = "Your_Path/Geno_disc_PRS",
+          output_dir = "Your_Path/Asso") 
+```
 
 <br>
 
