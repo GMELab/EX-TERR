@@ -1,11 +1,10 @@
 Package: EXTERR
-Title: What the Package Does (One Line, Title Case)
+Title: MARS Polygenic Risk Scores
 Version: 0.0.0.9000
 Authors@R: 
     person("Ann", "Le", , "annl.37@hotmail.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+Description: An R package for polygenic risk score (PRS) generation that applies multivariate adaptive regression splines (MARS) to integrate genetic information from multiple related traits.
+License: use_mit_license()
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
