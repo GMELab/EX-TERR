@@ -494,7 +494,7 @@ get_assoc(flag = "val",
 <br>
 
 ## License
-Distributed under the MIT License. See LICENSE.txt for more information.
+Distributed under the MIT License.
 
 ## Contact Information
 For questions, feedback or other inquiries regarding the EX-TERR pipeline, please contact 
