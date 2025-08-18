@@ -10,7 +10,7 @@ combine and priortize polygenic genetic information from multiple different trai
 > should GWAS information be unavailable. Further details regarding development and further details
 > of EX-TERR can be referred to in the [corresponding manuscript](https://example.com).
 >
-> This R package automates the pipeline using functions: 
+> This R package automates the pipeline using functions: `run_LDpred2()`, `convert_LDpred2()`, `geno_PCA()`, `run_earth()`, `get_assoc()` and `get_rotations()`.
 > 
 
 ## Table of Contents
