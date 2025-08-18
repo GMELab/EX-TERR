@@ -409,7 +409,7 @@ for(ids in 1:5){
             outcome_db = "UKB",
             mask = "no_mask",
             mask_dir = NULL)
-+ }
+}
 ```
 
 
