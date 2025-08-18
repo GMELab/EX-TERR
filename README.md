@@ -340,10 +340,10 @@ cross_val_PC_SD(blocks_info = "Your_Path/Blocks_info.txt",
                 output_dir = "Your_Path")
 
 # Sample Blocks_info.txt format
-1  1  1
-1  1  2
-1  1  3
-1  1  4
+# 1  1  1
+# 1  1  2
+# 1  1  3
+# 1  1  4
 ```
 
 Once rotations are obtained and the SD are calculated for each rotation, the `convert_LDpred2` consolidates
