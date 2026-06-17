@@ -1,0 +1,16 @@
+CHECKS:
+
+1_LDPRED2.R
+- Lines 49-54:
+  - Make sure the conditions are correct (if both files don't exis. If one of the files don't exist)
+
+2_convert_LDPRED2_PC_weights.R
+- Lines 70:
+  - Do we need to setwd()? Simply print where the function is run.. 
+  - Double check differences between grid, auto and maybe outcome
+
+3_new_get_earth_PRS.R
+- Line 23: Can we set default/default condition to function as "no_mask"?
+
+5_new_get_PRS_for_each_block.R
+- What to return for this step?
